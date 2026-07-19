@@ -1,0 +1,48 @@
+METROPOLIS IN RUINS — CONFIGURAÇÃO PHOTON FUSION GODOT
+======================================================
+
+REQUISITOS
+----------
+- Godot 4.6 ou superior.
+- Uma conta gratuita no Photon Engine.
+- Um aplicativo Fusion versão 3 e seu App ID.
+- O Photon Fusion Godot SDK 3 instalado em res://addons/fusion/.
+
+PASSO A PASSO
+-------------
+1. Acesse o Photon Dashboard.
+2. Vá em YOUR > APPS > Development > CREATE A NEW APP.
+3. Em Photon SDK, escolha Fusion.
+4. Em SDK Version, escolha 3.
+5. Nomeie o app como Metropolis in Ruins e crie.
+6. Copie o App ID.
+7. Abra res://photon/photon_config.cfg e substitua:
+
+   app_id="COLE_SEU_FUSION_3_APP_ID_AQUI"
+
+8. Baixe o Fusion Godot SDK 3 e copie a pasta fusion para addons/.
+9. Reabra o projeto no Godot.
+10. Abra o jogo, clique em Online e confira:
+    ADDON PHOTON FUSION: INSTALADO
+    APP ID: CONFIGURADO
+11. Clique em CONECTAR À NUVEM.
+12. Gere ou digite um código de sala e clique em ENTRAR / CRIAR SALA.
+13. Em outra instância do jogo, use o mesmo código.
+
+MODO DE AUTORIDADE
+------------------
+A base desta versão testa conexão e sala. Antes de portar a partida, configure:
+Project > Project Settings > Fusion > Simulation > Mode = Authority
+
+Isso faz o criador da sala ser o host da simulação. O jogo atual ainda usa
+RPCs do MultiplayerAPI/ENet na partida LAN; esses RPCs serão migrados para
+Fusion.rpc em uma próxima etapa. Portanto, entrar na sala Photon ainda não
+abre o tabuleiro online nesta versão.
+
+CONFIGURAÇÃO ALTERNATIVA
+------------------------
+Durante desenvolvimento, você pode criar:
+user://photon_config.cfg
+
+Ele tem prioridade sobre res://photon/photon_config.cfg e evita colocar o App ID
+no repositório. Use a mesma estrutura [PHOTON].

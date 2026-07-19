@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://dpqawvwe4o5oq"]
+
+[ext_resource type="Script" uid="uid://bgfm8iwd8qgcb" path="res://scenes/gameplay/tabuleiro/tabuleiro.gd" id="1_cw4cw"]
+[ext_resource type="PackedScene" path="res://scenes/ui/menu_pause/menu_pause.tscn" id="2_pause"]
+
+[node name="Tabuleiro_Metropolis" type="Node2D" unique_id=1890467695]
+y_sort_enabled = true
+script = ExtResource("1_cw4cw")
+
+[node name="MenuPause" parent="." unique_id=56073364 instance=ExtResource("2_pause")]
+
+[node name="FundoEscuro" type="ColorRect" parent="." unique_id=623206479]
+z_index = -5
+offset_left = -4697.0
+offset_top = -4867.0
+offset_right = 5303.0
+offset_bottom = 5133.0
+color = Color(0.07058824, 0.08627451, 0.1254902, 1)
+
+[node name="Camada_01_Ruas" type="TileMapLayer" parent="." unique_id=1232694689]
+
+[node name="Camada_02_Predios" type="TileMapLayer" parent="." unique_id=1631273774]
+y_sort_enabled = true
+
+[node name="CameraDoTabuleiro" type="Camera2D" parent="." unique_id=268784252]
+zoom = Vector2(1.5, 1.5)
+position_smoothing_enabled = true

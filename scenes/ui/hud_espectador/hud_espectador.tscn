@@ -1,0 +1,956 @@
+[gd_scene load_steps=26 format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/hud_espectador/hud_espectador.gd" id="1_script"]
+[ext_resource type="FontFile" path="res://assets/fonts/PressStart2P.ttf" id="2_font"]
+
+[sub_resource type="Theme" id="ThemeDropdown"]
+default_font = ExtResource("2_font")
+default_font_size = 13
+
+[sub_resource type="StyleBoxFlat" id="StylePanelLogs"]
+bg_color = Color(0.025, 0.032, 0.045, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.26, 0.84, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 13.0
+content_margin_top = 11.0
+content_margin_right = 13.0
+content_margin_bottom = 11.0
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StylePanelRanking"]
+bg_color = Color(0.025, 0.032, 0.045, 0.91)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.78, 0.2, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 13.0
+content_margin_top = 11.0
+content_margin_right = 13.0
+content_margin_bottom = 11.0
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StylePanelEfeitos"]
+bg_color = Color(0.025, 0.032, 0.045, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.82, 0.54, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 13.0
+content_margin_top = 11.0
+content_margin_right = 13.0
+content_margin_bottom = 11.0
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StylePanelResumo"]
+bg_color = Color(0.025, 0.032, 0.045, 0.91)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.26, 0.84, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 13.0
+content_margin_top = 11.0
+content_margin_right = 13.0
+content_margin_bottom = 11.0
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StylePanelDock"]
+bg_color = Color(0.025, 0.032, 0.045, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.42, 0.95, 0.54, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 13.0
+content_margin_top = 11.0
+content_margin_right = 13.0
+content_margin_bottom = 11.0
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StylePanelDetalhes"]
+bg_color = Color(0.025, 0.032, 0.045, 0.98)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.26, 0.84, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 13.0
+content_margin_top = 11.0
+content_margin_right = 13.0
+content_margin_bottom = 11.0
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleButtonDisabled"]
+bg_color = Color(0.025, 0.032, 0.045, 0.72)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.28, 0.32, 0.38, 0.45)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 13.0
+content_margin_top = 11.0
+content_margin_right = 13.0
+content_margin_bottom = 11.0
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleButtonCyanNormal"]
+bg_color = Color(0.025, 0.032, 0.045, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.26, 0.84, 1, 0.65)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 13.0
+content_margin_top = 11.0
+content_margin_right = 13.0
+content_margin_bottom = 11.0
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleButtonCyanHover"]
+bg_color = Color(0.025, 0.032, 0.045, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.26, 0.84, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 13.0
+content_margin_top = 11.0
+content_margin_right = 13.0
+content_margin_bottom = 11.0
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleButtonCyanPressed"]
+bg_color = Color(0.025, 0.032, 0.045, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.1872, 0.6048, 0.72, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 13.0
+content_margin_top = 11.0
+content_margin_right = 13.0
+content_margin_bottom = 11.0
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleButtonGreenNormal"]
+bg_color = Color(0.025, 0.032, 0.045, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.42, 0.95, 0.54, 0.65)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 13.0
+content_margin_top = 11.0
+content_margin_right = 13.0
+content_margin_bottom = 11.0
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleButtonGreenHover"]
+bg_color = Color(0.025, 0.032, 0.045, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.42, 0.95, 0.54, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 13.0
+content_margin_top = 11.0
+content_margin_right = 13.0
+content_margin_bottom = 11.0
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleButtonGreenPressed"]
+bg_color = Color(0.025, 0.032, 0.045, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.3024, 0.684, 0.3888, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 13.0
+content_margin_top = 11.0
+content_margin_right = 13.0
+content_margin_bottom = 11.0
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleButtonRedNormal"]
+bg_color = Color(0.025, 0.032, 0.045, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.96, 0.34, 0.32, 0.65)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 13.0
+content_margin_top = 11.0
+content_margin_right = 13.0
+content_margin_bottom = 11.0
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleButtonRedHover"]
+bg_color = Color(0.025, 0.032, 0.045, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.96, 0.34, 0.32, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 13.0
+content_margin_top = 11.0
+content_margin_right = 13.0
+content_margin_bottom = 11.0
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleButtonRedPressed"]
+bg_color = Color(0.025, 0.032, 0.045, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.6912, 0.2448, 0.2304, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 13.0
+content_margin_top = 11.0
+content_margin_right = 13.0
+content_margin_bottom = 11.0
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+
+[sub_resource type="StyleBoxFlat" id="StyleButtonYellowNormal"]
+bg_color = Color(0.025, 0.032, 0.045, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 0.78, 0.2, 0.65)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 13.0
+content_margin_top = 11.0
+content_margin_right = 13.0
+content_margin_bottom = 11.0
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleButtonYellowHover"]
+bg_color = Color(0.025, 0.032, 0.045, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.78, 0.2, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 13.0
+content_margin_top = 11.0
+content_margin_right = 13.0
+content_margin_bottom = 11.0
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleButtonYellowPressed"]
+bg_color = Color(0.025, 0.032, 0.045, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.72, 0.5616, 0.144, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 13.0
+content_margin_top = 11.0
+content_margin_right = 13.0
+content_margin_bottom = 11.0
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleButtonNeutralNormal"]
+bg_color = Color(0.025, 0.032, 0.045, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.34, 0.44, 0.56, 0.65)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 13.0
+content_margin_top = 11.0
+content_margin_right = 13.0
+content_margin_bottom = 11.0
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleButtonNeutralHover"]
+bg_color = Color(0.025, 0.032, 0.045, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.34, 0.44, 0.56, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 13.0
+content_margin_top = 11.0
+content_margin_right = 13.0
+content_margin_bottom = 11.0
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleButtonNeutralPressed"]
+bg_color = Color(0.025, 0.032, 0.045, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.2448, 0.3168, 0.4032, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 13.0
+content_margin_top = 11.0
+content_margin_right = 13.0
+content_margin_bottom = 11.0
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[node name="HUD_Espectador" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+z_index = 920
+visible = false
+script = ExtResource("1_script")
+
+[node name="PainelLogs" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 18.0
+offset_top = 18.0
+offset_right = 578.0
+offset_bottom = 372.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StylePanelLogs")
+
+[node name="MargemLogs" type="MarginContainer" parent="PainelLogs"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="CaixaLogs" type="VBoxContainer" parent="PainelLogs/MargemLogs"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TituloLogs" type="HBoxContainer" parent="PainelLogs/MargemLogs/CaixaLogs"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Marcador" type="ColorRect" parent="PainelLogs/MargemLogs/CaixaLogs/TituloLogs"]
+custom_minimum_size = Vector2(6, 26)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.26, 0.84, 1, 1)
+
+[node name="Titulo" type="Label" parent="PainelLogs/MargemLogs/CaixaLogs/TituloLogs"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.26, 0.84, 1, 1)
+theme_override_constants/line_spacing = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "METROPOLIS LIVE // ÚLTIMAS AÇÕES"
+
+[node name="StatusPartida" type="Label" parent="PainelLogs/MargemLogs/CaixaLogs"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.61, 0.68, 0.76, 1)
+theme_override_constants/line_spacing = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 13
+
+[node name="SeparadorLogs" type="ColorRect" parent="PainelLogs/MargemLogs/CaixaLogs"]
+custom_minimum_size = Vector2(1, 2)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.26, 0.84, 1, 0.28)
+
+[node name="ListaLogs" type="VBoxContainer" parent="PainelLogs/MargemLogs/CaixaLogs"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PainelRanking" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -558.0
+offset_top = 18.0
+offset_right = -18.0
+offset_bottom = 578.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StylePanelRanking")
+
+[node name="MargemRanking" type="MarginContainer" parent="PainelRanking"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="CaixaRanking" type="VBoxContainer" parent="PainelRanking/MargemRanking"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TituloRanking" type="HBoxContainer" parent="PainelRanking/MargemRanking/CaixaRanking"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Marcador" type="ColorRect" parent="PainelRanking/MargemRanking/CaixaRanking/TituloRanking"]
+custom_minimum_size = Vector2(6, 26)
+layout_mode = 2
+mouse_filter = 2
+color = Color(1, 0.78, 0.2, 1)
+
+[node name="Titulo" type="Label" parent="PainelRanking/MargemRanking/CaixaRanking/TituloRanking"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.78, 0.2, 1)
+theme_override_constants/line_spacing = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "MERCADO // PREVISÃO DE VITÓRIA"
+
+[node name="DicaRanking" type="Label" parent="PainelRanking/MargemRanking/CaixaRanking"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.61, 0.68, 0.76, 1)
+theme_override_constants/line_spacing = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 12
+text = "Toque em um jogador para acompanhar ou inspecionar."
+autowrap_mode = 3
+
+[node name="ListaRanking" type="VBoxContainer" parent="PainelRanking/MargemRanking/CaixaRanking"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PainelEfeitos" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = -298.0
+offset_right = 578.0
+offset_bottom = -18.0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StylePanelEfeitos")
+
+[node name="MargemEfeitos" type="MarginContainer" parent="PainelEfeitos"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="CaixaEfeitos" type="VBoxContainer" parent="PainelEfeitos/MargemEfeitos"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TituloEfeitos" type="HBoxContainer" parent="PainelEfeitos/MargemEfeitos/CaixaEfeitos"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Marcador" type="ColorRect" parent="PainelEfeitos/MargemEfeitos/CaixaEfeitos/TituloEfeitos"]
+custom_minimum_size = Vector2(6, 26)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.82, 0.54, 1, 1)
+
+[node name="Titulo" type="Label" parent="PainelEfeitos/MargemEfeitos/CaixaEfeitos/TituloEfeitos"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.82, 0.54, 1, 1)
+theme_override_constants/line_spacing = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "EFEITOS ATIVOS E ACORDOS"
+
+[node name="ListaEfeitos" type="VBoxContainer" parent="PainelEfeitos/MargemEfeitos/CaixaEfeitos"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PainelResumoAlvo" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -558.0
+offset_top = -396.0
+offset_right = -18.0
+offset_bottom = -18.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StylePanelResumo")
+
+[node name="MargemResumo" type="MarginContainer" parent="PainelResumoAlvo"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="CaixaResumo" type="VBoxContainer" parent="PainelResumoAlvo/MargemResumo"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TituloResumo" type="HBoxContainer" parent="PainelResumoAlvo/MargemResumo/CaixaResumo"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Marcador" type="ColorRect" parent="PainelResumoAlvo/MargemResumo/CaixaResumo/TituloResumo"]
+custom_minimum_size = Vector2(6, 26)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.26, 0.84, 1, 1)
+
+[node name="Titulo" type="Label" parent="PainelResumoAlvo/MargemResumo/CaixaResumo/TituloResumo"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.26, 0.84, 1, 1)
+theme_override_constants/line_spacing = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "JOGADOR EM FOCO"
+
+[node name="ResumoNome" type="Label" parent="PainelResumoAlvo/MargemResumo/CaixaResumo"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.78, 0.2, 1)
+theme_override_constants/line_spacing = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 19
+
+[node name="ResumoStatus" type="Label" parent="PainelResumoAlvo/MargemResumo/CaixaResumo"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.89, 0.92, 0.96, 1)
+theme_override_constants/line_spacing = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 13
+autowrap_mode = 3
+
+[node name="ResumoPropriedades" type="Label" parent="PainelResumoAlvo/MargemResumo/CaixaResumo"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.61, 0.68, 0.76, 1)
+theme_override_constants/line_spacing = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 12
+autowrap_mode = 3
+
+[node name="BtnDetalhes" type="Button" parent="PainelResumoAlvo/MargemResumo/CaixaResumo"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.89, 0.92, 0.96, 1)
+theme_override_colors/font_disabled_color = Color(0.47, 0.51, 0.57, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleButtonCyanNormal")
+theme_override_styles/hover = SubResource("StyleButtonCyanHover")
+theme_override_styles/pressed = SubResource("StyleButtonCyanPressed")
+theme_override_styles/disabled = SubResource("StyleButtonDisabled")
+text = "ABRIR DETALHES"
+
+[node name="DockCamera" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -382.0
+offset_top = -158.0
+offset_right = 382.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StylePanelDock")
+
+[node name="MargemDock" type="MarginContainer" parent="DockCamera"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 9
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 9
+
+[node name="ColunaDock" type="VBoxContainer" parent="DockCamera/MargemDock"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LinhaStatus" type="HBoxContainer" parent="DockCamera/MargemDock/ColunaDock"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="SeloEspectador" type="Label" parent="DockCamera/MargemDock/ColunaDock/LinhaStatus"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.95, 0.54, 1)
+theme_override_constants/line_spacing = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "ESPECTADOR"
+
+[node name="StatusCamera" type="Label" parent="DockCamera/MargemDock/ColunaDock/LinhaStatus"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.61, 0.68, 0.76, 1)
+theme_override_constants/line_spacing = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 12
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="LinhaControles" type="HBoxContainer" parent="DockCamera/MargemDock/ColunaDock"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="AutoSeguir" type="CheckButton" parent="DockCamera/MargemDock/ColunaDock/LinhaControles"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(190, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.89, 0.92, 0.96, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 13
+text = "SEGUIR TURNO"
+button_pressed = true
+
+[node name="DropdownJogadores" type="OptionButton" parent="DockCamera/MargemDock/ColunaDock/LinhaControles"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(270, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("ThemeDropdown")
+theme_override_colors/font_color = Color(0.89, 0.92, 0.96, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 13
+
+[node name="BtnFocar" type="Button" parent="DockCamera/MargemDock/ColunaDock/LinhaControles"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(125, 50)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.89, 0.92, 0.96, 1)
+theme_override_colors/font_disabled_color = Color(0.47, 0.51, 0.57, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleButtonGreenNormal")
+theme_override_styles/hover = SubResource("StyleButtonGreenHover")
+theme_override_styles/pressed = SubResource("StyleButtonGreenPressed")
+theme_override_styles/disabled = SubResource("StyleButtonDisabled")
+text = "FOCAR"
+
+[node name="GavetaDetalhes" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1154.0
+offset_top = 128.0
+offset_right = -574.0
+offset_bottom = 900.0
+grow_horizontal = 0
+z_index = 30
+theme_override_styles/panel = SubResource("StylePanelDetalhes")
+
+[node name="MargemDetalhes" type="MarginContainer" parent="GavetaDetalhes"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 12
+
+[node name="CaixaDetalhes" type="VBoxContainer" parent="GavetaDetalhes/MargemDetalhes"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TopoDetalhes" type="HBoxContainer" parent="GavetaDetalhes/MargemDetalhes/CaixaDetalhes"]
+layout_mode = 2
+
+[node name="DetalhesTitulo" type="Label" parent="GavetaDetalhes/MargemDetalhes/CaixaDetalhes/TopoDetalhes"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.26, 0.84, 1, 1)
+theme_override_constants/line_spacing = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+
+[node name="BtnFecharDetalhes" type="Button" parent="GavetaDetalhes/MargemDetalhes/CaixaDetalhes/TopoDetalhes"]
+custom_minimum_size = Vector2(48, 44)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.89, 0.92, 0.96, 1)
+theme_override_colors/font_disabled_color = Color(0.47, 0.51, 0.57, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleButtonRedNormal")
+theme_override_styles/hover = SubResource("StyleButtonRedHover")
+theme_override_styles/pressed = SubResource("StyleButtonRedPressed")
+theme_override_styles/disabled = SubResource("StyleButtonDisabled")
+text = "X"
+
+[node name="ScrollDetalhes" type="ScrollContainer" parent="GavetaDetalhes/MargemDetalhes/CaixaDetalhes"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="DetalhesConteudo" type="VBoxContainer" parent="GavetaDetalhes/MargemDetalhes/CaixaDetalhes/ScrollDetalhes"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+
+[node name="Templates" type="Node" parent="."]
+
+[node name="TemplateRankingNeutro" type="Button" parent="Templates"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 62)
+mouse_default_cursor_shape = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.89, 0.92, 0.96, 1)
+theme_override_colors/font_disabled_color = Color(0.47, 0.51, 0.57, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleButtonNeutralNormal")
+theme_override_styles/hover = SubResource("StyleButtonNeutralHover")
+theme_override_styles/pressed = SubResource("StyleButtonNeutralPressed")
+theme_override_styles/disabled = SubResource("StyleButtonDisabled")
+alignment = 0
+text_overrun_behavior = 3
+
+[node name="TemplateRankingCiano" type="Button" parent="Templates"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 62)
+mouse_default_cursor_shape = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.89, 0.92, 0.96, 1)
+theme_override_colors/font_disabled_color = Color(0.47, 0.51, 0.57, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleButtonCyanNormal")
+theme_override_styles/hover = SubResource("StyleButtonCyanHover")
+theme_override_styles/pressed = SubResource("StyleButtonCyanPressed")
+theme_override_styles/disabled = SubResource("StyleButtonDisabled")
+alignment = 0
+text_overrun_behavior = 3
+
+[node name="TemplateRankingAmarelo" type="Button" parent="Templates"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 62)
+mouse_default_cursor_shape = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.89, 0.92, 0.96, 1)
+theme_override_colors/font_disabled_color = Color(0.47, 0.51, 0.57, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleButtonYellowNormal")
+theme_override_styles/hover = SubResource("StyleButtonYellowHover")
+theme_override_styles/pressed = SubResource("StyleButtonYellowPressed")
+theme_override_styles/disabled = SubResource("StyleButtonDisabled")
+alignment = 0
+text_overrun_behavior = 3
+
+[node name="TemplateRankingVermelho" type="Button" parent="Templates"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 62)
+mouse_default_cursor_shape = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.89, 0.92, 0.96, 1)
+theme_override_colors/font_disabled_color = Color(0.47, 0.51, 0.57, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleButtonRedNormal")
+theme_override_styles/hover = SubResource("StyleButtonRedHover")
+theme_override_styles/pressed = SubResource("StyleButtonRedPressed")
+theme_override_styles/disabled = SubResource("StyleButtonDisabled")
+alignment = 0
+text_overrun_behavior = 3
+
+[node name="TemplateLinha12" type="Label" parent="Templates"]
+unique_name_in_owner = true
+visible = false
+theme_override_colors/font_color = Color(0.89, 0.92, 0.96, 1)
+theme_override_constants/line_spacing = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 12
+autowrap_mode = 3
+text_overrun_behavior = 3
+
+[node name="TemplateLinha13" type="Label" parent="Templates"]
+unique_name_in_owner = true
+visible = false
+theme_override_colors/font_color = Color(0.89, 0.92, 0.96, 1)
+theme_override_constants/line_spacing = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 13
+autowrap_mode = 3
+text_overrun_behavior = 3
+
+[node name="TemplateSubtitulo" type="Label" parent="Templates"]
+unique_name_in_owner = true
+visible = false
+theme_override_colors/font_color = Color(0.89, 0.92, 0.96, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 4
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+
+[node name="TemplateSeparador" type="ColorRect" parent="Templates"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(1, 2)
+mouse_filter = 2
+color = Color(0.89, 0.92, 0.96, 0.25)
+
+[connection signal="pressed" from="PainelResumoAlvo/MargemResumo/CaixaResumo/BtnDetalhes" to="." method="_alternar_detalhes"]
+[connection signal="toggled" from="DockCamera/MargemDock/ColunaDock/LinhaControles/AutoSeguir" to="." method="_on_auto_toggled"]
+[connection signal="item_selected" from="DockCamera/MargemDock/ColunaDock/LinhaControles/DropdownJogadores" to="." method="_on_alvo_selecionado"]
+[connection signal="pressed" from="DockCamera/MargemDock/ColunaDock/LinhaControles/BtnFocar" to="." method="_on_focar_pressed"]
+[connection signal="pressed" from="GavetaDetalhes/MargemDetalhes/CaixaDetalhes/TopoDetalhes/BtnFecharDetalhes" to="." method="_alternar_detalhes"]

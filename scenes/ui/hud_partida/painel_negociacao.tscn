@@ -1,0 +1,414 @@
+[gd_scene format=3 uid="uid://cc508ievn0efk"]
+
+[ext_resource type="Script" uid="uid://cb7h0qoulrjnu" path="res://scenes/ui/hud_partida/painel_negociacao.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://l1mtn5nwuak0" path="res://assets/fonts/PressStart2P.ttf" id="2_font"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_painel_neg"]
+content_margin_left = 36.0
+content_margin_top = 30.0
+content_margin_right = 36.0
+content_margin_bottom = 30.0
+bg_color = Color(0.035, 0.04, 0.06, 0.985)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.35, 0.78, 1, 0.95)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0, 0, 0, 0.65)
+shadow_size = 18
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_coluna_oferece"]
+content_margin_left = 22.0
+content_margin_top = 20.0
+content_margin_right = 22.0
+content_margin_bottom = 20.0
+bg_color = Color(0.055, 0.14, 0.085, 0.94)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.3, 0.9, 0.5, 0.8)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+anti_aliasing = false
+
+[sub_resource type="Theme" id="Theme_pixel_controls"]
+default_font = ExtResource("2_font")
+default_font_size = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_coluna_pede"]
+content_margin_left = 22.0
+content_margin_top = 20.0
+content_margin_right = 22.0
+content_margin_bottom = 20.0
+bg_color = Color(0.15, 0.07, 0.045, 0.94)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.95, 0.6, 0.2, 0.8)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+anti_aliasing = false
+
+[node name="PainelNegociacao" type="CanvasLayer" unique_id=1826548559]
+layer = 100
+visible = false
+script = ExtResource("1_script")
+
+[node name="Fundo" type="ColorRect" parent="." unique_id=1483194913]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.82)
+
+[node name="Centro" type="CenterContainer" parent="." unique_id=1752880496]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PainelPrincipal" type="PanelContainer" parent="Centro" unique_id=562815358]
+custom_minimum_size = Vector2(1680, 950)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_painel_neg")
+
+[node name="VBoxRaiz" type="VBoxContainer" parent="Centro/PainelPrincipal" unique_id=736334447]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="HBoxHeader" type="HBoxContainer" parent="Centro/PainelPrincipal/VBoxRaiz" unique_id=361311996]
+layout_mode = 2
+
+[node name="Titulo" type="Label" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxHeader" unique_id=300674647]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.98, 0.87, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 28
+text = "🤝 NEGOCIAÇÃO"
+vertical_alignment = 1
+
+[node name="BtnFechar" type="Button" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxHeader" unique_id=437013205]
+custom_minimum_size = Vector2(72, 64)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.35, 0.35, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+text = "X"
+
+[node name="SeparadorTop" type="ColorRect" parent="Centro/PainelPrincipal/VBoxRaiz" unique_id=1139394200]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+color = Color(0.35, 0.78, 1, 0.72)
+
+[node name="HBoxColunas" type="HBoxContainer" parent="Centro/PainelPrincipal/VBoxRaiz" unique_id=1510790482]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 22
+
+[node name="ColunaOferece" type="PanelContainer" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas" unique_id=1888834884]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_coluna_oferece")
+
+[node name="VBoxOferece" type="VBoxContainer" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaOferece" unique_id=2124094123]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="TituloOferece" type="Label" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaOferece/VBoxOferece" unique_id=1648828063]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 1, 0.58, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 22
+text = "OFEREÇO"
+horizontal_alignment = 1
+
+[node name="SubOferece" type="Label" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaOferece/VBoxOferece" unique_id=1393250569]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.82, 0.86, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+text = "VOCÊ ESTÁ OFERECENDO"
+horizontal_alignment = 1
+
+[node name="HBoxDinheiroOferece" type="HBoxContainer" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaOferece/VBoxOferece" unique_id=555336594]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="LblDinOferece" type="Label" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaOferece/VBoxOferece/HBoxDinheiroOferece" unique_id=1469738377]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 17
+text = "💰 DINHEIRO:"
+vertical_alignment = 1
+
+[node name="InputDinheiroOferece" type="LineEdit" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaOferece/VBoxOferece/HBoxDinheiroOferece" unique_id=1625865335]
+custom_minimum_size = Vector2(0, 62)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 19
+text = "0"
+placeholder_text = "0"
+alignment = 2
+
+[node name="HBoxImunidadeOferece" type="HBoxContainer" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaOferece/VBoxOferece" unique_id=452018941]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="LblImunOferece" type="Label" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaOferece/VBoxOferece/HBoxImunidadeOferece" unique_id=1353570985]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "🛡 VISITAS:"
+vertical_alignment = 1
+
+[node name="SpinImunidadeOferece" type="SpinBox" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaOferece/VBoxOferece/HBoxImunidadeOferece" unique_id=181525568]
+custom_minimum_size = Vector2(150, 62)
+layout_mode = 2
+theme = SubResource("Theme_pixel_controls")
+max_value = 5.0
+
+[node name="LblAjudaImunOferece" type="Label" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaOferece/VBoxOferece/HBoxImunidadeOferece" unique_id=667770010]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.76, 0.8, 0.84, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 12
+text = "N = N visitas sem aluguel"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="HBoxPassesOferece" type="HBoxContainer" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaOferece/VBoxOferece" unique_id=42716305]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="LblPassesOferece" type="Label" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaOferece/VBoxOferece/HBoxPassesOferece" unique_id=1016822641]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "🚇 PASSES:"
+vertical_alignment = 1
+
+[node name="SpinPassesOferece" type="SpinBox" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaOferece/VBoxOferece/HBoxPassesOferece" unique_id=1895322088]
+custom_minimum_size = Vector2(150, 62)
+layout_mode = 2
+theme = SubResource("Theme_pixel_controls")
+max_value = 3.0
+
+[node name="LblAjudaPassesOferece" type="Label" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaOferece/VBoxOferece/HBoxPassesOferece" unique_id=1278784447]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.76, 0.8, 0.84, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 12
+text = "Requer 2+ linhas de metrô"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="TituloPropsOferece" type="Label" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaOferece/VBoxOferece" unique_id=673524719]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.84, 0.88, 0.92, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "🏠 PROPRIEDADES"
+
+[node name="ScrollOferece" type="ScrollContainer" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaOferece/VBoxOferece" unique_id=141390152]
+custom_minimum_size = Vector2(0, 275)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ListaPropsOferece" type="VBoxContainer" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaOferece/VBoxOferece/ScrollOferece" unique_id=566069913]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="ColunaPede" type="PanelContainer" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas" unique_id=1479236134]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_coluna_pede")
+
+[node name="VBoxPede" type="VBoxContainer" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaPede" unique_id=1065305619]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="TituloPede" type="Label" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaPede/VBoxPede" unique_id=1036045192]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.66, 0.24, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 22
+text = "PEÇO EM TROCA"
+horizontal_alignment = 1
+
+[node name="LblInfoAlvo" type="Label" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaPede/VBoxPede" unique_id=1490322280]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.84, 0.88, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+text = "COM QUEM NEGOCIAR:"
+
+[node name="DropdownAlvo" type="OptionButton" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaPede/VBoxPede" unique_id=996764259]
+custom_minimum_size = Vector2(0, 62)
+layout_mode = 2
+theme = SubResource("Theme_pixel_controls")
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 17
+
+[node name="HBoxDinheiroPede" type="HBoxContainer" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaPede/VBoxPede" unique_id=636239582]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="LblDinPede" type="Label" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaPede/VBoxPede/HBoxDinheiroPede" unique_id=44795250]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 17
+text = "💰 DINHEIRO:"
+vertical_alignment = 1
+
+[node name="InputDinheiroPede" type="LineEdit" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaPede/VBoxPede/HBoxDinheiroPede" unique_id=770511406]
+custom_minimum_size = Vector2(0, 62)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 19
+text = "0"
+placeholder_text = "0"
+alignment = 2
+
+[node name="HBoxImunidadePede" type="HBoxContainer" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaPede/VBoxPede" unique_id=461530305]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="LblImunPede" type="Label" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaPede/VBoxPede/HBoxImunidadePede" unique_id=1290960213]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "🛡 VISITAS:"
+vertical_alignment = 1
+
+[node name="SpinImunidadePede" type="SpinBox" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaPede/VBoxPede/HBoxImunidadePede" unique_id=135440496]
+custom_minimum_size = Vector2(150, 62)
+layout_mode = 2
+theme = SubResource("Theme_pixel_controls")
+max_value = 5.0
+
+[node name="LblAjudaImunPede" type="Label" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaPede/VBoxPede/HBoxImunidadePede" unique_id=346587117]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.76, 0.8, 0.84, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 12
+text = "N = N visitas sem aluguel"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="HBoxPassesPede" type="HBoxContainer" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaPede/VBoxPede" unique_id=1652388776]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="LblPassesPede" type="Label" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaPede/VBoxPede/HBoxPassesPede" unique_id=1788688333]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "🚇 PASSES:"
+vertical_alignment = 1
+
+[node name="SpinPassesPede" type="SpinBox" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaPede/VBoxPede/HBoxPassesPede" unique_id=1799010742]
+custom_minimum_size = Vector2(150, 62)
+layout_mode = 2
+theme = SubResource("Theme_pixel_controls")
+max_value = 3.0
+
+[node name="LblAjudaPassesPede" type="Label" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaPede/VBoxPede/HBoxPassesPede" unique_id=132843976]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.76, 0.8, 0.84, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 12
+text = "Requer 2+ linhas de metrô"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="TituloPropsPede" type="Label" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaPede/VBoxPede" unique_id=2094591440]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.84, 0.88, 0.92, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "🏠 PROPRIEDADES"
+
+[node name="ScrollPede" type="ScrollContainer" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaPede/VBoxPede" unique_id=1569388600]
+custom_minimum_size = Vector2(0, 275)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ListaPropsPede" type="VBoxContainer" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxColunas/ColunaPede/VBoxPede/ScrollPede" unique_id=1827647446]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="LabelResumo" type="Label" parent="Centro/PainelPrincipal/VBoxRaiz" unique_id=1836137391]
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.82, 0.86, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 15
+text = "Resumo da negociação..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="HBoxBotoes" type="HBoxContainer" parent="Centro/PainelPrincipal/VBoxRaiz" unique_id=779702400]
+layout_mode = 2
+theme_override_constants/separation = 28
+alignment = 1
+
+[node name="BtnCancelar" type="Button" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxBotoes" unique_id=1238883624]
+custom_minimum_size = Vector2(330, 76)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.34, 0.34, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "CANCELAR"
+
+[node name="BtnAcao" type="Button" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxBotoes" unique_id=943272668]
+custom_minimum_size = Vector2(470, 76)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 1, 0.45, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+text = "ENVIAR PROPOSTA"
+
+[node name="BtnAlianca" type="Button" parent="Centro/PainelPrincipal/VBoxRaiz/HBoxBotoes" unique_id=918166426]
+custom_minimum_size = Vector2(330, 76)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.87, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 15
+text = "🤝 PROPOR
+ALIANÇA"

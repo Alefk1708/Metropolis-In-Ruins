@@ -1,0 +1,1481 @@
+[gd_scene format=3 uid="uid://b6mbeg4280cw"]
+
+[ext_resource type="Script" uid="uid://cyhwlwd4cj07l" path="res://scenes/ui/online/online_menu.gd" id="1_online"]
+[ext_resource type="Texture2D" uid="uid://rxwypksk3bmb" path="res://assets/textures/Fundo_tela_online.png" id="2_f6wih"]
+[ext_resource type="FontFile" uid="uid://l1mtn5nwuak0" path="res://assets/fonts/PressStart2P.ttf" id="2_pixel"]
+[ext_resource type="FontFile" uid="uid://kmbykul5ln5g" path="res://assets/fonts/m5x7.ttf" id="3_read"]
+[ext_resource type="Texture2D" uid="uid://ii4p13bodya2" path="res://assets/textures/LogoMetropolis.png" id="5_logo"]
+[ext_resource type="Texture2D" path="res://assets/textures/lixeira_pixel.svg" id="6_delete"]
+
+[sub_resource type="StyleBoxFlat" id="PanelStatus"]
+bg_color = Color(0.055, 0.052, 0.078, 0.97)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.42, 0.42, 0.49, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+shadow_color = Color(0, 0, 0, 0.75)
+shadow_size = 11
+shadow_offset = Vector2(0, 7)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="PanelMain"]
+bg_color = Color(0.095, 0.092, 0.13, 0.975)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(0.42, 0.42, 0.49, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+shadow_color = Color(0, 0, 0, 0.75)
+shadow_size = 11
+shadow_offset = Vector2(0, 7)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="InputNormal"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(0.055, 0.052, 0.078, 0.98)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.34, 0.33, 0.41, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="InputFocus"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(0.075, 0.067, 0.095, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.72, 0.56, 0.67, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="ButtonNormal"]
+content_margin_left = 19.0
+content_margin_top = 10.0
+content_margin_right = 19.0
+content_margin_bottom = 10.0
+bg_color = Color(0.205, 0.2, 0.275, 0.99)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.025, 0.022, 0.035, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.82)
+shadow_size = 5
+shadow_offset = Vector2(0, 4)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="ButtonPressed"]
+content_margin_left = 19.0
+content_margin_top = 10.0
+content_margin_right = 19.0
+content_margin_bottom = 10.0
+bg_color = Color(0.39, 0.285, 0.34, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.025, 0.022, 0.035, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="ButtonHover"]
+content_margin_left = 19.0
+content_margin_top = 10.0
+content_margin_right = 19.0
+content_margin_bottom = 10.0
+bg_color = Color(0.63, 0.48, 0.54, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.025, 0.022, 0.035, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.82)
+shadow_size = 5
+shadow_offset = Vector2(0, 4)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="ButtonDisabled"]
+content_margin_left = 19.0
+content_margin_top = 10.0
+content_margin_right = 19.0
+content_margin_bottom = 10.0
+bg_color = Color(0.105, 0.1, 0.13, 0.96)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.025, 0.022, 0.035, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="ButtonFocus"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.97, 0.95, 0.94, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+expand_margin_left = 7.0
+expand_margin_top = 7.0
+expand_margin_right = 7.0
+expand_margin_bottom = 7.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="PlayerRow"]
+bg_color = Color(0.012, 0.022, 0.048, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.25098, 0.321569, 0.447059, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+shadow_color = Color(0, 0, 0, 0.75)
+shadow_size = 11
+shadow_offset = Vector2(0, 7)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="ButtonDestructiveNormal"]
+content_margin_left = 19.0
+content_margin_top = 10.0
+content_margin_right = 19.0
+content_margin_bottom = 10.0
+bg_color = Color(0.31, 0.17, 0.205, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.025, 0.022, 0.035, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.82)
+shadow_size = 5
+shadow_offset = Vector2(0, 4)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="ButtonDestructivePressed"]
+content_margin_left = 19.0
+content_margin_top = 10.0
+content_margin_right = 19.0
+content_margin_bottom = 10.0
+bg_color = Color(0.39, 0.16, 0.19, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.025, 0.022, 0.035, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="ButtonDestructiveHover"]
+content_margin_left = 19.0
+content_margin_top = 10.0
+content_margin_right = 19.0
+content_margin_bottom = 10.0
+bg_color = Color(0.57, 0.31, 0.36, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.025, 0.022, 0.035, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.82)
+shadow_size = 5
+shadow_offset = Vector2(0, 4)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="DeleteButtonNormal"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.65, 0.16, 0.22, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.025, 0.022, 0.035, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.82)
+shadow_size = 5
+shadow_offset = Vector2(0, 4)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="DeleteButtonHover"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.86, 0.29, 0.35, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.025, 0.022, 0.035, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.82)
+shadow_size = 5
+shadow_offset = Vector2(0, 4)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="DeleteButtonPressed"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.45, 0.1, 0.15, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.025, 0.022, 0.035, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing = false
+
+[node name="OnlineMenu" type="Control" unique_id=1481554981]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_online")
+
+[node name="Fundo" type="TextureRect" parent="." unique_id=1969616647]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_f6wih")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Sombra" type="ColorRect" parent="." unique_id=1280630811]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.015, 0.01, 0.026, 0.58)
+
+[node name="MainMargin" type="MarginContainer" parent="." unique_id=637535190]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 48
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 48
+theme_override_constants/margin_bottom = 28
+
+[node name="Raiz" type="VBoxContainer" parent="MainMargin" unique_id=523952669]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="CentroLogo" type="CenterContainer" parent="MainMargin/Raiz" unique_id=1533202678]
+custom_minimum_size = Vector2(0, 142)
+layout_mode = 2
+
+[node name="Logo" type="TextureRect" parent="MainMargin/Raiz/CentroLogo" unique_id=1200933280]
+custom_minimum_size = Vector2(620, 136)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("5_logo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Cabecalho" type="HBoxContainer" parent="MainMargin/Raiz" unique_id=1733428622]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="BlocoTitulo" type="VBoxContainer" parent="MainMargin/Raiz/Cabecalho" unique_id=796586297]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="Titulo" type="Label" parent="MainMargin/Raiz/Cabecalho/BlocoTitulo" unique_id=970208099]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.980392, 0.968627, 0.972549, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_read")
+theme_override_font_sizes/font_size = 42
+text = "MODO ONLINE"
+
+[node name="Subtitulo" type="Label" parent="MainMargin/Raiz/Cabecalho/BlocoTitulo" unique_id=18277724]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.980392, 0.968627, 0.972549, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_read")
+theme_override_font_sizes/font_size = 23
+text = "Jogue com até seis pessoas usando uma sala privada."
+
+[node name="StatusPainel" type="PanelContainer" parent="MainMargin/Raiz/Cabecalho" unique_id=1532907278]
+custom_minimum_size = Vector2(300, 66)
+layout_mode = 2
+theme_override_styles/panel = SubResource("PanelStatus")
+
+[node name="StatusMargem" type="MarginContainer" parent="MainMargin/Raiz/Cabecalho/StatusPainel" unique_id=58158158]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 10
+
+[node name="LblStatusConexao" type="Label" parent="MainMargin/Raiz/Cabecalho/StatusPainel/StatusMargem" unique_id=2099015838]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 14
+text = "SERVIÇO ONLINE: VERIFICANDO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ContainerInicio" type="CenterContainer" parent="MainMargin/Raiz" unique_id=1766791037]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PainelInicio" type="PanelContainer" parent="MainMargin/Raiz/ContainerInicio" unique_id=1662384785]
+custom_minimum_size = Vector2(960, 500)
+layout_mode = 2
+theme_override_styles/panel = SubResource("PanelMain")
+
+[node name="MargemInicio" type="MarginContainer" parent="MainMargin/Raiz/ContainerInicio/PainelInicio" unique_id=1080002906]
+layout_mode = 2
+theme_override_constants/margin_left = 54
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 54
+theme_override_constants/margin_bottom = 40
+
+[node name="ConteudoInicio" type="VBoxContainer" parent="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio" unique_id=732424109]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Titulo" type="Label" parent="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio" unique_id=346373022]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.980392, 0.968627, 0.972549, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_read")
+theme_override_font_sizes/font_size = 39
+text = "ENTRAR EM UMA PARTIDA"
+horizontal_alignment = 1
+
+[node name="Explicacao" type="Label" parent="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio" unique_id=1439599573]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.980392, 0.968627, 0.972549, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_read")
+theme_override_font_sizes/font_size = 25
+text = "Crie uma nova sala ou entre em uma sala existente usando o código do anfitrião."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Separador" type="HSeparator" parent="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio" unique_id=271619946]
+layout_mode = 2
+
+[node name="LinhaNome" type="HBoxContainer" parent="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio" unique_id=628951094]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="LabelNome" type="Label" parent="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio/LinhaNome" unique_id=870369255]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 15
+text = "SEU NOME"
+vertical_alignment = 1
+
+[node name="InputNome" type="LineEdit" parent="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio/LinhaNome" unique_id=447445168]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.980392, 0.968627, 0.972549, 1)
+theme_override_colors/font_placeholder_color = Color(0.64, 0.62, 0.69, 0.82)
+theme_override_colors/caret_color = Color(0.98, 0.83, 0.79, 1)
+theme_override_fonts/font = ExtResource("3_read")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("InputNormal")
+theme_override_styles/focus = SubResource("InputFocus")
+placeholder_text = "Seu nome"
+max_length = 18
+
+[node name="LinhaAcoes" type="HBoxContainer" parent="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio" unique_id=1225550148]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="BtnCriarSala" type="Button" parent="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio/LinhaAcoes" unique_id=834942829]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 92)
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Cria uma nova sala e gera um código para compartilhar."
+theme_override_colors/font_color = Color(0.980392, 0.968627, 0.972549, 1)
+theme_override_colors/font_pressed_color = Color(1, 0.913725, 0.886275, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.56, 0.54, 0.59, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/disabled = SubResource("ButtonDisabled")
+theme_override_styles/focus = SubResource("ButtonFocus")
+text = "CRIAR SALA"
+
+[node name="BtnMostrarEntradaCodigo" type="Button" parent="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio/LinhaAcoes" unique_id=982471538]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 92)
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Entra em uma sala criada por outra pessoa."
+theme_override_colors/font_color = Color(0.980392, 0.968627, 0.972549, 1)
+theme_override_colors/font_pressed_color = Color(1, 0.913725, 0.886275, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.56, 0.54, 0.59, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/disabled = SubResource("ButtonDisabled")
+theme_override_styles/focus = SubResource("ButtonFocus")
+text = "ENTRAR COM CÓDIGO"
+
+[node name="PainelRetomada" type="PanelContainer" parent="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 94)
+layout_mode = 2
+theme_override_styles/panel = SubResource("PanelStatus")
+
+[node name="Margem" type="MarginContainer" parent="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio/PainelRetomada"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 12
+
+[node name="Linha" type="HBoxContainer" parent="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio/PainelRetomada/Margem"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Textos" type="VBoxContainer" parent="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio/PainelRetomada/Margem/Linha"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+theme_override_constants/separation = 5
+
+[node name="Titulo" type="Label" parent="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio/PainelRetomada/Margem/Linha/Textos"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94902, 0.709804, 0.658824, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 15
+text = "PARTIDA SALVA ENCONTRADA"
+
+[node name="LblResumoRetomada" type="Label" parent="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio/PainelRetomada/Margem/Linha/Textos"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.980392, 0.968627, 0.972549, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_read")
+theme_override_font_sizes/font_size = 20
+text = "Rodada 1  •  2 participantes"
+
+[node name="BtnRetomarPartida" type="Button" parent="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio/PainelRetomada/Margem/Linha"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(310, 66)
+layout_mode = 2
+tooltip_text = "Cria uma nova sala e aguarda os participantes da partida salva."
+theme_override_colors/font_color = Color(0.980392, 0.968627, 0.972549, 1)
+theme_override_colors/font_pressed_color = Color(1, 0.913725, 0.886275, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.56, 0.54, 0.59, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/disabled = SubResource("ButtonDisabled")
+theme_override_styles/focus = SubResource("ButtonFocus")
+text = "RETOMAR PARTIDA"
+
+[node name="BtnExcluirPartidaSalva" type="Button" parent="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio/PainelRetomada/Margem/Linha"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(66, 66)
+layout_mode = 2
+tooltip_text = "Excluir definitivamente esta partida salva."
+theme_override_styles/normal = SubResource("DeleteButtonNormal")
+theme_override_styles/pressed = SubResource("DeleteButtonPressed")
+theme_override_styles/hover = SubResource("DeleteButtonHover")
+theme_override_styles/disabled = SubResource("ButtonDisabled")
+theme_override_styles/focus = SubResource("ButtonFocus")
+icon = ExtResource("6_delete")
+expand_icon = true
+icon_max_width = 32
+icon_alignment = 1
+
+[node name="ContainerEntradaCodigo" type="VBoxContainer" parent="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio" unique_id=1553505742]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LabelCodigo" type="Label" parent="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio/ContainerEntradaCodigo" unique_id=1134251055]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 14
+text = "CÓDIGO DA SALA"
+
+[node name="LinhaCodigo" type="HBoxContainer" parent="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio/ContainerEntradaCodigo" unique_id=1897346600]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="InputCodigo" type="LineEdit" parent="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio/ContainerEntradaCodigo/LinhaCodigo" unique_id=490654915]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.980392, 0.968627, 0.972549, 1)
+theme_override_colors/font_placeholder_color = Color(0.64, 0.62, 0.69, 0.82)
+theme_override_colors/caret_color = Color(0.98, 0.83, 0.79, 1)
+theme_override_fonts/font = ExtResource("3_read")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("InputNormal")
+theme_override_styles/focus = SubResource("InputFocus")
+placeholder_text = "EX.: RUINAS7"
+max_length = 20
+
+[node name="BtnConfirmarEntrada" type="Button" parent="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio/ContainerEntradaCodigo/LinhaCodigo" unique_id=185760179]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 66)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.980392, 0.968627, 0.972549, 1)
+theme_override_colors/font_pressed_color = Color(1, 0.913725, 0.886275, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.56, 0.54, 0.59, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/disabled = SubResource("ButtonDisabled")
+theme_override_styles/focus = SubResource("ButtonFocus")
+text = "ENTRAR"
+
+[node name="LblMensagemInicio" type="Label" parent="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio" unique_id=689247045]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_read")
+theme_override_font_sizes/font_size = 22
+text = "Preparando o serviço online..."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="ContainerLobbyOnline" type="HBoxContainer" parent="MainMargin/Raiz" unique_id=2026233475]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 24
+
+[node name="PainelJogadores" type="PanelContainer" parent="MainMargin/Raiz/ContainerLobbyOnline" unique_id=1549390823]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("PanelMain")
+
+[node name="MargemJogadores" type="MarginContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores" unique_id=531077135]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 26
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 26
+
+[node name="ColunaJogadores" type="VBoxContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores" unique_id=780785093]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="CabecalhoSala" type="HBoxContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores" unique_id=1683846652]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="BlocoSala" type="VBoxContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/CabecalhoSala" unique_id=1131636533]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="TituloSala" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/CabecalhoSala/BlocoSala" unique_id=1729690439]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94902, 0.709804, 0.658824, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 22
+text = "SALA ONLINE"
+
+[node name="LinhaCodigo" type="HBoxContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/CabecalhoSala/BlocoSala" unique_id=815196480]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="LblCodigoAtual" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/CabecalhoSala/BlocoSala/LinhaCodigo" unique_id=1553150506]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.980392, 0.968627, 0.972549, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_read")
+theme_override_font_sizes/font_size = 25
+text = "CÓDIGO: —"
+
+[node name="BtnCopiarCodigo" type="Button" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/CabecalhoSala/BlocoSala/LinhaCodigo" unique_id=2140963167]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(210, 52)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.980392, 0.968627, 0.972549, 1)
+theme_override_colors/font_pressed_color = Color(1, 0.913725, 0.886275, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.56, 0.54, 0.59, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/disabled = SubResource("ButtonDisabled")
+theme_override_styles/focus = SubResource("ButtonFocus")
+text = "COPIAR CÓDIGO"
+
+[node name="LblContadorJogadores" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/CabecalhoSala" unique_id=1193188963]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94902, 0.709804, 0.658824, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 18
+text = "0 / 6"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Separador" type="HSeparator" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores" unique_id=197773712]
+layout_mode = 2
+
+[node name="ListaJogadoresBox" type="VBoxContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores" unique_id=166041983]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 9
+
+[node name="Jogador1" type="PanelContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox" unique_id=1769799351]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+theme_override_styles/panel = SubResource("PlayerRow")
+
+[node name="Margem" type="MarginContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador1" unique_id=1823930923]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="Linha" type="HBoxContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador1/Margem" unique_id=1314320699]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Indicador" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador1/Margem/Linha" unique_id=1549662621]
+custom_minimum_size = Vector2(28, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32549, 0.380392, 0.478431, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_read")
+theme_override_font_sizes/font_size = 19
+text = "●"
+vertical_alignment = 1
+
+[node name="Posicao" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador1/Margem/Linha" unique_id=719966082]
+custom_minimum_size = Vector2(38, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 15
+text = "1"
+vertical_alignment = 1
+
+[node name="Nome" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador1/Margem/Linha" unique_id=2092428603]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_read")
+theme_override_font_sizes/font_size = 25
+text = "VAGA DISPONÍVEL"
+vertical_alignment = 1
+
+[node name="Cargo" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador1/Margem/Linha" unique_id=2130615978]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 13
+text = "—"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Estado" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador1/Margem/Linha" unique_id=623262613]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 13
+text = "VAZIA"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Jogador2" type="PanelContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox" unique_id=544033717]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+theme_override_styles/panel = SubResource("PlayerRow")
+
+[node name="Margem" type="MarginContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador2" unique_id=1905518147]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="Linha" type="HBoxContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador2/Margem" unique_id=1669685205]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Indicador" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador2/Margem/Linha" unique_id=2042105977]
+custom_minimum_size = Vector2(28, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32549, 0.380392, 0.478431, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_read")
+theme_override_font_sizes/font_size = 19
+text = "●"
+vertical_alignment = 1
+
+[node name="Posicao" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador2/Margem/Linha" unique_id=2139725273]
+custom_minimum_size = Vector2(38, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 15
+text = "2"
+vertical_alignment = 1
+
+[node name="Nome" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador2/Margem/Linha" unique_id=115244497]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_read")
+theme_override_font_sizes/font_size = 25
+text = "VAGA DISPONÍVEL"
+vertical_alignment = 1
+
+[node name="Cargo" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador2/Margem/Linha" unique_id=370119888]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 13
+text = "—"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Estado" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador2/Margem/Linha" unique_id=776485148]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 13
+text = "VAZIA"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Jogador3" type="PanelContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox" unique_id=1380869453]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+theme_override_styles/panel = SubResource("PlayerRow")
+
+[node name="Margem" type="MarginContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador3" unique_id=1207487823]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="Linha" type="HBoxContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador3/Margem" unique_id=1216680907]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Indicador" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador3/Margem/Linha" unique_id=1395531524]
+custom_minimum_size = Vector2(28, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32549, 0.380392, 0.478431, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_read")
+theme_override_font_sizes/font_size = 19
+text = "●"
+vertical_alignment = 1
+
+[node name="Posicao" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador3/Margem/Linha" unique_id=999161311]
+custom_minimum_size = Vector2(38, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 15
+text = "3"
+vertical_alignment = 1
+
+[node name="Nome" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador3/Margem/Linha" unique_id=1017170053]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_read")
+theme_override_font_sizes/font_size = 25
+text = "VAGA DISPONÍVEL"
+vertical_alignment = 1
+
+[node name="Cargo" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador3/Margem/Linha" unique_id=289756840]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 13
+text = "—"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Estado" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador3/Margem/Linha" unique_id=1508473538]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 13
+text = "VAZIA"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Jogador4" type="PanelContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox" unique_id=1639958040]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+theme_override_styles/panel = SubResource("PlayerRow")
+
+[node name="Margem" type="MarginContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador4" unique_id=1556817926]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="Linha" type="HBoxContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador4/Margem" unique_id=597164495]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Indicador" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador4/Margem/Linha" unique_id=1778450884]
+custom_minimum_size = Vector2(28, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32549, 0.380392, 0.478431, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_read")
+theme_override_font_sizes/font_size = 19
+text = "●"
+vertical_alignment = 1
+
+[node name="Posicao" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador4/Margem/Linha" unique_id=619395077]
+custom_minimum_size = Vector2(38, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 15
+text = "4"
+vertical_alignment = 1
+
+[node name="Nome" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador4/Margem/Linha" unique_id=910610074]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_read")
+theme_override_font_sizes/font_size = 25
+text = "VAGA DISPONÍVEL"
+vertical_alignment = 1
+
+[node name="Cargo" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador4/Margem/Linha" unique_id=1485574064]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 13
+text = "—"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Estado" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador4/Margem/Linha" unique_id=1136173518]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 13
+text = "VAZIA"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Jogador5" type="PanelContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox" unique_id=1589013972]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+theme_override_styles/panel = SubResource("PlayerRow")
+
+[node name="Margem" type="MarginContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador5" unique_id=194639541]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="Linha" type="HBoxContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador5/Margem" unique_id=1289925397]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Indicador" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador5/Margem/Linha" unique_id=1834235012]
+custom_minimum_size = Vector2(28, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32549, 0.380392, 0.478431, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_read")
+theme_override_font_sizes/font_size = 19
+text = "●"
+vertical_alignment = 1
+
+[node name="Posicao" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador5/Margem/Linha" unique_id=1695711590]
+custom_minimum_size = Vector2(38, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 15
+text = "5"
+vertical_alignment = 1
+
+[node name="Nome" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador5/Margem/Linha" unique_id=2092526704]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_read")
+theme_override_font_sizes/font_size = 25
+text = "VAGA DISPONÍVEL"
+vertical_alignment = 1
+
+[node name="Cargo" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador5/Margem/Linha" unique_id=507083437]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 13
+text = "—"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Estado" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador5/Margem/Linha" unique_id=1551177011]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 13
+text = "VAZIA"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Jogador6" type="PanelContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox" unique_id=174872519]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+theme_override_styles/panel = SubResource("PlayerRow")
+
+[node name="Margem" type="MarginContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador6" unique_id=1223764037]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="Linha" type="HBoxContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador6/Margem" unique_id=194024533]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Indicador" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador6/Margem/Linha" unique_id=1820792060]
+custom_minimum_size = Vector2(28, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32549, 0.380392, 0.478431, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_read")
+theme_override_font_sizes/font_size = 19
+text = "●"
+vertical_alignment = 1
+
+[node name="Posicao" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador6/Margem/Linha" unique_id=280277660]
+custom_minimum_size = Vector2(38, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 15
+text = "6"
+vertical_alignment = 1
+
+[node name="Nome" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador6/Margem/Linha" unique_id=1652919604]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_read")
+theme_override_font_sizes/font_size = 25
+text = "VAGA DISPONÍVEL"
+vertical_alignment = 1
+
+[node name="Cargo" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador6/Margem/Linha" unique_id=652314589]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 13
+text = "—"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Estado" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/ListaJogadoresBox/Jogador6/Margem/Linha" unique_id=1680847755]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 13
+text = "VAZIA"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="PainelAcoes" type="PanelContainer" parent="MainMargin/Raiz/ContainerLobbyOnline" unique_id=1123702773]
+custom_minimum_size = Vector2(460, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("PanelMain")
+
+[node name="MargemAcoes" type="MarginContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelAcoes" unique_id=1540154313]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 28
+
+[node name="ColunaAcoes" type="VBoxContainer" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelAcoes/MargemAcoes" unique_id=2069208312]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Titulo" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelAcoes/MargemAcoes/ColunaAcoes" unique_id=1571449486]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.980392, 0.968627, 0.972549, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_read")
+theme_override_font_sizes/font_size = 31
+text = "CONTROLES DA SALA"
+
+[node name="LblPapelLocal" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelAcoes/MargemAcoes/ColunaAcoes" unique_id=297168016]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.537255, 0.682353, 0.917647, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 18
+text = "VOCÊ É JOGADOR"
+horizontal_alignment = 1
+
+[node name="LblEstadoProntidao" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelAcoes/MargemAcoes/ColunaAcoes" unique_id=1419902632]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 66)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94902, 0.709804, 0.658824, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 18
+text = "AGUARDANDO JOGADORES..."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="LblDicaLobby" type="Label" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelAcoes/MargemAcoes/ColunaAcoes" unique_id=726779483]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.980392, 0.968627, 0.972549, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_read")
+theme_override_font_sizes/font_size = 23
+text = "Marque-se como pronto quando estiver preparado."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Espacador" type="Control" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelAcoes/MargemAcoes/ColunaAcoes" unique_id=1834822765]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="BtnPronto" type="Button" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelAcoes/MargemAcoes/ColunaAcoes" unique_id=1595087728]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 82)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.980392, 0.968627, 0.972549, 1)
+theme_override_colors/font_pressed_color = Color(1, 0.913725, 0.886275, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.56, 0.54, 0.59, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 17
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/disabled = SubResource("ButtonDisabled")
+theme_override_styles/focus = SubResource("ButtonFocus")
+text = "DAR PRONTO"
+
+[node name="BtnIniciarPartida" type="Button" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelAcoes/MargemAcoes/ColunaAcoes" unique_id=1321404860]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 82)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.980392, 0.968627, 0.972549, 1)
+theme_override_colors/font_pressed_color = Color(1, 0.913725, 0.886275, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.56, 0.54, 0.59, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/disabled = SubResource("ButtonDisabled")
+theme_override_styles/focus = SubResource("ButtonFocus")
+disabled = true
+text = "COMEÇAR PARTIDA"
+
+[node name="BtnSairSala" type="Button" parent="MainMargin/Raiz/ContainerLobbyOnline/PainelAcoes/MargemAcoes/ColunaAcoes" unique_id=1373411287]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.980392, 0.968627, 0.972549, 1)
+theme_override_colors/font_pressed_color = Color(1, 0.913725, 0.886275, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.56, 0.54, 0.59, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("ButtonDestructiveNormal")
+theme_override_styles/pressed = SubResource("ButtonDestructivePressed")
+theme_override_styles/hover = SubResource("ButtonDestructiveHover")
+theme_override_styles/disabled = SubResource("ButtonDisabled")
+theme_override_styles/focus = SubResource("ButtonFocus")
+text = "SAIR DA SALA"
+
+[node name="Rodape" type="HBoxContainer" parent="MainMargin/Raiz" unique_id=1492695233]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="BtnVoltar" type="Button" parent="MainMargin/Raiz/Rodape" unique_id=1352510630]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 58)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.980392, 0.968627, 0.972549, 1)
+theme_override_colors/font_pressed_color = Color(1, 0.913725, 0.886275, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.56, 0.54, 0.59, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("ButtonDestructiveNormal")
+theme_override_styles/pressed = SubResource("ButtonDestructivePressed")
+theme_override_styles/hover = SubResource("ButtonDestructiveHover")
+theme_override_styles/disabled = SubResource("ButtonDisabled")
+theme_override_styles/focus = SubResource("ButtonFocus")
+text = "VOLTAR AO MENU"
+
+[node name="DicaRodape" type="Label" parent="MainMargin/Raiz/Rodape" unique_id=1530236524]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.721569, 0.705882, 0.756863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_read")
+theme_override_font_sizes/font_size = 20
+text = "Crie uma sala e compartilhe o código com seus amigos."
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ConfirmacaoExcluirSalvamento" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 100
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="Fundo" type="ColorRect" parent="ConfirmacaoExcluirSalvamento"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+color = Color(0.012, 0.008, 0.018, 0.82)
+
+[node name="Centro" type="CenterContainer" parent="ConfirmacaoExcluirSalvamento"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="PainelConfirmacaoExclusao" type="PanelContainer" parent="ConfirmacaoExcluirSalvamento/Centro"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(720, 330)
+layout_mode = 2
+theme_override_styles/panel = SubResource("PanelMain")
+
+[node name="Margem" type="MarginContainer" parent="ConfirmacaoExcluirSalvamento/Centro/PainelConfirmacaoExclusao"]
+layout_mode = 2
+theme_override_constants/margin_left = 44
+theme_override_constants/margin_top = 36
+theme_override_constants/margin_right = 44
+theme_override_constants/margin_bottom = 36
+
+[node name="Conteudo" type="VBoxContainer" parent="ConfirmacaoExcluirSalvamento/Centro/PainelConfirmacaoExclusao/Margem"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Titulo" type="Label" parent="ConfirmacaoExcluirSalvamento/Centro/PainelConfirmacaoExclusao/Margem/Conteudo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.38, 0.43, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 22
+text = "EXCLUIR PARTIDA SALVA?"
+horizontal_alignment = 1
+
+[node name="Mensagem" type="Label" parent="ConfirmacaoExcluirSalvamento/Centro/PainelConfirmacaoExclusao/Margem/Conteudo"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.980392, 0.968627, 0.972549, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.94)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_read")
+theme_override_font_sizes/font_size = 25
+text = "O progresso desta partida será apagado permanentemente. Esta ação não pode ser desfeita."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Acoes" type="HBoxContainer" parent="ConfirmacaoExcluirSalvamento/Centro/PainelConfirmacaoExclusao/Margem/Conteudo"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="BtnCancelarExclusao" type="Button" parent="ConfirmacaoExcluirSalvamento/Centro/PainelConfirmacaoExclusao/Margem/Conteudo/Acoes"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.980392, 0.968627, 0.972549, 1)
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("ButtonFocus")
+text = "CANCELAR"
+
+[node name="BtnConfirmarExclusao" type="Button" parent="ConfirmacaoExcluirSalvamento/Centro/PainelConfirmacaoExclusao/Margem/Conteudo/Acoes"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.97, 0.97, 1)
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("DeleteButtonNormal")
+theme_override_styles/pressed = SubResource("DeleteButtonPressed")
+theme_override_styles/hover = SubResource("DeleteButtonHover")
+theme_override_styles/focus = SubResource("ButtonFocus")
+text = "SIM, EXCLUIR"
+
+[connection signal="focus_exited" from="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio/LinhaNome/InputNome" to="." method="_salvar_nome"]
+[connection signal="pressed" from="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio/LinhaAcoes/BtnCriarSala" to="." method="_criar_sala"]
+[connection signal="pressed" from="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio/LinhaAcoes/BtnMostrarEntradaCodigo" to="." method="_mostrar_entrada_codigo"]
+[connection signal="pressed" from="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio/PainelRetomada/Margem/Linha/BtnRetomarPartida" to="." method="_retomar_partida_salva"]
+[connection signal="pressed" from="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio/PainelRetomada/Margem/Linha/BtnExcluirPartidaSalva" to="." method="_solicitar_exclusao_partida_salva"]
+[connection signal="text_submitted" from="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio/ContainerEntradaCodigo/LinhaCodigo/InputCodigo" to="." method="_codigo_enviado"]
+[connection signal="pressed" from="MainMargin/Raiz/ContainerInicio/PainelInicio/MargemInicio/ConteudoInicio/ContainerEntradaCodigo/LinhaCodigo/BtnConfirmarEntrada" to="." method="_entrar_com_codigo"]
+[connection signal="pressed" from="MainMargin/Raiz/ContainerLobbyOnline/PainelJogadores/MargemJogadores/ColunaJogadores/CabecalhoSala/BlocoSala/LinhaCodigo/BtnCopiarCodigo" to="." method="_copiar_codigo"]
+[connection signal="pressed" from="MainMargin/Raiz/ContainerLobbyOnline/PainelAcoes/MargemAcoes/ColunaAcoes/BtnPronto" to="." method="_alternar_pronto"]
+[connection signal="pressed" from="MainMargin/Raiz/ContainerLobbyOnline/PainelAcoes/MargemAcoes/ColunaAcoes/BtnIniciarPartida" to="." method="_iniciar_selecao_online"]
+[connection signal="pressed" from="MainMargin/Raiz/ContainerLobbyOnline/PainelAcoes/MargemAcoes/ColunaAcoes/BtnSairSala" to="." method="_sair_sala"]
+[connection signal="pressed" from="MainMargin/Raiz/Rodape/BtnVoltar" to="." method="_voltar_menu"]
+[connection signal="pressed" from="ConfirmacaoExcluirSalvamento/Centro/PainelConfirmacaoExclusao/Margem/Conteudo/Acoes/BtnCancelarExclusao" to="." method="_cancelar_exclusao_partida_salva"]
+[connection signal="pressed" from="ConfirmacaoExcluirSalvamento/Centro/PainelConfirmacaoExclusao/Margem/Conteudo/Acoes/BtnConfirmarExclusao" to="." method="_confirmar_exclusao_partida_salva"]

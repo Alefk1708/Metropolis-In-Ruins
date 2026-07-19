@@ -1,0 +1,610 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/menu_pause/menu_pause.gd" id="1_script"]
+[ext_resource type="FontFile" path="res://assets/fonts/m5x7.ttf" id="2_font"]
+
+[sub_resource type="StyleBoxFlat" id="StylePainel"]
+content_margin_left = 34.0
+content_margin_top = 28.0
+content_margin_right = 34.0
+content_margin_bottom = 30.0
+bg_color = Color(0.035, 0.03, 0.055, 0.985)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.55, 0.48, 0.7, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.8)
+shadow_size = 16
+shadow_offset = Vector2(0, 8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBotaoNormal"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.08, 0.075, 0.12, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.35, 0.34, 0.46, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBotaoHover"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.15, 0.12, 0.2, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.78, 0.63, 0.9, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBotaoPressed"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.2, 0.13, 0.24, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 0.72, 0.83, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleDesistirNormal"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.16, 0.055, 0.065, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.76, 0.25, 0.28, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleDesistirHover"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.28, 0.07, 0.08, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 0.42, 0.4, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleSecundario"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.055, 0.06, 0.08, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.28, 0.3, 0.36, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleAviso"]
+content_margin_left = 24.0
+content_margin_top = 16.0
+content_margin_right = 24.0
+content_margin_bottom = 16.0
+bg_color = Color(0.06, 0.05, 0.09, 0.98)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.76, 0.32, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.7)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleSlider"]
+bg_color = Color(0.08, 0.08, 0.12, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleSliderFill"]
+bg_color = Color(0.68, 0.45, 0.82, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="MenuPause" type="CanvasLayer"]
+process_mode = 3
+layer = 1500
+script = ExtResource("1_script")
+
+[node name="PauseRoot" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="FundoPause" type="ColorRect" parent="PauseRoot"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0.012, 0.008, 0.025, 0.86)
+
+[node name="CentroPause" type="CenterContainer" parent="PauseRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PainelPause" type="PanelContainer" parent="PauseRoot/CentroPause"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(520, 700)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StylePainel")
+
+[node name="MargemPause" type="MarginContainer" parent="PauseRoot/CentroPause/PainelPause"]
+layout_mode = 2
+
+[node name="ConteudoPause" type="VBoxContainer" parent="PauseRoot/CentroPause/PainelPause/MargemPause"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Titulo" type="Label" parent="PauseRoot/CentroPause/PainelPause/MargemPause/ConteudoPause"]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.97, 0.88, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 50
+text = "PAUSADO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Subtitulo" type="Label" parent="PauseRoot/CentroPause/PainelPause/MargemPause/ConteudoPause"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.68, 0.68, 0.78, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "A CIDADE CONTINUA ESPERANDO"
+horizontal_alignment = 1
+
+[node name="Linha" type="ColorRect" parent="PauseRoot/CentroPause/PainelPause/MargemPause/ConteudoPause"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.49, 0.43, 0.61, 1)
+
+[node name="BtnContinuar" type="Button" parent="PauseRoot/CentroPause/PainelPause/MargemPause/ConteudoPause"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.96, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBotaoNormal")
+theme_override_styles/hover = SubResource("StyleBotaoHover")
+theme_override_styles/pressed = SubResource("StyleBotaoPressed")
+theme_override_styles/focus = SubResource("StyleBotaoHover")
+text = "CONTINUAR"
+
+[node name="BtnOpcoes" type="Button" parent="PauseRoot/CentroPause/PainelPause/MargemPause/ConteudoPause"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.96, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBotaoNormal")
+theme_override_styles/hover = SubResource("StyleBotaoHover")
+theme_override_styles/pressed = SubResource("StyleBotaoPressed")
+theme_override_styles/focus = SubResource("StyleBotaoHover")
+text = "OPÇÕES"
+
+[node name="BtnDesistir" type="Button" parent="PauseRoot/CentroPause/PainelPause/MargemPause/ConteudoPause"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.88, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleDesistirNormal")
+theme_override_styles/hover = SubResource("StyleDesistirHover")
+theme_override_styles/pressed = SubResource("StyleDesistirHover")
+theme_override_styles/focus = SubResource("StyleDesistirHover")
+text = "DESISTIR"
+
+[node name="BtnSalvar" type="Button" parent="PauseRoot/CentroPause/PainelPause/MargemPause/ConteudoPause"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.73, 0.8, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleSecundario")
+theme_override_styles/hover = SubResource("StyleBotaoHover")
+theme_override_styles/pressed = SubResource("StyleBotaoPressed")
+theme_override_styles/focus = SubResource("StyleBotaoHover")
+text = "SALVAR AGORA"
+
+[node name="BtnSair" type="Button" parent="PauseRoot/CentroPause/PainelPause/MargemPause/ConteudoPause"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.73, 0.8, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleSecundario")
+theme_override_styles/hover = SubResource("StyleBotaoHover")
+theme_override_styles/pressed = SubResource("StyleBotaoPressed")
+theme_override_styles/focus = SubResource("StyleBotaoHover")
+text = "SALVAR E SAIR"
+
+[node name="Dica" type="Label" parent="PauseRoot/CentroPause/PainelPause/MargemPause/ConteudoPause"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.51, 0.59, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 17
+text = "AUTOSSALVAMENTO ATIVO • ESC OU VOLTAR PARA CONTINUAR"
+horizontal_alignment = 1
+
+[node name="PausaRemota" type="CenterContainer" parent="PauseRoot"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PainelPausaRemota" type="PanelContainer" parent="PauseRoot/PausaRemota"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(700, 330)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StylePainel")
+
+[node name="Margem" type="MarginContainer" parent="PauseRoot/PausaRemota/PainelPausaRemota"]
+layout_mode = 2
+theme_override_constants/margin_left = 42
+theme_override_constants/margin_top = 34
+theme_override_constants/margin_right = 42
+theme_override_constants/margin_bottom = 36
+
+[node name="Conteudo" type="VBoxContainer" parent="PauseRoot/PausaRemota/PainelPausaRemota/Margem"]
+layout_mode = 2
+theme_override_constants/separation = 22
+alignment = 1
+
+[node name="Titulo" type="Label" parent="PauseRoot/PausaRemota/PainelPausaRemota/Margem/Conteudo"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.97, 0.88, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 48
+text = "PARTIDA PAUSADA"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Linha" type="ColorRect" parent="PauseRoot/PausaRemota/PainelPausaRemota/Margem/Conteudo"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.49, 0.43, 0.61, 1)
+
+[node name="LabelPausadoPor" type="Label" parent="PauseRoot/PausaRemota/PainelPausaRemota/Margem/Conteudo"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 92)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.82, 0.9, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 30
+text = "PAUSA SOLICITADA POR
+OUTRO JOGADOR"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Aguarde" type="Label" parent="PauseRoot/PausaRemota/PainelPausaRemota/Margem/Conteudo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.8, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 21
+text = "AGUARDE O JOGADOR CONTINUAR A PARTIDA"
+horizontal_alignment = 1
+
+[node name="TelaOpcoesPause" type="Control" parent="PauseRoot"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Centro" type="CenterContainer" parent="PauseRoot/TelaOpcoesPause"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PainelOpcoesPause" type="PanelContainer" parent="PauseRoot/TelaOpcoesPause/Centro"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(620, 480)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StylePainel")
+
+[node name="Margem" type="MarginContainer" parent="PauseRoot/TelaOpcoesPause/Centro/PainelOpcoesPause"]
+layout_mode = 2
+
+[node name="Conteudo" type="VBoxContainer" parent="PauseRoot/TelaOpcoesPause/Centro/PainelOpcoesPause/Margem"]
+layout_mode = 2
+theme_override_constants/separation = 26
+
+[node name="Titulo" type="Label" parent="PauseRoot/TelaOpcoesPause/Centro/PainelOpcoesPause/Margem/Conteudo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.97, 0.88, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 44
+text = "OPÇÕES"
+horizontal_alignment = 1
+
+[node name="LinhaVolume" type="HBoxContainer" parent="PauseRoot/TelaOpcoesPause/Centro/PainelOpcoesPause/Margem/Conteudo"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Rotulo" type="Label" parent="PauseRoot/TelaOpcoesPause/Centro/PainelOpcoesPause/Margem/Conteudo/LinhaVolume"]
+custom_minimum_size = Vector2(175, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 26
+text = "VOLUME"
+vertical_alignment = 1
+
+[node name="SliderVolumePause" type="HSlider" parent="PauseRoot/TelaOpcoesPause/Centro/PainelOpcoesPause/Margem/Conteudo/LinhaVolume"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(250, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+theme_override_styles/slider = SubResource("StyleSlider")
+theme_override_styles/grabber_area = SubResource("StyleSliderFill")
+theme_override_styles/grabber_area_highlight = SubResource("StyleSliderFill")
+
+[node name="LabelVolumePause" type="Label" parent="PauseRoot/TelaOpcoesPause/Centro/PainelOpcoesPause/Margem/Conteudo/LinhaVolume"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 24
+text = "100%"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CheckTelaCheiaPause" type="CheckButton" parent="PauseRoot/TelaOpcoesPause/Centro/PainelOpcoesPause/Margem/Conteudo"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 26
+text = "TELA CHEIA"
+
+[node name="Separador" type="ColorRect" parent="PauseRoot/TelaOpcoesPause/Centro/PainelOpcoesPause/Margem/Conteudo"]
+custom_minimum_size = Vector2(0, 3)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.35, 0.32, 0.43, 1)
+
+[node name="BtnVoltarOpcoesPause" type="Button" parent="PauseRoot/TelaOpcoesPause/Centro/PainelOpcoesPause/Margem/Conteudo"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBotaoNormal")
+theme_override_styles/hover = SubResource("StyleBotaoHover")
+theme_override_styles/pressed = SubResource("StyleBotaoPressed")
+theme_override_styles/focus = SubResource("StyleBotaoHover")
+text = "VOLTAR"
+
+[node name="TelaConfirmarDesistencia" type="Control" parent="PauseRoot"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Bloqueio" type="ColorRect" parent="PauseRoot/TelaConfirmarDesistencia"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0, 0, 0, 0.48)
+
+[node name="Centro" type="CenterContainer" parent="PauseRoot/TelaConfirmarDesistencia"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PainelConfirmarDesistencia" type="PanelContainer" parent="PauseRoot/TelaConfirmarDesistencia/Centro"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(670, 420)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StylePainel")
+
+[node name="Margem" type="MarginContainer" parent="PauseRoot/TelaConfirmarDesistencia/Centro/PainelConfirmarDesistencia"]
+layout_mode = 2
+
+[node name="Conteudo" type="VBoxContainer" parent="PauseRoot/TelaConfirmarDesistencia/Centro/PainelConfirmarDesistencia/Margem"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Titulo" type="Label" parent="PauseRoot/TelaConfirmarDesistencia/Centro/PainelConfirmarDesistencia/Margem/Conteudo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.48, 0.48, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 42
+text = "DESISTIR DA PARTIDA?"
+horizontal_alignment = 1
+
+[node name="Mensagem" type="Label" parent="PauseRoot/TelaConfirmarDesistencia/Centro/PainelConfirmarDesistencia/Margem/Conteudo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.88, 0.88, 0.94, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 24
+text = "VOCÊ SERÁ ELIMINADO E O ADVERSÁRIO\nRECEBERÁ A VITÓRIA. ESTA AÇÃO NÃO\nPODE SER DESFEITA."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Botoes" type="HBoxContainer" parent="PauseRoot/TelaConfirmarDesistencia/Centro/PainelConfirmarDesistencia/Margem/Conteudo"]
+layout_mode = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="BtnCancelarDesistencia" type="Button" parent="PauseRoot/TelaConfirmarDesistencia/Centro/PainelConfirmarDesistencia/Margem/Conteudo/Botoes"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(250, 72)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 27
+theme_override_styles/normal = SubResource("StyleBotaoNormal")
+theme_override_styles/hover = SubResource("StyleBotaoHover")
+theme_override_styles/pressed = SubResource("StyleBotaoPressed")
+theme_override_styles/focus = SubResource("StyleBotaoHover")
+text = "CANCELAR"
+
+[node name="BtnConfirmarDesistencia" type="Button" parent="PauseRoot/TelaConfirmarDesistencia/Centro/PainelConfirmarDesistencia/Margem/Conteudo/Botoes"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(290, 72)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 27
+theme_override_styles/normal = SubResource("StyleDesistirNormal")
+theme_override_styles/hover = SubResource("StyleDesistirHover")
+theme_override_styles/pressed = SubResource("StyleDesistirHover")
+theme_override_styles/focus = SubResource("StyleDesistirHover")
+text = "SIM, DESISTIR"
+
+[node name="AvisoPause" type="PanelContainer" parent="PauseRoot"]
+unique_name_in_owner = true
+z_index = 10
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 520.0
+offset_top = 54.0
+offset_right = -520.0
+offset_bottom = 160.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleAviso")
+
+[node name="LabelAvisoPause" type="Label" parent="PauseRoot/AvisoPause"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.62, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 24
+text = "EM DESENVOLVIMENTO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="PauseRoot/CentroPause/PainelPause/MargemPause/ConteudoPause/BtnContinuar" to="." method="_on_btn_continuar_pressed"]
+[connection signal="pressed" from="PauseRoot/CentroPause/PainelPause/MargemPause/ConteudoPause/BtnOpcoes" to="." method="_on_btn_opcoes_pressed"]
+[connection signal="pressed" from="PauseRoot/CentroPause/PainelPause/MargemPause/ConteudoPause/BtnDesistir" to="." method="_on_btn_desistir_pressed"]
+[connection signal="pressed" from="PauseRoot/CentroPause/PainelPause/MargemPause/ConteudoPause/BtnSalvar" to="." method="_on_btn_salvar_pressed"]
+[connection signal="pressed" from="PauseRoot/CentroPause/PainelPause/MargemPause/ConteudoPause/BtnSair" to="." method="_on_btn_sair_pressed"]
+[connection signal="value_changed" from="PauseRoot/TelaOpcoesPause/Centro/PainelOpcoesPause/Margem/Conteudo/LinhaVolume/SliderVolumePause" to="." method="_on_slider_volume_value_changed"]
+[connection signal="toggled" from="PauseRoot/TelaOpcoesPause/Centro/PainelOpcoesPause/Margem/Conteudo/CheckTelaCheiaPause" to="." method="_on_check_tela_cheia_toggled"]
+[connection signal="pressed" from="PauseRoot/TelaOpcoesPause/Centro/PainelOpcoesPause/Margem/Conteudo/BtnVoltarOpcoesPause" to="." method="_fechar_opcoes"]
+[connection signal="pressed" from="PauseRoot/TelaConfirmarDesistencia/Centro/PainelConfirmarDesistencia/Margem/Conteudo/Botoes/BtnCancelarDesistencia" to="." method="_fechar_confirmacao"]
+[connection signal="pressed" from="PauseRoot/TelaConfirmarDesistencia/Centro/PainelConfirmarDesistencia/Margem/Conteudo/Botoes/BtnConfirmarDesistencia" to="." method="_on_btn_confirmar_desistencia_pressed"]

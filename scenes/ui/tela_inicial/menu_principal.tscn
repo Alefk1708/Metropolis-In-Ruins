@@ -1,0 +1,1044 @@
+[gd_scene format=3 uid="uid://dg3h4gmrhmvnp"]
+
+[ext_resource type="Script" uid="uid://k3q8lq3it46n" path="res://scenes/ui/tela_inicial/menu_principal.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://c68i3xelcdslq" path="res://assets/textures/Fundo_tela_inicial.png" id="2_bg"]
+[ext_resource type="Texture2D" uid="uid://ii4p13bodya2" path="res://assets/textures/LogoMetropolis.png" id="3_logo"]
+[ext_resource type="Texture2D" uid="uid://dpv7g0ggjqbwt" path="res://assets/textures/MundoIcon.png" id="4_online"]
+[ext_resource type="FontFile" uid="uid://kmbykul5ln5g" path="res://assets/fonts/m5x7.ttf" id="5_font"]
+[ext_resource type="Texture2D" uid="uid://bwyiv340gt4vk" path="res://assets/textures/PlayIcon.png" id="5_u3kyi"]
+[ext_resource type="Texture2D" uid="uid://c06yelkydr3ad" path="res://assets/textures/easter_egg/ceu_estrelado.png" id="6_easter_sky"]
+[ext_resource type="Texture2D" uid="uid://df6vb2q1pqyuf" path="res://assets/textures/easter_egg/lua_pixel.png" id="7_easter_moon"]
+[ext_resource type="Texture2D" uid="uid://dqxasm47apt67" path="res://assets/textures/EngrenagemIcon.png" id="7_i7rb2"]
+[ext_resource type="Texture2D" uid="uid://qwa5ekah7j1w" path="res://assets/textures/easter_egg/rosa_caule.png" id="8_rose_stem"]
+[ext_resource type="Texture2D" uid="uid://exoidj8gr6ox" path="res://assets/textures/easter_egg/rosa_botao.png" id="9_rose_bud"]
+[ext_resource type="Texture2D" uid="uid://ddtrr1kpiqre3" path="res://assets/textures/easter_egg/rosa_meia_aberta.png" id="10_rose_half"]
+[ext_resource type="Texture2D" uid="uid://bb8gixorgmvoq" path="res://assets/textures/easter_egg/rosa_aberta_suave.png" id="11_rose_open"]
+[ext_resource type="Texture2D" uid="uid://c0d37hm5nj237" path="res://assets/textures/Tutotialon.png" id="14_i7rb2"]
+
+[sub_resource type="StyleBoxFlat" id="StylePanel"]
+content_margin_left = 30.0
+content_margin_top = 22.0
+content_margin_right = 30.0
+content_margin_bottom = 28.0
+bg_color = Color(0.095, 0.092, 0.13, 0.975)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(0.42, 0.42, 0.49, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+shadow_color = Color(0, 0, 0, 0.82)
+shadow_size = 13
+shadow_offset = Vector2(0, 8)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleButtonNormal"]
+content_margin_left = 22.0
+content_margin_top = 10.0
+content_margin_right = 22.0
+content_margin_bottom = 10.0
+bg_color = Color(0.205, 0.2, 0.275, 0.99)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.025, 0.024, 0.038, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.86)
+shadow_size = 5
+shadow_offset = Vector2(0, 4)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleButtonPressed"]
+content_margin_left = 22.0
+content_margin_top = 13.0
+content_margin_right = 22.0
+content_margin_bottom = 7.0
+bg_color = Color(0.39, 0.285, 0.34, 1)
+border_width_left = 3
+border_width_top = 4
+border_width_right = 3
+border_width_bottom = 2
+border_color = Color(0.02, 0.018, 0.028, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleButtonHover"]
+content_margin_left = 22.0
+content_margin_top = 10.0
+content_margin_right = 22.0
+content_margin_bottom = 10.0
+bg_color = Color(0.63, 0.48, 0.54, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.035, 0.028, 0.04, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0.96, 0.73, 0.72, 0.5)
+shadow_size = 5
+shadow_offset = Vector2(0, 4)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleButtonFocus"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.97, 0.95, 0.94, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+expand_margin_left = 7.0
+expand_margin_top = 7.0
+expand_margin_right = 7.0
+expand_margin_bottom = 7.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleExitNormal"]
+content_margin_left = 22.0
+content_margin_top = 10.0
+content_margin_right = 22.0
+content_margin_bottom = 10.0
+bg_color = Color(0.31, 0.17, 0.205, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.025, 0.02, 0.028, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.86)
+shadow_size = 5
+shadow_offset = Vector2(0, 4)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleExitPressed"]
+content_margin_left = 22.0
+content_margin_top = 13.0
+content_margin_right = 22.0
+content_margin_bottom = 7.0
+bg_color = Color(0.39, 0.16, 0.19, 1)
+border_width_left = 5
+border_width_top = 6
+border_width_right = 5
+border_width_bottom = 4
+border_color = Color(0.02, 0.015, 0.02, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleExitHover"]
+content_margin_left = 22.0
+content_margin_top = 10.0
+content_margin_right = 22.0
+content_margin_bottom = 10.0
+bg_color = Color(0.57, 0.31, 0.36, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.025, 0.02, 0.028, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(1, 0.42, 0.42, 0.42)
+shadow_size = 5
+shadow_offset = Vector2(0, 4)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StylePerfilResumo"]
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.055, 0.048, 0.078, 0.96)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.4, 0.39, 0.47, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StylePerfilBotaoNormal"]
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.2, 0.18, 0.27, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.52, 0.49, 0.59, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StylePerfilBotaoPressed"]
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.3, 0.19, 0.25, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 0.67, 0.7, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StylePerfilBotaoHover"]
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.5, 0.36, 0.44, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 0.78, 0.76, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StylePerfilModal"]
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.022, 0.038, 0.065, 0.995)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 0.76, 0.2, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StylePerfilInputNormal"]
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.012, 0.024, 0.044, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.28, 0.58, 0.78, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StylePerfilInputFocus"]
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.02, 0.04, 0.07, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.55, 0.92, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StylePerfilXpBackground"]
+bg_color = Color(0.008, 0.018, 0.034, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.2, 0.32, 0.45, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StylePerfilXpFill"]
+bg_color = Color(0.18, 0.67, 0.92, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.55, 0.92, 1, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StylePerfilEstatisticas"]
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.01, 0.022, 0.041, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.2, 0.43, 0.6, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StylePerfilSalvarNormal"]
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.06, 0.27, 0.38, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.35, 0.88, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StylePerfilSalvarHover"]
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.08, 0.38, 0.5, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.65, 0.96, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StylePerfilFecharNormal"]
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.18, 0.08, 0.08, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.86, 0.36, 0.32, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StylePerfilFecharHover"]
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.3, 0.1, 0.1, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 0.55, 0.45, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="MenuPrincipal" type="Control" unique_id=1001467096]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="FundoCidade" type="TextureRect" parent="." unique_id=666747029]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="EscurecimentoSuave" type="ColorRect" parent="." unique_id=1784737327]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.015, 0.01, 0.025, 0.08)
+
+[node name="LogoMetropolis" type="TextureRect" parent="." unique_id=1052184961]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -560.0
+offset_top = 33.0
+offset_right = 560.0
+offset_bottom = 304.0
+grow_horizontal = 2
+texture = ExtResource("3_logo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ContainerBotoes" type="PanelContainer" parent="." unique_id=1779862849]
+custom_minimum_size = Vector2(490, 560)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -245.0
+offset_top = -116.0
+offset_right = 245.0
+offset_bottom = 444.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StylePanel")
+
+[node name="VBoxBotoes" type="VBoxContainer" parent="ContainerBotoes" unique_id=448942273]
+layout_mode = 2
+theme_override_constants/separation = 13
+
+[node name="TituloMenu" type="Label" parent="ContainerBotoes/VBoxBotoes" unique_id=1041346225]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.97, 0.98, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.015, 0.025, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 44
+text = "MENU PRINCIPAL"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LinhaTitulo" type="ColorRect" parent="ContainerBotoes/VBoxBotoes" unique_id=1503344473]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.54, 0.52, 0.61, 1)
+
+[node name="BtnLocal" type="Button" parent="ContainerBotoes/VBoxBotoes" unique_id=416301126]
+custom_minimum_size = Vector2(0, 84)
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../BtnOnline")
+theme_override_colors/font_color = Color(0.98, 0.97, 0.98, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 0.9, 0.86, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/h_separation = 23
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 54
+theme_override_styles/normal = SubResource("StyleButtonNormal")
+theme_override_styles/pressed = SubResource("StyleButtonPressed")
+theme_override_styles/hover = SubResource("StyleButtonHover")
+theme_override_styles/focus = SubResource("StyleButtonFocus")
+text = "    JOGAR"
+
+[node name="TextureRect" type="TextureRect" parent="ContainerBotoes/VBoxBotoes/BtnLocal" unique_id=336267367]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 16.0
+offset_top = -26.0
+offset_right = 87.0
+offset_bottom = 27.0
+grow_vertical = 2
+texture = ExtResource("5_u3kyi")
+expand_mode = 2
+
+[node name="BtnOnline" type="Button" parent="ContainerBotoes/VBoxBotoes" unique_id=1638430345]
+custom_minimum_size = Vector2(0, 84)
+layout_mode = 2
+focus_neighbor_top = NodePath("../BtnLocal")
+focus_neighbor_bottom = NodePath("../BtnOpcoes")
+theme_override_colors/font_color = Color(0.98, 0.97, 0.98, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.8, 0.95, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 51
+theme_override_styles/normal = SubResource("StyleButtonNormal")
+theme_override_styles/pressed = SubResource("StyleButtonPressed")
+theme_override_styles/hover = SubResource("StyleButtonHover")
+theme_override_styles/focus = SubResource("StyleButtonFocus")
+text = "ONLINE"
+icon = ExtResource("4_online")
+
+[node name="BtnOpcoes" type="Button" parent="ContainerBotoes/VBoxBotoes" unique_id=753829856]
+custom_minimum_size = Vector2(0, 84)
+layout_mode = 2
+focus_neighbor_top = NodePath("../BtnOnline")
+focus_neighbor_bottom = NodePath("../BtnSair")
+theme_override_colors/font_color = Color(0.98, 0.97, 0.98, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 0.9, 0.86, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleButtonNormal")
+theme_override_styles/pressed = SubResource("StyleButtonPressed")
+theme_override_styles/hover = SubResource("StyleButtonHover")
+theme_override_styles/focus = SubResource("StyleButtonFocus")
+text = "    OPÇÕES"
+
+[node name="TextureRect" type="TextureRect" parent="ContainerBotoes/VBoxBotoes/BtnOpcoes" unique_id=1780900972]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -66.375
+offset_right = 127.0
+offset_bottom = 66.375
+grow_vertical = 2
+texture = ExtResource("7_i7rb2")
+expand_mode = 1
+
+[node name="BtnSair" type="Button" parent="ContainerBotoes/VBoxBotoes" unique_id=1680555331]
+custom_minimum_size = Vector2(0, 84)
+layout_mode = 2
+focus_neighbor_top = NodePath("../BtnOpcoes")
+focus_neighbor_bottom = NodePath("../BtnLocal")
+theme_override_colors/font_color = Color(1, 0.94, 0.94, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 0.82, 0.82, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 53
+theme_override_styles/normal = SubResource("StyleExitNormal")
+theme_override_styles/pressed = SubResource("StyleExitPressed")
+theme_override_styles/hover = SubResource("StyleExitHover")
+theme_override_styles/focus = SubResource("StyleButtonFocus")
+text = "SAIR"
+
+[node name="ResumoPerfilProgressao" type="PanelContainer" parent="." unique_id=2074030370]
+unique_name_in_owner = true
+z_index = 120
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -388.0
+offset_top = -132.0
+offset_right = -22.0
+offset_bottom = -18.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StylePerfilResumo")
+
+[node name="MargemResumo" type="MarginContainer" parent="ResumoPerfilProgressao" unique_id=1589998832]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 10
+
+[node name="LinhaPrincipal" type="HBoxContainer" parent="ResumoPerfilProgressao/MargemResumo" unique_id=633298583]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Dados" type="VBoxContainer" parent="ResumoPerfilProgressao/MargemResumo/LinhaPrincipal" unique_id=809315564]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 1
+alignment = 1
+
+[node name="LabelNomeResumo" type="Label" parent="ResumoPerfilProgressao/MargemResumo/LinhaPrincipal/Dados" unique_id=36485189]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.72, 0.76, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 28
+text = "JOGADOR"
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="LinhaProgresso" type="HBoxContainer" parent="ResumoPerfilProgressao/MargemResumo/LinhaPrincipal/Dados" unique_id=503230608]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LabelNivelResumo" type="Label" parent="ResumoPerfilProgressao/MargemResumo/LinhaPrincipal/Dados/LinhaProgresso" unique_id=523994373]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.7, 0.88, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 19
+text = "NÍVEL 1"
+
+[node name="LabelXpResumo" type="Label" parent="ResumoPerfilProgressao/MargemResumo/LinhaPrincipal/Dados/LinhaProgresso" unique_id=1183326918]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.79, 0.88, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 18
+text = "0 / 500 XP"
+horizontal_alignment = 2
+
+[node name="BtnAbrirPerfil" type="Button" parent="ResumoPerfilProgressao/MargemResumo/LinhaPrincipal" unique_id=1316930003]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(112, 72)
+layout_mode = 2
+tooltip_text = "Abrir perfil, experiência, nível e estatísticas persistentes."
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 0.88, 0.88, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StylePerfilBotaoNormal")
+theme_override_styles/pressed = SubResource("StylePerfilBotaoPressed")
+theme_override_styles/hover = SubResource("StylePerfilBotaoHover")
+text = "PERFIL"
+
+[node name="ModalPerfilProgressao" type="Control" parent="." unique_id=745793518]
+unique_name_in_owner = true
+visible = false
+z_index = 1500
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FundoEscurecido" type="ColorRect" parent="ModalPerfilProgressao" unique_id=812544263]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.003, 0.008, 0.018, 0.93)
+
+[node name="CentroPerfil" type="CenterContainer" parent="ModalPerfilProgressao" unique_id=559940800]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PainelPerfilCompleto" type="PanelContainer" parent="ModalPerfilProgressao/CentroPerfil" unique_id=410289538]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(980, 790)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StylePerfilModal")
+
+[node name="MargemPerfil" type="MarginContainer" parent="ModalPerfilProgressao/CentroPerfil/PainelPerfilCompleto" unique_id=1527321874]
+layout_mode = 2
+theme_override_constants/margin_left = 38
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 38
+theme_override_constants/margin_bottom = 28
+
+[node name="ConteudoPerfil" type="VBoxContainer" parent="ModalPerfilProgressao/CentroPerfil/PainelPerfilCompleto/MargemPerfil" unique_id=1483165957]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TituloPerfil" type="Label" parent="ModalPerfilProgressao/CentroPerfil/PainelPerfilCompleto/MargemPerfil/ConteudoPerfil" unique_id=1952918072]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.82, 0.25, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 43
+text = "PERFIL DO JOGADOR"
+horizontal_alignment = 1
+
+[node name="DicaPerfil" type="Label" parent="ModalPerfilProgressao/CentroPerfil/PainelPerfilCompleto/MargemPerfil/ConteudoPerfil" unique_id=2107647380]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.82, 0.92, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 20
+text = "Seu XP, nível e estatísticas são salvos automaticamente após cada partida concluída."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="SeparadorTopo" type="HSeparator" parent="ModalPerfilProgressao/CentroPerfil/PainelPerfilCompleto/MargemPerfil/ConteudoPerfil" unique_id=2119796192]
+layout_mode = 2
+
+[node name="LabelNomePerfil" type="Label" parent="ModalPerfilProgressao/CentroPerfil/PainelPerfilCompleto/MargemPerfil/ConteudoPerfil" unique_id=821466400]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.88, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 24
+text = "NOME DO PERFIL"
+
+[node name="InputNomePerfil" type="LineEdit" parent="ModalPerfilProgressao/CentroPerfil/PainelPerfilCompleto/MargemPerfil/ConteudoPerfil" unique_id=895870858]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 62)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 27
+theme_override_styles/normal = SubResource("StylePerfilInputNormal")
+theme_override_styles/focus = SubResource("StylePerfilInputFocus")
+placeholder_text = "Digite seu nome"
+max_length = 18
+
+[node name="LinhaNivel" type="HBoxContainer" parent="ModalPerfilProgressao/CentroPerfil/PainelPerfilCompleto/MargemPerfil/ConteudoPerfil" unique_id=567756733]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="BarraXpPerfil" type="ProgressBar" parent="ModalPerfilProgressao/CentroPerfil/PainelPerfilCompleto/MargemPerfil/ConteudoPerfil/LinhaNivel" unique_id=1673709419]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/background = SubResource("StylePerfilXpBackground")
+theme_override_styles/fill = SubResource("StylePerfilXpFill")
+show_percentage = false
+
+[node name="LabelBarraXpPerfil" type="Label" parent="ModalPerfilProgressao/CentroPerfil/PainelPerfilCompleto/MargemPerfil/ConteudoPerfil/LinhaNivel" unique_id=1937750324]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(310, 48)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.88, 0.95, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 23
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TituloEstatisticas" type="Label" parent="ModalPerfilProgressao/CentroPerfil/PainelPerfilCompleto/MargemPerfil/ConteudoPerfil" unique_id=184240454]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.48, 0.9, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 27
+text = "ESTATÍSTICAS GERAIS"
+horizontal_alignment = 1
+
+[node name="PainelEstatisticas" type="PanelContainer" parent="ModalPerfilProgressao/CentroPerfil/PainelPerfilCompleto/MargemPerfil/ConteudoPerfil" unique_id=792468299]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StylePerfilEstatisticas")
+
+[node name="LabelDadosPerfil" type="Label" parent="ModalPerfilProgressao/CentroPerfil/PainelPerfilCompleto/MargemPerfil/ConteudoPerfil/PainelEstatisticas" unique_id=1666751279]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.87, 0.91, 0.96, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 23
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="BotoesPerfil" type="HBoxContainer" parent="ModalPerfilProgressao/CentroPerfil/PainelPerfilCompleto/MargemPerfil/ConteudoPerfil" unique_id=280105122]
+layout_mode = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="BtnSalvarNome" type="Button" parent="ModalPerfilProgressao/CentroPerfil/PainelPerfilCompleto/MargemPerfil/ConteudoPerfil/BotoesPerfil" unique_id=94629040]
+custom_minimum_size = Vector2(300, 64)
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StylePerfilSalvarNormal")
+theme_override_styles/hover = SubResource("StylePerfilSalvarHover")
+text = "SALVAR NOME"
+
+[node name="BtnFecharPerfil" type="Button" parent="ModalPerfilProgressao/CentroPerfil/PainelPerfilCompleto/MargemPerfil/ConteudoPerfil/BotoesPerfil" unique_id=2144021900]
+custom_minimum_size = Vector2(230, 64)
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StylePerfilFecharNormal")
+theme_override_styles/hover = SubResource("StylePerfilFecharHover")
+text = "FECHAR"
+
+[node name="DicaFecharPerfil" type="Label" parent="ModalPerfilProgressao/CentroPerfil/PainelPerfilCompleto/MargemPerfil/ConteudoPerfil" unique_id=696472640]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54, 0.64, 0.74, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 17
+text = "ESC ou clique fora da janela para fechar"
+horizontal_alignment = 1
+
+[node name="EasterEggOverlay" type="Control" parent="." unique_id=67133495]
+unique_name_in_owner = true
+visible = false
+z_index = 2200
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="CeuEstrelado" type="TextureRect" parent="EasterEggOverlay" unique_id=433500726]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("6_easter_sky")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="VeladuraNoturna" type="ColorRect" parent="EasterEggOverlay" unique_id=1422486253]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.03, 0.015, 0.06, 0.15)
+
+[node name="Lua" type="TextureRect" parent="EasterEggOverlay" unique_id=418752502]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(384, 384)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -300.0
+offset_right = 192.0
+offset_bottom = 84.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("7_easter_moon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RosasLayer" type="Control" parent="EasterEggOverlay" unique_id=733594988]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="RosaTemplate" type="Control" parent="EasterEggOverlay/RosasLayer" unique_id=251946030]
+visible = false
+anchors_preset = 0
+offset_right = 128.0
+offset_bottom = 320.0
+mouse_filter = 2
+
+[node name="Caule" type="TextureRect" parent="EasterEggOverlay/RosasLayer/RosaTemplate" unique_id=2058481837]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 112.0
+offset_bottom = 320.0
+pivot_offset = Vector2(48, 256)
+mouse_filter = 2
+texture = ExtResource("8_rose_stem")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Botao" type="TextureRect" parent="EasterEggOverlay/RosasLayer/RosaTemplate" unique_id=758598219]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
+pivot_offset = Vector2(64, 112)
+mouse_filter = 2
+texture = ExtResource("9_rose_bud")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="FlorMeiaAberta" type="TextureRect" parent="EasterEggOverlay/RosasLayer/RosaTemplate" unique_id=928311895]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
+pivot_offset = Vector2(64, 112)
+mouse_filter = 2
+texture = ExtResource("10_rose_half")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="FlorAberta" type="TextureRect" parent="EasterEggOverlay/RosasLayer/RosaTemplate" unique_id=138743333]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
+pivot_offset = Vector2(64, 112)
+mouse_filter = 2
+texture = ExtResource("11_rose_open")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="." unique_id=1231185658]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -55.0
+offset_right = 360.0
+offset_bottom = -2.0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 55
+text = "Versão 1.0"
+
+[node name="Label2" type="Label" parent="." unique_id=568805636]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -518.0
+offset_top = -53.0
+offset_right = 518.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 57
+text = "\"Uma cidade nunca dorme. Mas pode entrar em colapso\""
+
+[node name="TutorialContainer" type="PanelContainer" parent="." unique_id=1275174973]
+layout_mode = 0
+offset_left = 57.0
+offset_top = 51.0
+offset_right = 423.0
+offset_bottom = 177.0
+theme_override_styles/panel = SubResource("StylePanel")
+
+[node name="BtnTutorial" type="Button" parent="TutorialContainer" unique_id=1684489238]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleButtonNormal")
+theme_override_styles/pressed = SubResource("StyleButtonPressed")
+theme_override_styles/hover = SubResource("StyleButtonHover")
+
+[node name="Label" type="Label" parent="TutorialContainer/BtnTutorial" unique_id=1012080065]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -123.5
+offset_top = -21.5
+offset_right = 123.5
+offset_bottom = 21.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 54
+text = "     TUTORIAL"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="TutorialContainer/BtnTutorial" unique_id=2090985937]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 9.0
+offset_top = -37.0
+offset_right = 93.0
+offset_bottom = 39.0
+grow_vertical = 2
+texture = ExtResource("14_i7rb2")
+expand_mode = 1
+
+[connection signal="gui_input" from="LogoMetropolis" to="." method="_on_logo_metropolis_gui_input"]
+[connection signal="pressed" from="ContainerBotoes/VBoxBotoes/BtnLocal" to="." method="_on_btn_local_pressed"]
+[connection signal="pressed" from="ContainerBotoes/VBoxBotoes/BtnOnline" to="." method="_on_btn_online_pressed"]
+[connection signal="pressed" from="ContainerBotoes/VBoxBotoes/BtnOpcoes" to="." method="_on_btn_opcoes_pressed"]
+[connection signal="pressed" from="ContainerBotoes/VBoxBotoes/BtnSair" to="." method="_on_btn_sair_pressed"]
+[connection signal="pressed" from="TutorialContainer/BtnTutorial" to="." method="_on_btn_tutorial_pressed"]
+[connection signal="pressed" from="ResumoPerfilProgressao/MargemResumo/LinhaPrincipal/BtnAbrirPerfil" to="." method="_abrir_perfil"]
+[connection signal="gui_input" from="ModalPerfilProgressao/FundoEscurecido" to="." method="_ao_clicar_fundo_perfil"]
+[connection signal="text_submitted" from="ModalPerfilProgressao/CentroPerfil/PainelPerfilCompleto/MargemPerfil/ConteudoPerfil/InputNomePerfil" to="." method="_ao_submeter_nome_perfil"]
+[connection signal="pressed" from="ModalPerfilProgressao/CentroPerfil/PainelPerfilCompleto/MargemPerfil/ConteudoPerfil/BotoesPerfil/BtnSalvarNome" to="." method="_salvar_nome_perfil"]
+[connection signal="pressed" from="ModalPerfilProgressao/CentroPerfil/PainelPerfilCompleto/MargemPerfil/ConteudoPerfil/BotoesPerfil/BtnFecharPerfil" to="." method="_fechar_perfil"]

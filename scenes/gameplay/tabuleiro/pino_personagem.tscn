@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://c6jhuk7sr51a5"]
+
+[ext_resource type="Script" uid="uid://vj818xasc02n" path="res://scenes/gameplay/tabuleiro/pino_personagem.gd" id="1_hvb6j"]
+
+[node name="PinoPersonagem" type="Node2D" unique_id=1505691052]
+z_index = 20
+script = ExtResource("1_hvb6j")

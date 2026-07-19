@@ -1,0 +1,616 @@
+[gd_scene format=3 uid="uid://c2x5tf1miweh0"]
+
+[ext_resource type="Script" uid="uid://bgagj0wvnp3jw" path="res://scenes/ui/selecao_personagem/selecao_personagem.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://qgtjq5333w8r" path="res://assets/textures/Fundo_tela_selecao.png" id="2_jiopf"]
+[ext_resource type="FontFile" uid="uid://l1mtn5nwuak0" path="res://assets/fonts/PressStart2P.ttf" id="2_pixel"]
+[ext_resource type="FontFile" uid="uid://kmbykul5ln5g" path="res://assets/fonts/m5x7.ttf" id="3_leitura"]
+[ext_resource type="Texture2D" uid="uid://ii4p13bodya2" path="res://assets/textures/LogoMetropolis.png" id="5_logo"]
+[ext_resource type="Texture2D" uid="uid://03ldl18hmvtt" path="res://assets/textures/retrato_yasmin.jpg" id="6_yasmin"]
+[ext_resource type="Texture2D" uid="uid://c83fluwxouf8i" path="res://assets/textures/retrato_breno.jpg" id="7_breno"]
+[ext_resource type="Texture2D" uid="uid://bt8a6u1u8as1a" path="res://assets/textures/retrato_mira.jpg" id="8_mira"]
+[ext_resource type="Texture2D" uid="uid://dbti0j1fk7u6c" path="res://assets/textures/retrato_igor.jpg" id="9_igor"]
+[ext_resource type="Texture2D" uid="uid://bbflcb25a2ydw" path="res://assets/textures/retrato_diana.jpg" id="10_diana"]
+[ext_resource type="Texture2D" uid="uid://drb6gjhqek4f4" path="res://assets/textures/retrato_kofi.jpg" id="11_kofi"]
+
+[sub_resource type="StyleBoxFlat" id="PanelPrincipal"]
+content_margin_left = 26.0
+content_margin_top = 22.0
+content_margin_right = 26.0
+content_margin_bottom = 24.0
+bg_color = Color(0.095, 0.092, 0.13, 0.97)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(0.42, 0.42, 0.49, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+shadow_color = Color(0, 0, 0, 0.82)
+shadow_size = 12
+shadow_offset = Vector2(0, 8)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="ButtonNormal"]
+content_margin_left = 16.0
+content_margin_top = 10.0
+content_margin_right = 16.0
+content_margin_bottom = 10.0
+bg_color = Color(0.19, 0.185, 0.255, 0.99)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.024, 0.022, 0.035, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.8)
+shadow_size = 5
+shadow_offset = Vector2(0, 4)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="ButtonPressed"]
+content_margin_left = 16.0
+content_margin_top = 13.0
+content_margin_right = 16.0
+content_margin_bottom = 7.0
+bg_color = Color(0.65, 0.48, 0.54, 1)
+border_width_left = 5
+border_width_top = 6
+border_width_right = 5
+border_width_bottom = 4
+border_color = Color(0.98, 0.83, 0.79, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="ButtonHover"]
+content_margin_left = 16.0
+content_margin_top = 10.0
+content_margin_right = 16.0
+content_margin_bottom = 10.0
+bg_color = Color(0.55, 0.39, 0.49, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.035, 0.028, 0.04, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0.96, 0.73, 0.72, 0.4)
+shadow_size = 6
+shadow_offset = Vector2(0, 4)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="ButtonDisabled"]
+content_margin_left = 16.0
+content_margin_top = 10.0
+content_margin_right = 16.0
+content_margin_bottom = 10.0
+bg_color = Color(0.105, 0.1, 0.13, 0.96)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.16, 0.15, 0.19, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="ButtonFocus"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.98, 0.95, 0.92, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+expand_margin_left = 6.0
+expand_margin_top = 6.0
+expand_margin_right = 6.0
+expand_margin_bottom = 6.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="ButtonExitNormal"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(0.31, 0.17, 0.205, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.025, 0.02, 0.028, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.82)
+shadow_size = 5
+shadow_offset = Vector2(0, 4)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="ButtonExitHover"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(0.57, 0.31, 0.36, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.025, 0.02, 0.028, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(1, 0.42, 0.42, 0.35)
+shadow_size = 5
+shadow_offset = Vector2(0, 4)
+anti_aliasing = false
+
+[node name="SelecaoPersonagem" type="Control" unique_id=362311641]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="FundoCidade" type="TextureRect" parent="." unique_id=1732167890]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_jiopf")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Escurecimento" type="ColorRect" parent="." unique_id=1207256782]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.015, 0.01, 0.026, 0.58)
+
+[node name="VinhetaSuperior" type="ColorRect" parent="." unique_id=1245202172]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 210.0
+grow_horizontal = 2
+mouse_filter = 2
+color = Color(0.03, 0.02, 0.055, 0.5)
+
+[node name="LogoMetropolis" type="TextureRect" parent="." unique_id=116693301]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -327.0
+offset_top = 17.0
+offset_right = 333.0
+offset_bottom = 153.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("5_logo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SubtituloTela" type="Label" parent="." unique_id=1633600700]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -560.0
+offset_top = 167.0
+offset_right = 560.0
+offset_bottom = 207.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.98, 0.88, 0.83, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 20
+text = "ESCOLHA QUEM VAI DOMINAR A CIDADE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MargemPrincipal" type="MarginContainer" parent="." unique_id=405867294]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 210.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 34
+
+[node name="LayoutHorizontal" type="HBoxContainer" parent="MargemPrincipal" unique_id=924905523]
+layout_mode = 2
+theme_override_constants/separation = 26
+
+[node name="LadoEsquerdo_Lista" type="VBoxContainer" parent="MargemPrincipal/LayoutHorizontal" unique_id=287768547]
+custom_minimum_size = Vector2(650, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.78
+theme_override_constants/separation = 14
+
+[node name="Titulo" type="Label" parent="MargemPrincipal/LayoutHorizontal/LadoEsquerdo_Lista" unique_id=646666597]
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.95, 0.94, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 42
+text = "PERSONAGENS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LinhaTitulo" type="ColorRect" parent="MargemPrincipal/LayoutHorizontal/LadoEsquerdo_Lista" unique_id=2077469734]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.67, 0.48, 0.62, 1)
+
+[node name="PainelGrade" type="PanelContainer" parent="MargemPrincipal/LayoutHorizontal/LadoEsquerdo_Lista" unique_id=334334416]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("PanelPrincipal")
+
+[node name="GradePersonagens" type="GridContainer" parent="MargemPrincipal/LayoutHorizontal/LadoEsquerdo_Lista/PainelGrade" unique_id=375783601]
+layout_mode = 2
+theme_override_constants/h_separation = 14
+theme_override_constants/v_separation = 14
+columns = 2
+
+[node name="BtnYasmin" type="Button" parent="MargemPrincipal/LayoutHorizontal/LadoEsquerdo_Lista/PainelGrade/GradePersonagens" unique_id=967250935]
+custom_minimum_size = Vector2(280, 148)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_right = NodePath("../BtnBreno")
+focus_neighbor_bottom = NodePath("../BtnMira")
+theme_override_colors/font_color = Color(0.98, 0.97, 0.98, 1)
+theme_override_colors/font_pressed_color = Color(1, 0.96, 0.92, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.48, 0.46, 0.52, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/hover_pressed = SubResource("ButtonPressed")
+theme_override_styles/disabled = SubResource("ButtonDisabled")
+theme_override_styles/focus = SubResource("ButtonFocus")
+toggle_mode = true
+text = "YASMIN"
+icon = ExtResource("6_yasmin")
+expand_icon = true
+
+[node name="BtnBreno" type="Button" parent="MargemPrincipal/LayoutHorizontal/LadoEsquerdo_Lista/PainelGrade/GradePersonagens" unique_id=1348873448]
+custom_minimum_size = Vector2(280, 148)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_left = NodePath("../BtnYasmin")
+focus_neighbor_bottom = NodePath("../BtnIgor")
+theme_override_colors/font_color = Color(0.98, 0.97, 0.98, 1)
+theme_override_colors/font_pressed_color = Color(1, 0.96, 0.92, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.48, 0.46, 0.52, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/hover_pressed = SubResource("ButtonPressed")
+theme_override_styles/disabled = SubResource("ButtonDisabled")
+theme_override_styles/focus = SubResource("ButtonFocus")
+toggle_mode = true
+text = "BRENO"
+icon = ExtResource("7_breno")
+expand_icon = true
+
+[node name="BtnMira" type="Button" parent="MargemPrincipal/LayoutHorizontal/LadoEsquerdo_Lista/PainelGrade/GradePersonagens" unique_id=1179691286]
+custom_minimum_size = Vector2(280, 148)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_top = NodePath("../BtnYasmin")
+focus_neighbor_right = NodePath("../BtnIgor")
+focus_neighbor_bottom = NodePath("../BtnDiana")
+theme_override_colors/font_color = Color(0.98, 0.97, 0.98, 1)
+theme_override_colors/font_pressed_color = Color(1, 0.96, 0.92, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.48, 0.46, 0.52, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/hover_pressed = SubResource("ButtonPressed")
+theme_override_styles/disabled = SubResource("ButtonDisabled")
+theme_override_styles/focus = SubResource("ButtonFocus")
+toggle_mode = true
+text = "MIRA"
+icon = ExtResource("8_mira")
+expand_icon = true
+
+[node name="BtnIgor" type="Button" parent="MargemPrincipal/LayoutHorizontal/LadoEsquerdo_Lista/PainelGrade/GradePersonagens" unique_id=1666043471]
+custom_minimum_size = Vector2(280, 148)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_left = NodePath("../BtnMira")
+focus_neighbor_top = NodePath("../BtnBreno")
+focus_neighbor_bottom = NodePath("../BtnKofi")
+theme_override_colors/font_color = Color(0.98, 0.97, 0.98, 1)
+theme_override_colors/font_pressed_color = Color(1, 0.96, 0.92, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.48, 0.46, 0.52, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/hover_pressed = SubResource("ButtonPressed")
+theme_override_styles/disabled = SubResource("ButtonDisabled")
+theme_override_styles/focus = SubResource("ButtonFocus")
+toggle_mode = true
+text = "IGOR"
+icon = ExtResource("9_igor")
+expand_icon = true
+
+[node name="BtnDiana" type="Button" parent="MargemPrincipal/LayoutHorizontal/LadoEsquerdo_Lista/PainelGrade/GradePersonagens" unique_id=2062132277]
+custom_minimum_size = Vector2(280, 148)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_top = NodePath("../BtnMira")
+focus_neighbor_right = NodePath("../BtnKofi")
+focus_neighbor_bottom = NodePath("../../../BtnVoltar")
+theme_override_colors/font_color = Color(0.98, 0.97, 0.98, 1)
+theme_override_colors/font_pressed_color = Color(1, 0.96, 0.92, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.48, 0.46, 0.52, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/hover_pressed = SubResource("ButtonPressed")
+theme_override_styles/disabled = SubResource("ButtonDisabled")
+theme_override_styles/focus = SubResource("ButtonFocus")
+toggle_mode = true
+text = "DIANA"
+icon = ExtResource("10_diana")
+expand_icon = true
+
+[node name="BtnKofi" type="Button" parent="MargemPrincipal/LayoutHorizontal/LadoEsquerdo_Lista/PainelGrade/GradePersonagens" unique_id=1580485164]
+custom_minimum_size = Vector2(280, 148)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_left = NodePath("../BtnDiana")
+focus_neighbor_top = NodePath("../BtnIgor")
+focus_neighbor_bottom = NodePath("../../../../LadoDireito_Detalhes/VBoxDetalhes/BtnConfirmar")
+theme_override_colors/font_color = Color(0.98, 0.97, 0.98, 1)
+theme_override_colors/font_pressed_color = Color(1, 0.96, 0.92, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.48, 0.46, 0.52, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/hover_pressed = SubResource("ButtonPressed")
+theme_override_styles/disabled = SubResource("ButtonDisabled")
+theme_override_styles/focus = SubResource("ButtonFocus")
+toggle_mode = true
+text = "KOFI"
+icon = ExtResource("11_kofi")
+expand_icon = true
+
+[node name="BtnVoltar" type="Button" parent="MargemPrincipal/LayoutHorizontal/LadoEsquerdo_Lista" unique_id=1995793246]
+custom_minimum_size = Vector2(0, 66)
+layout_mode = 2
+focus_neighbor_top = NodePath("../PainelGrade/GradePersonagens/BtnDiana")
+focus_neighbor_right = NodePath("../../LadoDireito_Detalhes/VBoxDetalhes/BtnConfirmar")
+theme_override_colors/font_color = Color(1, 0.82, 0.82, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("ButtonExitNormal")
+theme_override_styles/pressed = SubResource("ButtonExitNormal")
+theme_override_styles/hover = SubResource("ButtonExitHover")
+theme_override_styles/focus = SubResource("ButtonFocus")
+text = "VOLTAR"
+
+[node name="LadoDireito_Detalhes" type="PanelContainer" parent="MargemPrincipal/LayoutHorizontal" unique_id=2062917702]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.22
+theme_override_styles/panel = SubResource("PanelPrincipal")
+
+[node name="VBoxDetalhes" type="VBoxContainer" parent="MargemPrincipal/LayoutHorizontal/LadoDireito_Detalhes" unique_id=1897874154]
+layout_mode = 2
+theme_override_constants/separation = 13
+
+[node name="TituloFicha" type="Label" parent="MargemPrincipal/LayoutHorizontal/LadoDireito_Detalhes/VBoxDetalhes" unique_id=1145836827]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.95, 0.94, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 34
+text = "DOSSIÊ DO PERSONAGEM"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LinhaFicha" type="ColorRect" parent="MargemPrincipal/LayoutHorizontal/LadoDireito_Detalhes/VBoxDetalhes" unique_id=1883623399]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.67, 0.48, 0.62, 1)
+
+[node name="Cabecalho" type="HBoxContainer" parent="MargemPrincipal/LayoutHorizontal/LadoDireito_Detalhes/VBoxDetalhes" unique_id=259886835]
+clip_contents = true
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="RetratoGrande" type="TextureRect" parent="MargemPrincipal/LayoutHorizontal/LadoDireito_Detalhes/VBoxDetalhes/Cabecalho" unique_id=962461045]
+custom_minimum_size = Vector2(180, 238)
+layout_mode = 2
+texture = ExtResource("6_yasmin")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="InfoTitulos" type="VBoxContainer" parent="MargemPrincipal/LayoutHorizontal/LadoDireito_Detalhes/VBoxDetalhes/Cabecalho" unique_id=1240417485]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="NomePersonagem" type="Label" parent="MargemPrincipal/LayoutHorizontal/LadoDireito_Detalhes/VBoxDetalhes/Cabecalho/InfoTitulos" unique_id=1423787548]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.97, 0.98, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_pixel")
+theme_override_font_sizes/font_size = 22
+text = "YASMIN KHALIL"
+autowrap_mode = 2
+
+[node name="AlcunhaPersonagem" type="Label" parent="MargemPrincipal/LayoutHorizontal/LadoDireito_Detalhes/VBoxDetalhes/Cabecalho/InfoTitulos" unique_id=574487644]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.93, 0.69, 0.72, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 34
+text = "A Corretora"
+
+[node name="Etiqueta" type="Label" parent="MargemPrincipal/LayoutHorizontal/LadoDireito_Detalhes/VBoxDetalhes/Cabecalho/InfoTitulos" unique_id=685973274]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.74, 0.92, 1)
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 25
+text = "ESPECIALISTA URBANO"
+vertical_alignment = 1
+
+[node name="LorePersonagem" type="Label" parent="MargemPrincipal/LayoutHorizontal/LadoDireito_Detalhes/VBoxDetalhes" unique_id=1264682990]
+custom_minimum_size = Vector2(0, 62)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.87, 0.84, 0.87, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 28
+text = "\"O mercado nao tem moral. Mas eu tenho agenda.\""
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="LinhaDivisoria" type="ColorRect" parent="MargemPrincipal/LayoutHorizontal/LadoDireito_Detalhes/VBoxDetalhes" unique_id=448263514]
+custom_minimum_size = Vector2(0, 3)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.36, 0.35, 0.43, 1)
+
+[node name="Habilidades" type="VBoxContainer" parent="MargemPrincipal/LayoutHorizontal/LadoDireito_Detalhes/VBoxDetalhes" unique_id=147732670]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 11
+
+[node name="Passiva" type="Label" parent="MargemPrincipal/LayoutHorizontal/LadoDireito_Detalhes/VBoxDetalhes/Habilidades" unique_id=129810534]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.84, 1, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 27
+text = "[PASSIVA] Leilao Preferencial: Vence empates em leilao com 5% de desconto."
+autowrap_mode = 3
+
+[node name="Passiva2" type="Label" parent="MargemPrincipal/LayoutHorizontal/LadoDireito_Detalhes/VBoxDetalhes/Habilidades" unique_id=1460969810]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.9, 0.72, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 25
+text = "[PASSIVA BÔNUS] ..."
+autowrap_mode = 3
+
+[node name="Ativa" type="Label" parent="MargemPrincipal/LayoutHorizontal/LadoDireito_Detalhes/VBoxDetalhes/Habilidades" unique_id=490806990]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.74, 0.67, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 27
+text = "[ATIVA — Recarga: 5 turnos] Oferta Irrecusavel: Compra por 150% um terreno vazio de grupo compartilhado, sem desmontar monopolios; exige 2 rodadas de posse e cada rival so pode ser alvo uma vez."
+autowrap_mode = 3
+
+[node name="BtnConfirmar" type="Button" parent="MargemPrincipal/LayoutHorizontal/LadoDireito_Detalhes/VBoxDetalhes" unique_id=2121845824]
+custom_minimum_size = Vector2(0, 76)
+layout_mode = 2
+focus_neighbor_left = NodePath("../../../LadoEsquerdo_Lista/BtnVoltar")
+theme_override_colors/font_color = Color(0.98, 0.97, 0.98, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.62, 0.6, 0.65, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 39
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/disabled = SubResource("ButtonDisabled")
+theme_override_styles/focus = SubResource("ButtonFocus")
+text = "CONFIRMAR SELEÇÃO"
+
+[connection signal="pressed" from="MargemPrincipal/LayoutHorizontal/LadoEsquerdo_Lista/PainelGrade/GradePersonagens/BtnYasmin" to="." method="_on_btn_yasmin_pressed"]
+[connection signal="pressed" from="MargemPrincipal/LayoutHorizontal/LadoEsquerdo_Lista/PainelGrade/GradePersonagens/BtnBreno" to="." method="_on_btn_breno_pressed"]
+[connection signal="pressed" from="MargemPrincipal/LayoutHorizontal/LadoEsquerdo_Lista/PainelGrade/GradePersonagens/BtnMira" to="." method="_on_btn_mira_pressed"]
+[connection signal="pressed" from="MargemPrincipal/LayoutHorizontal/LadoEsquerdo_Lista/PainelGrade/GradePersonagens/BtnIgor" to="." method="_on_btn_igor_pressed"]
+[connection signal="pressed" from="MargemPrincipal/LayoutHorizontal/LadoEsquerdo_Lista/PainelGrade/GradePersonagens/BtnDiana" to="." method="_on_btn_diana_pressed"]
+[connection signal="pressed" from="MargemPrincipal/LayoutHorizontal/LadoEsquerdo_Lista/PainelGrade/GradePersonagens/BtnKofi" to="." method="_on_btn_kofi_pressed"]
+[connection signal="pressed" from="MargemPrincipal/LayoutHorizontal/LadoEsquerdo_Lista/BtnVoltar" to="." method="_on_btn_voltar_pressed"]
+[connection signal="pressed" from="MargemPrincipal/LayoutHorizontal/LadoDireito_Detalhes/VBoxDetalhes/BtnConfirmar" to="." method="_on_btn_confirmar_pressed"]

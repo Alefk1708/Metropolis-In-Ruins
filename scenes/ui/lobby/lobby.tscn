@@ -1,0 +1,551 @@
+[gd_scene format=3 uid="uid://dbnlhexsf0usx"]
+
+[ext_resource type="Script" uid="uid://x7oexg3fjiqq" path="res://scenes/ui/lobby/lobby.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://c3yvugw53r4og" path="res://assets/textures/Fundo_tela_lobby.png" id="2_yvc5b"]
+[ext_resource type="FontFile" uid="uid://kmbykul5ln5g" path="res://assets/fonts/m5x7.ttf" id="3_leitura"]
+[ext_resource type="FontFile" uid="uid://l1mtn5nwuak0" path="res://assets/fonts/PressStart2P.ttf" id="4_pixel"]
+[ext_resource type="Texture2D" uid="uid://ii4p13bodya2" path="res://assets/textures/LogoMetropolis.png" id="5_logo"]
+
+[sub_resource type="StyleBoxFlat" id="PanelPrincipal"]
+content_margin_left = 34.0
+content_margin_top = 28.0
+content_margin_right = 34.0
+content_margin_bottom = 30.0
+bg_color = Color(0.095, 0.092, 0.13, 0.975)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(0.42, 0.42, 0.49, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+shadow_color = Color(0, 0, 0, 0.82)
+shadow_size = 13
+shadow_offset = Vector2(0, 8)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="ExitNormal"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.31, 0.17, 0.205, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.025, 0.02, 0.028, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.86)
+shadow_size = 5
+shadow_offset = Vector2(0, 4)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="ExitHover"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.57, 0.31, 0.36, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.025, 0.02, 0.028, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(1, 0.42, 0.42, 0.42)
+shadow_size = 5
+shadow_offset = Vector2(0, 4)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="ButtonFocus"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.97, 0.95, 0.94, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+expand_margin_left = 7.0
+expand_margin_top = 7.0
+expand_margin_right = 7.0
+expand_margin_bottom = 7.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="ButtonNormal"]
+content_margin_left = 22.0
+content_margin_top = 10.0
+content_margin_right = 22.0
+content_margin_bottom = 10.0
+bg_color = Color(0.205, 0.2, 0.275, 0.99)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.025, 0.024, 0.038, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.86)
+shadow_size = 5
+shadow_offset = Vector2(0, 4)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="ButtonPressed"]
+content_margin_left = 22.0
+content_margin_top = 13.0
+content_margin_right = 22.0
+content_margin_bottom = 7.0
+bg_color = Color(0.39, 0.285, 0.34, 1)
+border_width_left = 5
+border_width_top = 6
+border_width_right = 5
+border_width_bottom = 4
+border_color = Color(0.02, 0.018, 0.028, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="ButtonHover"]
+content_margin_left = 22.0
+content_margin_top = 10.0
+content_margin_right = 22.0
+content_margin_bottom = 10.0
+bg_color = Color(0.63, 0.48, 0.54, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.035, 0.028, 0.04, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0.96, 0.73, 0.72, 0.5)
+shadow_size = 5
+shadow_offset = Vector2(0, 4)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="ButtonDisabled"]
+content_margin_left = 22.0
+content_margin_top = 10.0
+content_margin_right = 22.0
+content_margin_bottom = 10.0
+bg_color = Color(0.105, 0.1, 0.13, 0.96)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.16, 0.15, 0.19, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="InputNormal"]
+content_margin_left = 20.0
+content_margin_top = 12.0
+content_margin_right = 20.0
+content_margin_bottom = 12.0
+bg_color = Color(0.055, 0.052, 0.078, 0.98)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.34, 0.33, 0.41, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="InputFocus"]
+content_margin_left = 20.0
+content_margin_top = 12.0
+content_margin_right = 20.0
+content_margin_bottom = 12.0
+bg_color = Color(0.075, 0.067, 0.095, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.72, 0.56, 0.67, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0.96, 0.73, 0.72, 0.25)
+shadow_size = 4
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="PanelStatus"]
+content_margin_left = 22.0
+content_margin_top = 18.0
+content_margin_right = 22.0
+content_margin_bottom = 18.0
+bg_color = Color(0.055, 0.052, 0.078, 0.97)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.45, 0.42, 0.53, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.62)
+shadow_size = 7
+shadow_offset = Vector2(0, 4)
+anti_aliasing = false
+
+[node name="LobbyMultiplayer" type="Control" unique_id=2063106150]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=391004240]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_yvc5b")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Escurecimento" type="ColorRect" parent="." unique_id=1047764912]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.015, 0.01, 0.026, 0.52)
+
+[node name="LogoMetropolis" type="TextureRect" parent="." unique_id=34854852]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -330.0
+offset_top = 13.0
+offset_right = 330.0
+offset_bottom = 170.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("5_logo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextoJogadores" type="Label" parent="." unique_id=5521608]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -700.0
+offset_top = 174.0
+offset_right = 700.0
+offset_bottom = 224.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.98, 0.88, 0.83, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("4_pixel")
+theme_override_font_sizes/font_size = 19
+text = "LOBBY — ESPERANDO JOGADORES (1/6)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PainelCentralFundo" type="PanelContainer" parent="." unique_id=2115683035]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -465.0
+offset_top = -285.0
+offset_right = 465.0
+offset_bottom = 420.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("PanelPrincipal")
+
+[node name="BtnVoltar" type="Button" parent="." unique_id=823569524]
+custom_minimum_size = Vector2(250, 66)
+layout_mode = 1
+offset_left = 34.0
+offset_top = 32.0
+offset_right = 284.0
+offset_bottom = 98.0
+focus_neighbor_right = NodePath("../VBoxContainer/BtnCriar")
+theme_override_colors/font_color = Color(1, 0.82, 0.82, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 34
+theme_override_styles/normal = SubResource("ExitNormal")
+theme_override_styles/pressed = SubResource("ExitNormal")
+theme_override_styles/hover = SubResource("ExitHover")
+theme_override_styles/focus = SubResource("ButtonFocus")
+text = "VOLTAR"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1925608966]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -420.0
+offset_top = -250.0
+offset_right = 420.0
+offset_bottom = 385.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 13
+
+[node name="TituloLobby" type="Label" parent="VBoxContainer" unique_id=1357483471]
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.97, 0.98, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 44
+text = "LOBBY LOCAL"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SubtituloLobby" type="Label" parent="VBoxContainer" unique_id=387515218]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.74, 0.82, 1)
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 27
+text = "Crie uma sala na rede local ou entre usando o IP do anfitrião."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="LinhaTitulo" type="ColorRect" parent="VBoxContainer" unique_id=1342222000]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.67, 0.48, 0.62, 1)
+
+[node name="BtnCriar" type="Button" parent="VBoxContainer" unique_id=353264953]
+custom_minimum_size = Vector2(0, 78)
+layout_mode = 2
+focus_neighbor_top = NodePath("../../BtnVoltar")
+focus_neighbor_bottom = NodePath("../InputIP")
+theme_override_colors/font_color = Color(0.98, 0.97, 0.98, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.62, 0.6, 0.65, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 39
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/disabled = SubResource("ButtonDisabled")
+theme_override_styles/focus = SubResource("ButtonFocus")
+text = "CRIAR SALA LOCAL"
+
+[node name="InputIP" type="LineEdit" parent="VBoxContainer" unique_id=314917463]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+focus_neighbor_top = NodePath("../BtnCriar")
+focus_neighbor_bottom = NodePath("../BtnEntrar")
+theme_override_colors/font_color = Color(0.98, 0.97, 0.98, 1)
+theme_override_colors/font_placeholder_color = Color(0.64, 0.62, 0.69, 0.82)
+theme_override_colors/caret_color = Color(0.98, 0.83, 0.79, 1)
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 34
+theme_override_styles/normal = SubResource("InputNormal")
+theme_override_styles/focus = SubResource("InputFocus")
+placeholder_text = "Digite o IP do anfitrião — ex.: 192.168.1.25"
+alignment = 1
+max_length = 15
+
+[node name="BtnEntrar" type="Button" parent="VBoxContainer" unique_id=1149760383]
+custom_minimum_size = Vector2(0, 78)
+layout_mode = 2
+focus_neighbor_top = NodePath("../InputIP")
+theme_override_colors/font_color = Color(0.98, 0.97, 0.98, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.62, 0.6, 0.65, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 39
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/disabled = SubResource("ButtonDisabled")
+theme_override_styles/focus = SubResource("ButtonFocus")
+text = "ENTRAR NA SALA"
+
+[node name="PainelInfoRede" type="PanelContainer" parent="VBoxContainer" unique_id=946882803]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("PanelStatus")
+
+[node name="MargemInfo" type="MarginContainer" parent="VBoxContainer/PainelInfoRede" unique_id=676175939]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxInfo" type="VBoxContainer" parent="VBoxContainer/PainelInfoRede/MargemInfo" unique_id=156456953]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LabelStatusRede" type="Label" parent="VBoxContainer/PainelInfoRede/MargemInfo/VBoxInfo" unique_id=736671630]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 1, 0.55, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 30
+text = "STATUS DA REDE"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="LabelTituloIP" type="Label" parent="VBoxContainer/PainelInfoRede/MargemInfo/VBoxInfo" unique_id=71997869]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.78, 0.72, 1)
+theme_override_fonts/font = ExtResource("4_pixel")
+theme_override_font_sizes/font_size = 14
+text = "IP PARA COMPARTILHAR"
+horizontal_alignment = 1
+
+[node name="SeletorIPHost" type="OptionButton" parent="VBoxContainer/PainelInfoRede/MargemInfo/VBoxInfo" unique_id=502778807]
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.97, 0.98, 1)
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("InputNormal")
+theme_override_styles/pressed = SubResource("InputFocus")
+theme_override_styles/hover = SubResource("InputFocus")
+alignment = 1
+selected = 0
+item_count = 1
+popup/item_0/text = "IP LAN"
+popup/item_0/id = 0
+
+[node name="BotoesIP" type="HBoxContainer" parent="VBoxContainer/PainelInfoRede/MargemInfo/VBoxInfo" unique_id=810334681]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="BtnCopiarIP" type="Button" parent="VBoxContainer/PainelInfoRede/MargemInfo/VBoxInfo/BotoesIP" unique_id=534354368]
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.98, 0.97, 0.98, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 29
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("ButtonFocus")
+text = "COPIAR IP"
+
+[node name="BtnAtualizarIP" type="Button" parent="VBoxContainer/PainelInfoRede/MargemInfo/VBoxInfo/BotoesIP" unique_id=693854495]
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.98, 0.97, 0.98, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 29
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("ButtonFocus")
+text = "ATUALIZAR IP"
+
+[node name="LabelDicaRede" type="Label" parent="VBoxContainer/PainelInfoRede/MargemInfo/VBoxInfo" unique_id=1420869155]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.84, 0.83, 0.87, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 24
+text = "Passe o IP para outro jogador na mesma rede Wi-Fi."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="BtnCancelarConexao" type="Button" parent="VBoxContainer" unique_id=121430372]
+visible = false
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.82, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 34
+theme_override_styles/normal = SubResource("ExitNormal")
+theme_override_styles/pressed = SubResource("ExitNormal")
+theme_override_styles/hover = SubResource("ExitHover")
+theme_override_styles/focus = SubResource("ButtonFocus")
+text = "CANCELAR CONEXÃO"
+
+[node name="BtnComecar" type="Button" parent="VBoxContainer" unique_id=1542460452]
+visible = false
+custom_minimum_size = Vector2(0, 76)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.97, 0.98, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.62, 0.6, 0.65, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.012, 0.02, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_leitura")
+theme_override_font_sizes/font_size = 39
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/disabled = SubResource("ButtonDisabled")
+theme_override_styles/focus = SubResource("ButtonFocus")
+text = "COMEÇAR PARTIDA"
+
+[connection signal="pressed" from="BtnVoltar" to="." method="_on_btn_voltar_pressed"]
+[connection signal="pressed" from="VBoxContainer/BtnCriar" to="." method="_on_btn_criar_pressed"]
+[connection signal="text_submitted" from="VBoxContainer/InputIP" to="." method="_on_input_ip_text_submitted"]
+[connection signal="pressed" from="VBoxContainer/BtnEntrar" to="." method="_on_btn_entrar_pressed"]
+[connection signal="item_selected" from="VBoxContainer/PainelInfoRede/MargemInfo/VBoxInfo/SeletorIPHost" to="." method="_on_seletor_ip_host_item_selected"]
+[connection signal="pressed" from="VBoxContainer/PainelInfoRede/MargemInfo/VBoxInfo/BotoesIP/BtnCopiarIP" to="." method="_on_btn_copiar_ip_pressed"]
+[connection signal="pressed" from="VBoxContainer/PainelInfoRede/MargemInfo/VBoxInfo/BotoesIP/BtnAtualizarIP" to="." method="_on_btn_atualizar_ip_pressed"]
+[connection signal="pressed" from="VBoxContainer/BtnCancelarConexao" to="." method="_on_btn_cancelar_conexao_pressed"]
+[connection signal="pressed" from="VBoxContainer/BtnComecar" to="." method="_on_btn_comecar_pressed"]

@@ -1,0 +1,26 @@
+PHOTON FUSION GODOT
+===================
+
+1. Entre em https://dashboard.photonengine.com/ e crie um app:
+   - Photon SDK: Fusion
+   - SDK Version: 3
+   - Nome: Metropolis in Ruins
+
+2. Copie o App ID para:
+   res://photon/photon_config.cfg
+
+3. Baixe o Photon Fusion Godot SDK 3 para Godot 4.6+.
+
+4. Extraia e copie a pasta "fusion" para esta pasta, ficando assim:
+   res://addons/fusion/
+   res://addons/fusion/bin/
+   res://addons/fusion/fusion.gdextension
+
+5. Reabra o Godot. O GDExtension é carregado automaticamente.
+
+6. Para a futura partida Client-Host autoritativa, abra:
+   Project > Project Settings > Fusion > Simulation > Mode
+   e selecione "Authority".
+
+O SDK não está incluído neste ZIP porque o download oficial exige uma conta
+Photon e a aceitação dos termos do serviço.

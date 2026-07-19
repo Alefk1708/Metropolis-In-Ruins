@@ -1,0 +1,1351 @@
+[gd_scene format=3 uid="uid://bmwc5ddynb31u"]
+
+[ext_resource type="Script" uid="uid://cfhik8j1m5hhy" path="res://scenes/ui/hud_partida/hud_partida.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://l1mtn5nwuak0" path="res://assets/fonts/PressStart2P.ttf" id="2_font"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud_partida/painel_negociacao.tscn" id="3_painel_neg_scene"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hud"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.05, 0.05, 0.07, 0.95)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.2, 0.6, 0.8, 0.5)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.4)
+shadow_size = 8
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_promessas"]
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.2, 0.15, 0.06, 0.97)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.9, 0.8, 0.4, 0.9)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 10
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hab"]
+content_margin_left = 18.0
+content_margin_top = 14.0
+content_margin_right = 18.0
+content_margin_bottom = 14.0
+bg_color = Color(0.22, 0.1, 0.3, 0.97)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.85, 0.55, 1, 0.9)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 10
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dossie"]
+content_margin_left = 25.0
+content_margin_top = 25.0
+content_margin_right = 25.0
+content_margin_bottom = 25.0
+bg_color = Color(0.12, 0.04, 0.04, 0.96)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.85, 0.2, 0.2, 0.7)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_size = 12
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_relatorio"]
+content_margin_left = 25.0
+content_margin_top = 25.0
+content_margin_right = 25.0
+content_margin_bottom = 25.0
+bg_color = Color(0.04, 0.08, 0.12, 0.96)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.85, 0.7, 0.2, 0.7)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_size = 12
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_negociar"]
+content_margin_left = 18.0
+content_margin_top = 14.0
+content_margin_right = 18.0
+content_margin_bottom = 14.0
+bg_color = Color(0.1, 0.2, 0.3, 0.97)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.4, 0.8, 1, 0.9)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 10
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_gestao"]
+content_margin_left = 20.0
+content_margin_top = 18.0
+content_margin_right = 20.0
+content_margin_bottom = 18.0
+bg_color = Color(0.12, 0.22, 0.1, 0.97)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.4, 0.95, 0.4, 0.9)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 10
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_cartas"]
+content_margin_left = 14.0
+content_margin_top = 10.0
+content_margin_right = 14.0
+content_margin_bottom = 10.0
+bg_color = Color(0.055, 0.075, 0.12, 0.98)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.42, 0.72, 1, 0.9)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_size = 5
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_painel_cartas"]
+content_margin_left = 14.0
+content_margin_top = 12.0
+content_margin_right = 14.0
+content_margin_bottom = 12.0
+bg_color = Color(0.035, 0.045, 0.075, 0.985)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.32, 0.58, 0.88, 0.9)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 7
+anti_aliasing = false
+
+[node name="HUD_Partida" type="CanvasLayer" unique_id=1631038809]
+script = ExtResource("1_script")
+
+[node name="Control" type="Control" parent="." unique_id=526667292]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="OverlayEscuro" type="ColorRect" parent="Control" unique_id=415450364]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.65)
+
+[node name="CentroSup_Evento" type="MarginContainer" parent="Control" unique_id=1651191617]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -250.0
+offset_right = 250.0
+offset_bottom = 110.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 30
+
+[node name="Panel" type="PanelContainer" parent="Control/CentroSup_Evento" unique_id=179658754]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud")
+
+[node name="VBox" type="VBoxContainer" parent="Control/CentroSup_Evento/Panel" unique_id=1897253166]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="Titulo" type="Label" parent="Control/CentroSup_Evento/Panel/VBox" unique_id=1614110899]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.25, 0.25, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 12
+text = "EVENTO GLOBAL ATIVO"
+horizontal_alignment = 1
+
+[node name="NomeEvento" type="Label" parent="Control/CentroSup_Evento/Panel/VBox" unique_id=700642175]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+text = "MERCADO ESTÁVEL"
+horizontal_alignment = 1
+
+[node name="BotaoEvento" type="Button" parent="Control/CentroSup_Evento" unique_id=784324794]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+flat = true
+
+[node name="Centro_DetalhesEvento" type="MarginContainer" parent="Control" unique_id=1840158271]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -320.0
+offset_top = 115.0
+offset_right = 320.0
+offset_bottom = 280.0
+grow_horizontal = 2
+
+[node name="PanelConteudo" type="PanelContainer" parent="Control/Centro_DetalhesEvento" unique_id=289320963]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud")
+
+[node name="TextoDetalhes" type="Label" parent="Control/Centro_DetalhesEvento/PanelConteudo" unique_id=1597989983]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+theme_override_constants/line_spacing = 10
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "Detalhes do evento..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="CantoSupEsq_Jogador" type="MarginContainer" parent="Control" unique_id=789761439]
+layout_mode = 1
+offset_right = 510.0
+offset_bottom = 220.0
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+
+[node name="Panel" type="PanelContainer" parent="Control/CantoSupEsq_Jogador" unique_id=1646796749]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud")
+
+[node name="VBox" type="VBoxContainer" parent="Control/CantoSupEsq_Jogador/Panel" unique_id=1916003980]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Nome" type="Label" parent="Control/CantoSupEsq_Jogador/Panel/VBox" unique_id=1960632967]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 22
+text = "JOGADOR"
+
+[node name="Dinheiro" type="Label" parent="Control/CantoSupEsq_Jogador/Panel/VBox" unique_id=219056124]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.2, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 30
+text = "$ 1,500"
+
+[node name="Propriedades" type="Label" parent="Control/CantoSupEsq_Jogador/Panel/VBox" unique_id=1319265305]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.88, 0.92, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 15
+text = "PROPRIEDADES: 0"
+
+[node name="PainelImunidades" type="PanelContainer" parent="Control" unique_id=789000001]
+visible = false
+layout_mode = 1
+offset_left = 30.0
+offset_top = 235.0
+offset_right = 340.0
+offset_bottom = 390.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud")
+
+[node name="Margin" type="MarginContainer" parent="Control/PainelImunidades" unique_id=789000002]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="Control/PainelImunidades/Margin" unique_id=789000003]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Titulo" type="Label" parent="Control/PainelImunidades/Margin/VBox" unique_id=789000004]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 1, 0.8, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 11
+text = "🛡 IMUNIDADES"
+
+[node name="ListaImunidades" type="VBoxContainer" parent="Control/PainelImunidades/Margin/VBox" unique_id=789000005]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="PainelAliancas" type="PanelContainer" parent="Control" unique_id=789000010]
+visible = false
+layout_mode = 1
+offset_left = 30.0
+offset_top = 400.0
+offset_right = 340.0
+offset_bottom = 510.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud")
+
+[node name="Margin" type="MarginContainer" parent="Control/PainelAliancas" unique_id=789000011]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="Control/PainelAliancas/Margin" unique_id=789000012]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Titulo" type="Label" parent="Control/PainelAliancas/Margin/VBox" unique_id=789000013]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.85, 0.15, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 11
+text = "🤝 SUAS ALIANÇAS"
+
+[node name="ListaAliancas" type="VBoxContainer" parent="Control/PainelAliancas/Margin/VBox" unique_id=789000014]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="CantoSupDir_Propriedade" type="MarginContainer" parent="Control" unique_id=495311761]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -400.0
+offset_bottom = 570.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+
+[node name="VBoxArea" type="VBoxContainer" parent="Control/CantoSupDir_Propriedade"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="Panel" type="PanelContainer" parent="Control/CantoSupDir_Propriedade/VBoxArea" unique_id=2006072992]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud")
+
+[node name="VBox" type="VBoxContainer" parent="Control/CantoSupDir_Propriedade/VBoxArea/Panel" unique_id=1980691725]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="NomeCasa" type="Label" parent="Control/CantoSupDir_Propriedade/VBoxArea/Panel/VBox" unique_id=1489629968]
+layout_mode = 2
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "CASA ATUAL"
+autowrap_mode = 3
+
+[node name="Dono" type="Label" parent="Control/CantoSupDir_Propriedade/VBoxArea/Panel/VBox" unique_id=501062399]
+layout_mode = 2
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 12
+text = "DONO: NENHUM"
+
+[node name="Aluguel" type="Label" parent="Control/CantoSupDir_Propriedade/VBoxArea/Panel/VBox" unique_id=1205430031]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.85, 0.25, 0.25, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+text = "ALUGUEL: $0"
+
+[node name="InfoExtra" type="Label" parent="Control/CantoSupDir_Propriedade/VBoxArea/Panel/VBox" unique_id=2133504788]
+custom_minimum_size = Vector2(340, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.65, 0.85, 0.95, 1)
+theme_override_constants/line_spacing = 6
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 10
+text = "Detalhes do terreno..."
+autowrap_mode = 3
+
+[node name="BtnCartasGuardadas" type="Button" parent="Control/CantoSupDir_Propriedade/VBoxArea"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+focus_mode = 1
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.85, 0.93, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.65, 0.82, 1, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_cartas")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_cartas")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_cartas")
+text = "CARTAS GUARDADAS: 0  ▼"
+
+[node name="PainelCartasGuardadas" type="PanelContainer" parent="Control/CantoSupDir_Propriedade/VBoxArea"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 230)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_painel_cartas")
+
+[node name="Margin" type="MarginContainer" parent="Control/CantoSupDir_Propriedade/VBoxArea/PainelCartasGuardadas"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="Control/CantoSupDir_Propriedade/VBoxArea/PainelCartasGuardadas/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Titulo" type="Label" parent="Control/CantoSupDir_Propriedade/VBoxArea/PainelCartasGuardadas/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.62, 0.82, 1, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 12
+text = "SUAS CARTAS"
+horizontal_alignment = 1
+
+[node name="SeparadorTopo" type="ColorRect" parent="Control/CantoSupDir_Propriedade/VBoxArea/PainelCartasGuardadas/Margin/VBox"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.3, 0.55, 0.82, 0.75)
+
+[node name="CartaCasaGratis" type="VBoxContainer" parent="Control/CantoSupDir_Propriedade/VBoxArea/PainelCartasGuardadas/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="LabelCartaCasaGratis" type="Label" parent="Control/CantoSupDir_Propriedade/VBoxArea/PainelCartasGuardadas/Margin/VBox/CartaCasaGratis"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.48, 1, 0.58, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 10
+text = "CONSTRUIR GRÁTIS  x0"
+
+[node name="Descricao" type="Label" parent="Control/CantoSupDir_Propriedade/VBoxArea/PainelCartasGuardadas/Margin/VBox/CartaCasaGratis"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.78, 0.88, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 8
+text = "O próximo botão CONSTRUIR ficará GRÁTIS."
+autowrap_mode = 3
+
+[node name="SeparadorMeio" type="ColorRect" parent="Control/CantoSupDir_Propriedade/VBoxArea/PainelCartasGuardadas/Margin/VBox"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.22, 0.38, 0.58, 0.7)
+
+[node name="CartaSairPrisao" type="VBoxContainer" parent="Control/CantoSupDir_Propriedade/VBoxArea/PainelCartasGuardadas/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="LabelCartaSairPrisao" type="Label" parent="Control/CantoSupDir_Propriedade/VBoxArea/PainelCartasGuardadas/Margin/VBox/CartaSairPrisao"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.84, 0.38, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 10
+text = "SAIR DA PRISÃO  x0"
+
+[node name="Descricao" type="Label" parent="Control/CantoSupDir_Propriedade/VBoxArea/PainelCartasGuardadas/Margin/VBox/CartaSairPrisao"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.78, 0.88, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 8
+text = "Usada automaticamente na próxima prisão."
+autowrap_mode = 3
+
+[node name="BtnTogglePromessas" type="Button" parent="Control" unique_id=789000020]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 30.0
+offset_top = -228.0
+offset_right = 420.0
+offset_bottom = -148.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 0.95, 0.7, 1)
+theme_override_colors/font_pressed_color = Color(0.7, 0.6, 0.3, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0.85, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_promessas")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_promessas")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_promessas")
+text = "📜 PROMESSAS ▼"
+
+[node name="PainelPromessas" type="PanelContainer" parent="Control" unique_id=789000024]
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 30.0
+offset_top = -565.0
+offset_right = 530.0
+offset_bottom = -230.0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud")
+
+[node name="Margin" type="MarginContainer" parent="Control/PainelPromessas" unique_id=789000025]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 14
+
+[node name="VBox" type="VBoxContainer" parent="Control/PainelPromessas/Margin" unique_id=789000026]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="HBoxTitulo" type="HBoxContainer" parent="Control/PainelPromessas/Margin/VBox" unique_id=789000027]
+layout_mode = 2
+alignment = 1
+
+[node name="Titulo" type="Label" parent="Control/PainelPromessas/Margin/VBox/HBoxTitulo" unique_id=789000028]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.9, 0.8, 0.5, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+text = "📜 PROMESSAS"
+horizontal_alignment = 1
+
+[node name="BtnFechar" type="Button" parent="Control/PainelPromessas/Margin/VBox/HBoxTitulo" unique_id=789000029]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.3, 0.3, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 12
+text = "X"
+
+[node name="Formulario" type="HBoxContainer" parent="Control/PainelPromessas/Margin/VBox" unique_id=789000030]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="InputPromessa" type="LineEdit" parent="Control/PainelPromessas/Margin/VBox/Formulario" unique_id=789000031]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 13
+placeholder_text = "Digite a promessa..."
+
+[node name="BtnCriar" type="Button" parent="Control/PainelPromessas/Margin/VBox/Formulario" unique_id=789000032]
+custom_minimum_size = Vector2(100, 48)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.95, 0.4, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 12
+text = "CRIAR"
+
+[node name="ScrollPromessas" type="ScrollContainer" parent="Control/PainelPromessas/Margin/VBox" unique_id=789000033]
+custom_minimum_size = Vector2(0, 180)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ListaPromessas" type="VBoxContainer" parent="Control/PainelPromessas/Margin/VBox/ScrollPromessas" unique_id=789000034]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="CantoInfEsq_Habilidade" type="MarginContainer" parent="Control" unique_id=1233935751]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -130.0
+offset_right = 420.0
+grow_vertical = 0
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="Panel" type="PanelContainer" parent="Control/CantoInfEsq_Habilidade" unique_id=1667899930]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_btn_hab")
+
+[node name="HBox" type="HBoxContainer" parent="Control/CantoInfEsq_Habilidade/Panel" unique_id=1664713733]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="BotaoHab" type="Button" parent="Control/CantoInfEsq_Habilidade/Panel/HBox" unique_id=113800783]
+custom_minimum_size = Vector2(120, 80)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.7, 0.5, 0.9, 1)
+theme_override_colors/font_hover_color = Color(0.95, 0.85, 1, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "USAR
+HAB."
+
+[node name="VBox" type="VBoxContainer" parent="Control/CantoInfEsq_Habilidade/Panel/HBox" unique_id=1654101512]
+layout_mode = 2
+alignment = 1
+
+[node name="NomeHab" type="Label" parent="Control/CantoInfEsq_Habilidade/Panel/HBox/VBox" unique_id=1774909131]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.75, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+text = "HABILIDADE"
+
+[node name="Recarga" type="Label" parent="Control/CantoInfEsq_Habilidade/Panel/HBox/VBox" unique_id=1129018647]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 11
+text = "PRONTA"
+
+[node name="Centro_Dados" type="VBoxContainer" parent="Control" unique_id=1304684774]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -110.0
+offset_right = 160.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="HBoxDados" type="HBoxContainer" parent="Control/Centro_Dados" unique_id=508152972]
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="Dado1" type="PanelContainer" parent="Control/Centro_Dados/HBoxDados" unique_id=1147086858]
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud")
+
+[node name="Valor" type="Label" parent="Control/Centro_Dados/HBoxDados/Dado1" unique_id=1759704016]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 28
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SinalMais" type="Label" parent="Control/Centro_Dados/HBoxDados" unique_id=1432677217]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 24
+text = "+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Dado2" type="PanelContainer" parent="Control/Centro_Dados/HBoxDados" unique_id=2084816795]
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud")
+
+[node name="Valor" type="Label" parent="Control/Centro_Dados/HBoxDados/Dado2" unique_id=1798816652]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 28
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BotaoGirar" type="Button" parent="Control/Centro_Dados" unique_id=1913061882]
+custom_minimum_size = Vector2(220, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_hab")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hab")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hab")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_btn_hab")
+text = "GIRAR DADOS"
+
+[node name="DossieDiana" type="MarginContainer" parent="Control" unique_id=1229926758]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -560.0
+offset_top = -700.0
+offset_bottom = -200.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 130
+
+[node name="VBox" type="VBoxContainer" parent="Control/DossieDiana" unique_id=945841684]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 2
+
+[node name="PanelConteudo" type="PanelContainer" parent="Control/DossieDiana/VBox" unique_id=605474709]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_dossie")
+
+[node name="ScrollDossie" type="ScrollContainer" parent="Control/DossieDiana/VBox/PanelConteudo" unique_id=605474710]
+custom_minimum_size = Vector2(500, 280)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="TextoInfiltrado" type="Label" parent="Control/DossieDiana/VBox/PanelConteudo/ScrollDossie" unique_id=1543269703]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+theme_override_constants/line_spacing = 8
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+text = "CARREGANDO DADOS..."
+autowrap_mode = 3
+
+[node name="BotaoAbriDossie" type="Button" parent="Control/DossieDiana/VBox" unique_id=1394745305]
+custom_minimum_size = Vector2(280, 56)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_color = Color(1, 0.85, 0.85, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_promessas")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_promessas")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_promessas")
+text = "ABRIR DOSSIÊ"
+
+[node name="RelatorioYasmin" type="MarginContainer" parent="Control" unique_id=1525382753]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -560.0
+offset_top = -700.0
+offset_bottom = -200.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 130
+
+[node name="VBox" type="VBoxContainer" parent="Control/RelatorioYasmin" unique_id=116298954]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 2
+
+[node name="PanelConteudo" type="PanelContainer" parent="Control/RelatorioYasmin/VBox" unique_id=258324151]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_relatorio")
+
+[node name="TextoRelatorio" type="Label" parent="Control/RelatorioYasmin/VBox/PanelConteudo" unique_id=730403697]
+custom_minimum_size = Vector2(500, 280)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+theme_override_constants/line_spacing = 8
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+text = "ANALISANDO MERCADO..."
+autowrap_mode = 3
+
+[node name="BotaoAbrirRelatorio" type="Button" parent="Control/RelatorioYasmin/VBox" unique_id=1925437797]
+custom_minimum_size = Vector2(280, 56)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_color = Color(1, 0.95, 0.7, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_promessas")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_promessas")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_promessas")
+text = "ABRIR RELATÓRIO"
+
+[node name="Centro_AcaoTerreno" type="MarginContainer" parent="Control" unique_id=1186617451]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -120.0
+offset_right = 220.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="Control/Centro_AcaoTerreno" unique_id=1978824567]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud")
+
+[node name="VBox" type="VBoxContainer" parent="Control/Centro_AcaoTerreno/Panel" unique_id=1377967652]
+layout_mode = 2
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="Titulo" type="Label" parent="Control/Centro_AcaoTerreno/Panel/VBox" unique_id=991791329]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+text = "TERRENO DISPONÍVEL"
+horizontal_alignment = 1
+
+[node name="Preco" type="Label" parent="Control/Centro_AcaoTerreno/Panel/VBox" unique_id=336165237]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.85, 0.15, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 24
+text = "PREÇO: $200"
+horizontal_alignment = 1
+
+[node name="HBoxBotoes" type="HBoxContainer" parent="Control/Centro_AcaoTerreno/Panel/VBox" unique_id=832579159]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="BtnComprar" type="Button" parent="Control/Centro_AcaoTerreno/Panel/VBox/HBoxBotoes" unique_id=180165153]
+custom_minimum_size = Vector2(190, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.9, 0.4, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+text = "COMPRAR"
+
+[node name="BtnLeilao" type="Button" parent="Control/Centro_AcaoTerreno/Panel/VBox/HBoxBotoes" unique_id=1696871269]
+custom_minimum_size = Vector2(190, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.4, 0.4, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+text = "IR P/ LEILÃO"
+
+[node name="Centro_Leilao" type="MarginContainer" parent="Control" unique_id=1028098363]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -140.0
+offset_right = 220.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="Control/Centro_Leilao" unique_id=439160372]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud")
+
+[node name="VBox" type="VBoxContainer" parent="Control/Centro_Leilao/Panel" unique_id=1642088257]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Titulo" type="Label" parent="Control/Centro_Leilao/Panel/VBox" unique_id=594300142]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.4, 0.4, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+text = "LEILÃO DA PROPRIEDADE"
+horizontal_alignment = 1
+
+[node name="Aviso" type="Label" parent="Control/Centro_Leilao/Panel/VBox" unique_id=135968714]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 12
+text = "LANCE SECRETO. O MAIOR LEVA."
+horizontal_alignment = 1
+
+[node name="InputLance" type="LineEdit" parent="Control/Centro_Leilao/Panel/VBox" unique_id=2057508557]
+custom_minimum_size = Vector2(250, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+placeholder_text = "$ 0"
+alignment = 1
+max_length = 4
+
+[node name="BtnEnviarLance" type="Button" parent="Control/Centro_Leilao/Panel/VBox" unique_id=1061485466]
+custom_minimum_size = Vector2(220, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.95, 0.85, 0.15, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+text = "ENVIAR LANCE"
+
+[node name="Centro_CartaSorteada" type="MarginContainer" parent="Control" unique_id=987654321]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -240.0
+offset_right = 180.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(180, 180)
+
+[node name="Panel" type="PanelContainer" parent="Control/Centro_CartaSorteada" unique_id=123456789]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud")
+
+[node name="VBox" type="VBoxContainer" parent="Control/Centro_CartaSorteada/Panel" unique_id=987123654]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="DeckNome" type="Label" parent="Control/Centro_CartaSorteada/Panel/VBox" unique_id=456789123]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.25, 0.85, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+text = "DESTINO DA CIDADE"
+horizontal_alignment = 1
+
+[node name="CartaNome" type="Label" parent="Control/Centro_CartaSorteada/Panel/VBox" unique_id=789123456]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 22
+text = "NOME DA CARTA"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Separador" type="ColorRect" parent="Control/Centro_CartaSorteada/Panel/VBox" unique_id=159357284]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+color = Color(1, 1, 1, 0.2)
+
+[node name="Descricao" type="Label" parent="Control/Centro_CartaSorteada/Panel/VBox" unique_id=357159482]
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_constants/line_spacing = 10
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "A prefeitura embargou a sua obra. Pague 50 moedas."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="CantoDir_Construcao" type="MarginContainer" parent="Control" unique_id=555666777]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -560.0
+offset_top = -900.0
+offset_bottom = -30.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="Control/CantoDir_Construcao" unique_id=555666778]
+layout_mode = 2
+alignment = 2
+
+[node name="PainelComBotao" type="Control" parent="Control/CantoDir_Construcao/VBox" unique_id=555666780]
+visible = false
+custom_minimum_size = Vector2(500, 720)
+layout_mode = 2
+size_flags_horizontal = 8
+mouse_filter = 2
+
+[node name="PanelConteudo" type="PanelContainer" parent="Control/CantoDir_Construcao/VBox/PainelComBotao" unique_id=555666783]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 55.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud")
+
+[node name="MarginInterna" type="MarginContainer" parent="Control/CantoDir_Construcao/VBox/PainelComBotao/PanelConteudo" unique_id=555666787]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="Scroll" type="ScrollContainer" parent="Control/CantoDir_Construcao/VBox/PainelComBotao/PanelConteudo/MarginInterna" unique_id=555666781]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 0
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="ListaPropriedades" type="VBoxContainer" parent="Control/CantoDir_Construcao/VBox/PainelComBotao/PanelConteudo/MarginInterna/Scroll" unique_id=555666782]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="HBoxBotoesInferior" type="HBoxContainer" parent="Control/CantoDir_Construcao/VBox" unique_id=195145205]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_constants/separation = 20
+alignment = 2
+
+[node name="BotaoNegociar" type="Button" parent="Control/CantoDir_Construcao/VBox/HBoxBotoesInferior" unique_id=555666900]
+custom_minimum_size = Vector2(220, 90)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.5, 0.7, 0.9, 1)
+theme_override_colors/font_hover_color = Color(0.85, 0.95, 1, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 17
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_negociar")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_negociar")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_negociar")
+text = "🤝
+NEGOCIAR"
+
+[node name="BotaoAbrirConstrucao" type="Button" parent="Control/CantoDir_Construcao/VBox/HBoxBotoesInferior" unique_id=555666779]
+custom_minimum_size = Vector2(420, 90)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.5, 0.8, 0.5, 1)
+theme_override_colors/font_hover_color = Color(0.85, 1, 0.85, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_gestao")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_gestao")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_gestao")
+text = "GESTÃO DE
+PROPRIEDADES ▼"
+
+[node name="Centro_BtnHipoteca" type="MarginContainer" parent="Control" unique_id=778899001]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = 130.0
+offset_right = 120.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BtnHipoteca" type="Button" parent="Control/Centro_BtnHipoteca" unique_id=778899002]
+custom_minimum_size = Vector2(240, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.95, 0.6, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 12
+text = "HIPOTECAR $X"
+
+[node name="Centro_HabilidadeOverlay" type="MarginContainer" parent="Control" unique_id=778899003]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="FundoHab" type="ColorRect" parent="Control/Centro_HabilidadeOverlay" unique_id=778899004]
+layout_mode = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
+[node name="PainelHab" type="PanelContainer" parent="Control/Centro_HabilidadeOverlay" unique_id=778899005]
+custom_minimum_size = Vector2(700, 220)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud")
+
+[node name="VBox" type="VBoxContainer" parent="Control/Centro_HabilidadeOverlay/PainelHab" unique_id=778899006]
+layout_mode = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="Titulo" type="Label" parent="Control/Centro_HabilidadeOverlay/PainelHab/VBox" unique_id=778899007]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.85, 0.15, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+text = "HABILIDADE ATIVADA"
+horizontal_alignment = 1
+
+[node name="NomeHab" type="Label" parent="Control/Centro_HabilidadeOverlay/PainelHab/VBox" unique_id=778899008]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 22
+text = "NOME DA HABILIDADE"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Descricao" type="Label" parent="Control/Centro_HabilidadeOverlay/PainelHab/VBox" unique_id=778899009]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 1)
+theme_override_constants/line_spacing = 8
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+text = "Descrição do efeito..."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="HBoxBotoesHab" type="HBoxContainer" parent="Control/Centro_HabilidadeOverlay/PainelHab/VBox" unique_id=778899010]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="BtnCancelarHab" type="Button" parent="Control/Centro_HabilidadeOverlay/PainelHab/VBox/HBoxBotoesHab" unique_id=778899011]
+custom_minimum_size = Vector2(220, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.4, 0.4, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+text = "CANCELAR"
+
+[node name="BtnConfirmarHab" type="Button" parent="Control/Centro_HabilidadeOverlay/PainelHab/VBox/HBoxBotoesHab" unique_id=778899012]
+custom_minimum_size = Vector2(280, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.95, 0.4, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+text = "CONFIRMAR ALVO"
+
+[node name="Centro_Falencia" type="MarginContainer" parent="Control" unique_id=1296112658]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Centro_Vitoria" type="MarginContainer" parent="Control" unique_id=208939146]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BarraLeilao" type="ProgressBar" parent="Control" unique_id=778899013]
+visible = false
+custom_minimum_size = Vector2(400, 24)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = 150.0
+offset_right = 200.0
+offset_bottom = 174.0
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 60.0
+value = 60.0
+show_percentage = false
+
+[node name="RoundCounter" type="Label" parent="Control" unique_id=778899014]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -80.0
+offset_right = 100.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.95, 0.85, 0.15, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+text = "RODADA 1"
+horizontal_alignment = 1
+
+[node name="Centro_VotacaoEleicao" type="MarginContainer" parent="Control" unique_id=1875438694]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+z_index = 500
+
+[node name="FundoVotacao" type="ColorRect" parent="Control/Centro_VotacaoEleicao" unique_id=99997372]
+layout_mode = 2
+mouse_filter = 0
+color = Color(0, 0, 0, 0.7)
+
+[node name="PainelVotacao" type="PanelContainer" parent="Control/Centro_VotacaoEleicao" unique_id=1790336693]
+custom_minimum_size = Vector2(900, 500)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud")
+
+[node name="VBox" type="VBoxContainer" parent="Control/Centro_VotacaoEleicao/PainelVotacao" unique_id=1478251762]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Titulo" type="Label" parent="Control/Centro_VotacaoEleicao/PainelVotacao/VBox" unique_id=1270200471]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.85, 0.15, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+text = "ELEICOES MUNICIPAIS"
+horizontal_alignment = 1
+
+[node name="Subtitulo" type="Label" parent="Control/Centro_VotacaoEleicao/PainelVotacao/VBox" unique_id=285901030]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 12
+text = "Vote no pacote de politicas:"
+horizontal_alignment = 1
+
+[node name="TimerLabel" type="Label" parent="Control/Centro_VotacaoEleicao/PainelVotacao/VBox" unique_id=1471097476]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.5, 0.3, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+text = "20s"
+horizontal_alignment = 1
+
+[node name="HBoxCards" type="HBoxContainer" parent="Control/Centro_VotacaoEleicao/PainelVotacao/VBox" unique_id=789109262]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="VotosContainer" type="HBoxContainer" parent="Control/Centro_VotacaoEleicao/PainelVotacao/VBox" unique_id=682558035]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="PainelNegociacao" parent="." instance=ExtResource("3_painel_neg_scene")]
+
+[connection signal="pressed" from="Control/CantoSupDir_Propriedade/VBoxArea/BtnCartasGuardadas" to="." method="_on_btn_cartas_guardadas_pressed"]

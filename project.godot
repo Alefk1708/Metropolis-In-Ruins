@@ -1,0 +1,64 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Metropolis In Ruins"
+run/main_scene="res://scenes/ui/introducao/introducao.tscn"
+config/quit_on_go_back=false
+config/features=PackedStringArray("4.7", "Mobile")
+boot_splash/bg_color=Color(0.004, 0.005, 0.019, 1)
+boot_splash/show_image=false
+config/icon="uid://c0s26sml7xuem"
+
+[autoload]
+
+NetworkManager="*uid://dcg16po2ajb8q"
+Global="*uid://dc82wn20p10el"
+Animacoes="*res://autoload/animacoes.gd"
+Progressao="*res://autoload/progressao.gd"
+PhotonManager="*res://autoload/photon_manager.gd"
+OnlineTransport="*res://autoload/online_transport.gd"
+GerenciadorSalvamento="*res://autoload/gerenciador_salvamento.gd"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=1
+window/size/initial_position_type=0
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/handheld/orientation=4
+
+[dotnet]
+
+project/assembly_name="Metropoli In Ruins"
+
+[fusion]
+
+connection/app_id="dafe46a5-0cb8-4662-9708-99287b9686da"
+connection/default_region="sa"
+connection/app_version="0.34.0"
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+rendering_device/driver.windows="d3d12"
+renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true

@@ -1,0 +1,151 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/introducao/introducao.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/textures/branding/sk_pixels_intro.png" id="2_logo"]
+[ext_resource type="FontFile" path="res://assets/fonts/PressStart2P.ttf" id="3_font"]
+
+[sub_resource type="Shader" id="Shader_vinheta"]
+code = "shader_type canvas_item;\n\nuniform float intensidade : hint_range(0.0, 1.0) = 0.72;\n\nvoid fragment() {\n\tvec2 centro = UV * 2.0 - 1.0;\n\tcentro.x *= 0.78;\n\tfloat borda = smoothstep(0.28, 1.12, dot(centro, centro));\n\tCOLOR = vec4(0.004, 0.003, 0.020, borda * intensidade);\n}\n"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vinheta"]
+shader = SubResource("Shader_vinheta")
+
+[sub_resource type="StyleBoxFlat" id="Style_dica"]
+bg_color = Color(0.015, 0.018, 0.052, 0.6)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.447, 0.39, 0.65, 0.5)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+anti_aliasing = false
+
+[node name="Introducao" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_script")
+
+[node name="FundoPreto" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.004, 0.005, 0.019, 1)
+
+[node name="ArteLogo" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_logo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Vinheta" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_vinheta")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 1)
+
+[node name="Particulas" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="LinhaLuz" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.768
+anchor_right = 0.5
+anchor_bottom = 0.768
+offset_left = -500.0
+offset_top = -2.0
+offset_right = 500.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0.573, 0.424, 1)
+
+[node name="LabelApresenta" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.872
+anchor_right = 0.5
+anchor_bottom = 0.872
+offset_left = -360.0
+offset_top = -22.0
+offset_right = 360.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.92, 0.86, 0.96, 1)
+theme_override_colors/font_shadow_color = Color(0.12, 0.035, 0.19, 0.9)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 20
+text = "APRESENTA"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DicaPular" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 0.67
+anchor_top = 0.93
+anchor_right = 0.98
+anchor_bottom = 0.982
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.79, 0.75, 0.87, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("Style_dica")
+text = "TOQUE OU PRESSIONE PARA PULAR"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FadePreto" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.004, 0.005, 0.019, 1)
