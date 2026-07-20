@@ -1,0 +1,1823 @@
+{
+  "version": 1,
+  "source": "C:\\Projetos\\Games\\metropoli-in-ruins\\scenes\\gameplay\\tabuleiro\\tabuleiro.gd",
+  "source_sha256": "85b3ca0c497b780cb4d13413f2b4f2885563859b32fcca08c30fcd2bfd28a7f4",
+  "source_lines": 11434,
+  "function_count": 359,
+  "kept_in_base": [],
+  "modules": {
+    "tabuleiro_online.gd": [
+      {
+        "name": "_preparar_espera_snapshot_online",
+        "sha256": "33e81cada859be8db63367da9200d985d80fc56b853b5a0775c9b4201b4f83ea",
+        "original_line": 938
+      },
+      {
+        "name": "_iniciar_sincronizacao_online",
+        "sha256": "189fcf59a4179c09a8fe7dd61002f587865f88a9ef4ab3bed35e8ca4f22be3e2",
+        "original_line": 944
+      },
+      {
+        "name": "_publicar_snapshot_inicial_online",
+        "sha256": "46d69d4e34743a6dd463247b5a9e79a49ab23e5adb098eb047b1e9559b29883c",
+        "original_line": 1023
+      },
+      {
+        "name": "_vigiar_entrada_visual_online",
+        "sha256": "cdb0662d3b3c5932d25d15f74690fa89bcdc824d5f8fed5aa56d9ae300a2ad73",
+        "original_line": 1042
+      },
+      {
+        "name": "criar_snapshot_online",
+        "sha256": "f4f4290d3db611d78319f05830ac150b3fc83715782f4b585a2b3322c2191905",
+        "original_line": 1148
+      },
+      {
+        "name": "aplicar_snapshot_online",
+        "sha256": "aa077a184e9c5d7bf7e31db315946bdc22b786b88a3c63b7aa1ceb8633f4aa52",
+        "original_line": 1210
+      },
+      {
+        "name": "_sincronizar_pinos_com_snapshot",
+        "sha256": "d86d610b6598d7cba30fbd14a575a3a036368e702ad49c7991a7447a26f6e86c",
+        "original_line": 1263
+      },
+      {
+        "name": "_reconstruir_visuais_apos_snapshot",
+        "sha256": "a3301268868a54720793d4420dff77334100fc922cf8ff47b64b7e86e0d8a71d",
+        "original_line": 1285
+      },
+      {
+        "name": "_on_jogador_desconectado_online",
+        "sha256": "2ca66512ea826c7d8f2a14b0bd4c2280a48d816b6eb5ed773a8574f84f8975ff",
+        "original_line": 1314
+      },
+      {
+        "name": "_on_jogador_reconectado_online",
+        "sha256": "00d8e838b911977778a5e7e15e13362ac12f4aa7fe5b35d11cc3621cb420c8a6",
+        "original_line": 1360
+      },
+      {
+        "name": "_on_host_alterado_online",
+        "sha256": "813696df654a47c9bbb6238e9db1393eef34ee67f9e9a41625627b6d6b25e826",
+        "original_line": 1373
+      },
+      {
+        "name": "_sincronizar_movimento_na_rede",
+        "sha256": "d02187651179afd1cbce88fceb71fd5a50d9358bbb1035519c9414e105346035",
+        "original_line": 3034
+      },
+      {
+        "name": "_sincronizar_proximo_evento_rede",
+        "sha256": "231f96c7e95b599d26b46589fb670fef8646d2db72fccb6b02788853172e2ef7",
+        "original_line": 3890
+      },
+      {
+        "name": "_snapshot_atual_jogador",
+        "sha256": "e17cb47479b75fd7fa7cf6df566325bfe10c3b0375678c603e6f93aca66d4f72",
+        "original_line": 5958
+      },
+      {
+        "name": "_registrar_snapshot_final",
+        "sha256": "59dbb74030634bb7a3a21aa650d5440e490175c36c1f22a574c0d58e8d800f4a",
+        "original_line": 5991
+      },
+      {
+        "name": "_personagem_por_peer_pause",
+        "sha256": "b26c5b91747561e36a6caba2eb4ca101ad5129d824bebed837c338c95d79caac",
+        "original_line": 8531
+      },
+      {
+        "name": "_peer_do_personagem_pause",
+        "sha256": "13347b1dc94ac06a9e64eab6dbdc9882086b43a5834872e6a0a4cb67ab764c4e",
+        "original_line": 8564
+      },
+      {
+        "name": "_on_solicitacao_estado_pausa_online",
+        "sha256": "bd916b7c6070b71ad7e2cd088daad05b192f1794d1c76adae8ebf098ca60b0d4",
+        "original_line": 8634
+      },
+      {
+        "name": "_on_estado_pausa_partida_online",
+        "sha256": "6f959d1b6b5f0a326f523858c78992adb8bd8fe43035ce76ac151b4f9aa38918",
+        "original_line": 8643
+      },
+      {
+        "name": "_publicar_estado_pausa_host",
+        "sha256": "ba445ea786af4d8451129addb1502461eb70fb36e8041960c123e02089b56eb6",
+        "original_line": 8667
+      },
+      {
+        "name": "_forcar_retomada_pausa_host",
+        "sha256": "241c6f575753bff6d41e3dcc5cd905fb614e96e13cb41901f6168429d3156c78",
+        "original_line": 8722
+      },
+      {
+        "name": "_solicitar_salvamento_ao_host",
+        "sha256": "4fd65fb72ea366f27bafb371ff7b1fd4eba77fb40d986eb4106e843a4c0955ac",
+        "original_line": 8803
+      },
+      {
+        "name": "_on_solicitacao_desistencia_partida_online",
+        "sha256": "ea876232d9af40a0f6d55c4f1d3b49a1195cc82e9db41f52cf5ac82e3e3dff7b",
+        "original_line": 8997
+      },
+      {
+        "name": "_on_resultado_desistencia_partida_online",
+        "sha256": "1b13a06cba10a530089c08c39920bf3a161b5d6ea677660be642cd00d1f849f5",
+        "original_line": 9118
+      },
+      {
+        "name": "_on_confirmacao_vitoria_desistencia_online",
+        "sha256": "bc16121cef85545613a09707933f70e0a779bbbe0345aa26db9cfa94c7e6e170",
+        "original_line": 9158
+      },
+      {
+        "name": "_peer_id_do",
+        "sha256": "36d1d22b862e3994dfed1dc387b6a93e281cddaf467121069114f2b30095a0b1",
+        "original_line": 10217
+      },
+      {
+        "name": "_personagem_do_peer",
+        "sha256": "79463618bfb28d040b8e325a13f93f4fa0ba29d2609ba601146bdd371e0f6684",
+        "original_line": 11191
+      }
+    ],
+    "tabuleiro_pausa_salvamento.gd": [
+      {
+        "name": "definir_bots_pausados",
+        "sha256": "eb69a643e251aa8610b8420ab3bbf55e94eacfbe06b9395fd1740e63bcd33b2a",
+        "original_line": 779
+      },
+      {
+        "name": "validar_salvamento_partida",
+        "sha256": "226ec7fb0827a2934c910f72da5c7752ab6ff48e9470c6e9ad96b48ded7e79aa",
+        "original_line": 1099
+      },
+      {
+        "name": "_sair_da_prisao_rede",
+        "sha256": "5127503910374325199d7205cfb2645399e5d68079eb6472ae6c324b87a63fc9",
+        "original_line": 2054
+      },
+      {
+        "name": "_encerrar_fluxo_evento_interativo",
+        "sha256": "9244acdd9d7f9bf0d787b0873abec44a83a0d97e890c10cdf6fbca6cae834589",
+        "original_line": 4558
+      },
+      {
+        "name": "_nome_jogador_para_pausa",
+        "sha256": "177a2081f2d3fcd0a58e66248667a4c9af34caf43b34d55569364bc3b5703c4d",
+        "original_line": 8581
+      },
+      {
+        "name": "_on_menu_pause_solicitar_pausa",
+        "sha256": "ec80291a7d31cc9ea42485da0df2e910acb48ce2f1d15ea5f2f3db99ebcb86e5",
+        "original_line": 8592
+      },
+      {
+        "name": "_on_menu_pause_solicitar_retomada",
+        "sha256": "e9abafe4d7ac2d9deed172f1fd795ca0b7a6010c56f7ff6d72622cbf65b080f3",
+        "original_line": 8613
+      },
+      {
+        "name": "_solicitar_estado_pausa_servidor",
+        "sha256": "38480531055e526407b775ac6d88e2abe468b6de6bb8a3527b0b039dc9699fee",
+        "original_line": 8660
+      },
+      {
+        "name": "_processar_solicitacao_estado_pausa",
+        "sha256": "8c7df52a1de9dfb273868f7e504adc2631529a5fcd223a03bc3a0d0d5b6f1c72",
+        "original_line": 8691
+      },
+      {
+        "name": "_aplicar_estado_pausa_rede",
+        "sha256": "845c0436c1a34a7428b8ffbb18992cf776fa09d873240f1ceca9cb1cb4195fc9",
+        "original_line": 8734
+      },
+      {
+        "name": "_aplicar_interface_estado_pausa_atual",
+        "sha256": "efa6e8b6920163f804fe49410fd99bc4bfe8965794e305dc1589d60788ed8631",
+        "original_line": 8781
+      },
+      {
+        "name": "_on_menu_pause_solicitar_salvamento",
+        "sha256": "50e207929efc53cd9129d297d3b652b0593091ae0972ec73ac2af2287ed6fa7c",
+        "original_line": 8795
+      },
+      {
+        "name": "_on_menu_pause_solicitar_salvar_e_sair",
+        "sha256": "de36d1c116002d3999447133795af8575e2f70095e73e0369edb4a9154bc61d9",
+        "original_line": 8799
+      },
+      {
+        "name": "_solicitar_salvamento_servidor",
+        "sha256": "daf862d014955d36b615dd452d7235b427de6ebda8e5b8926e4087beaac986c6",
+        "original_line": 8832
+      },
+      {
+        "name": "_processar_solicitacao_salvamento",
+        "sha256": "ed11f93cdcbf492ff8c54788624965bd306a0551533a20d3810bef0eb4dd2061",
+        "original_line": 8839
+      },
+      {
+        "name": "_enviar_resultado_salvamento",
+        "sha256": "faaa24abfc82f104f2f461975181648a164777bceae6eb2794e5c7a5ca83af7e",
+        "original_line": 8891
+      },
+      {
+        "name": "_notificar_resultado_salvamento_rede",
+        "sha256": "09f04f322f81181d863dcf538f36bdbd7ba6102e24a17722846fd67acc1261b1",
+        "original_line": 8910
+      },
+      {
+        "name": "_notificar_resultado_salvamento_local",
+        "sha256": "7a440656c370370b7a5c6d7beb1cb2e4092ea66f085e08546f910ffc403498d9",
+        "original_line": 8918
+      },
+      {
+        "name": "_finalizar_salvar_e_sair_rede",
+        "sha256": "1822c677809dd17d608f157a1a81d2ef8515a50ddd785cce5d32dd16a1a57150",
+        "original_line": 8928
+      },
+      {
+        "name": "_on_menu_pause_solicitar_desistencia",
+        "sha256": "4da7bcdc4e64817bc5761d8c774b75ed942a5d617412ffc08ac284faac414c83",
+        "original_line": 8961
+      },
+      {
+        "name": "_solicitar_desistencia_servidor",
+        "sha256": "fc6ed5f9319f8f4224b75079c4df2affa0be13be8cd06add756728dfe128efd9",
+        "original_line": 9008
+      },
+      {
+        "name": "_notificar_falha_desistencia_rede",
+        "sha256": "5c8ead39aeb2735e475a80554e4b47b390e033ea6c07f283be5064bad44c5fdf",
+        "original_line": 9024
+      },
+      {
+        "name": "_processar_solicitacao_desistencia",
+        "sha256": "3d51e0d786fe11b49055bacd4776d810b499b8f026f1218f54af446551620a2a",
+        "original_line": 9030
+      },
+      {
+        "name": "_confirmar_vitoria_por_desistencia_rede",
+        "sha256": "14d99616a739baba8c6167a841e083978819d50d1e5ddaec6ef0b1773ace850c",
+        "original_line": 9178
+      },
+      {
+        "name": "_confirmar_apresentacao_vitoria_desistencia_apos_delay",
+        "sha256": "3dfdd761eecc938e11a3d2d61004e050e94e25b8318d5d3dc0b6ab6f131accca",
+        "original_line": 9201
+      },
+      {
+        "name": "_confirmar_apresentacao_vitoria_desistencia_servidor",
+        "sha256": "bf8e72e3b1a9a2c339474008ab77dd854b127509b845785fd61eb618afc2757c",
+        "original_line": 9227
+      },
+      {
+        "name": "_resolver_desistencia_rede",
+        "sha256": "c3d8bd0f3a657bc33f036095d5451b9dcbeb73ebd471828750d7aa92a5549f54",
+        "original_line": 9243
+      },
+      {
+        "name": "_sair_para_menu_apos_desistencia",
+        "sha256": "0fd87ac20c0fe6b2be1a327a8c8cb0f6d46b71e12ed169918d3f51de5ed3a1a8",
+        "original_line": 9320
+      },
+      {
+        "name": "_encerrar_eleicao_apos_resultado",
+        "sha256": "f49eb24744b46f636b4c94b32d403fa46e6ddfbf9fd2d32b1e5a6509ee611f3a",
+        "original_line": 11313
+      },
+      {
+        "name": "_encerrar_eleicao_rede",
+        "sha256": "240f97e4ccd2e0cc776e95900d548c749af60df372ef96dbf03cf67620445809",
+        "original_line": 11332
+      }
+    ],
+    "tabuleiro_tutorial_bots.gd": [
+      {
+        "name": "_configurar_bots_locais",
+        "sha256": "ff04eab247f70de3ae972ac6a063f6d000bc4ea18bb05ac0e1e89ca004157c47",
+        "original_line": 747
+      },
+      {
+        "name": "_eh_jogador_bot",
+        "sha256": "9da94f7a8ddb8d7dee554bd9c98f70a3a1f0f69a7fcda5013eba9d27d9f3e8ff",
+        "original_line": 775
+      },
+      {
+        "name": "executar_rolagem_bot",
+        "sha256": "48719dba7fdc64ce14f6f88a3e3bcf54ce7482702ca622f6a7bf43838233271e",
+        "original_line": 787
+      },
+      {
+        "name": "obter_resultado_dados_tutorial",
+        "sha256": "2121108f58b36a4b388d7160df1e7c2a4a4a529e037c9ee51f6ff40c763540cd",
+        "original_line": 802
+      },
+      {
+        "name": "_solicitar_turno_bot",
+        "sha256": "52152611fdaf486d7c52761f237226dcc9e38e49aa5cfe8cf07510f9a854acb9",
+        "original_line": 808
+      },
+      {
+        "name": "_emitir_evento_tutorial",
+        "sha256": "9079dc0b1dbeaa93bf596526c9ecdab6f979704d790772071b46066b7f21b402",
+        "original_line": 817
+      },
+      {
+        "name": "preparar_cenario_tutorial_expandido",
+        "sha256": "c3302356bafc59f67812e6bda8cea10b62ddd481c90d50972a16cd9a280159ec",
+        "original_line": 825
+      },
+      {
+        "name": "obter_retangulo_tile_tutorial",
+        "sha256": "810a4e97b665aecdea9ebf88ff39fdf75a8a825b90449487915fd3cc519d10f6",
+        "original_line": 860
+      },
+      {
+        "name": "definir_nivel_construcao_tutorial",
+        "sha256": "3113ff422d56965b990a4cda713384c09c1803a679230867d8e10570afe29d01",
+        "original_line": 884
+      },
+      {
+        "name": "obter_resultado_tutorial_rapido",
+        "sha256": "70c1ac3041e7056aa0a356b0c320b305f09b4777e052cfe2066c7483290ebc74",
+        "original_line": 916
+      },
+      {
+        "name": "_sabotagem_bloqueada_por_raizes",
+        "sha256": "24497248ea67aefed79c30faa29b17e49bada6de9357b7e2022d8c26892c27b4",
+        "original_line": 3347
+      },
+      {
+        "name": "_notificar_tabuleiro_pronto_tutorial",
+        "sha256": "5526345f24d2a18fb15addf5826d570050e5ba18c2fe929624e7602b44462f1d",
+        "original_line": 6412
+      },
+      {
+        "name": "_responder_negociacao_bot",
+        "sha256": "f9723913a95dbc1e1c55f1c8e019fd58a664bb7f6e6cb838f012e362260630d9",
+        "original_line": 10360
+      },
+      {
+        "name": "_valor_pacote_negociacao_bot",
+        "sha256": "0f93b8c2d7d47ec90fdc08b2cb18fdfeff4c40c41a0e9910fd5b2a56d7eb5538",
+        "original_line": 10404
+      }
+    ],
+    "tabuleiro_visual_camera.gd": [
+      {
+        "name": "_cor_visual_personagem",
+        "sha256": "456d2ae2e44dca87dc14c7ff30a05a9c08e773e84f67384b8203ef4ae8eb6f3c",
+        "original_line": 731
+      },
+      {
+        "name": "_atualizar_alvo_camera_espectador",
+        "sha256": "3f040e7867512063eacfa55a305dbddf65061b5ed8db6bd581bd2c61da4c3e09",
+        "original_line": 6095
+      },
+      {
+        "name": "_aplicar_zoom",
+        "sha256": "072b6df549cca9b5c2956317bd9fbb093fe7ee45883c200af9a4c60bcc6347ef",
+        "original_line": 6283
+      },
+      {
+        "name": "_limitar_posicao_camera",
+        "sha256": "e775168641d2112d67abadb831405e380f33a26d0e27011a6f128201c2045ec5",
+        "original_line": 6308
+      },
+      {
+        "name": "_posicionar_camera_inicio_cinematica",
+        "sha256": "36c5017ecd5ba83ddba17a18877fc2d5d77173eeae855620e6fc01b54081ae7b",
+        "original_line": 6326
+      },
+      {
+        "name": "_iniciar_cinematica_abertura",
+        "sha256": "2da57d61cfa989d87afaa79320f2056f529c8aca7979931c640f7d5cb71a63ce",
+        "original_line": 6340
+      },
+      {
+        "name": "_verificar_tween_cinematica",
+        "sha256": "7f9f60c7f68f5f16b3349f37236898461e8c6d4680d8f457efe7814129d410d1",
+        "original_line": 6370
+      },
+      {
+        "name": "_concluir_cinematica_abertura",
+        "sha256": "83e7fbf4520f2f98b856f92ee0542eb6282a67bf14b296a0daa04b34f9bc1429",
+        "original_line": 6377
+      },
+      {
+        "name": "_atualizar_visual_dono",
+        "sha256": "68e100a7243b3d3eae7275235b2d3f4aa0a4b193642516c55cbe81466ab600fa",
+        "original_line": 6660
+      },
+      {
+        "name": "_validar_layout_tabuleiro",
+        "sha256": "e53de65858b08683c767100fbee8be79243b3e9f10fff1012fdb1b40f8288718",
+        "original_line": 6708
+      },
+      {
+        "name": "_garantir_layout_tabuleiro",
+        "sha256": "040aed1caa17793eec0277a69448395fa1432f105d61b9df31aee900c888614c",
+        "original_line": 6721
+      },
+      {
+        "name": "_gerar_cidade_de_fundo",
+        "sha256": "665d0f7897aa2109f58f86bc6e7a82f5f2e2696f82df2c9e233699a4321b3ac7",
+        "original_line": 6846
+      },
+      {
+        "name": "_hash_posicao_construcao_cidade",
+        "sha256": "0f6300764a762a405d06233239150d4310671faca2739b9daa7ce003c9ec2a53",
+        "original_line": 7163
+      },
+      {
+        "name": "_modulo_positivo_cidade",
+        "sha256": "66d6f512a09c4ce00eeb8caf25e6eaaf3a4ebb183c39dcf2803703d4ced0b3a9",
+        "original_line": 7171
+      },
+      {
+        "name": "_obter_indice_construcao_cidade",
+        "sha256": "36016581d80536fa7f904f7ac692646e8a71787bf3f5706baf6da8ff5de781dd",
+        "original_line": 7180
+      },
+      {
+        "name": "_classificar_variante_base_cidade",
+        "sha256": "78feeb84dda21c6972e814dec5f56ee40fd33daa5590c890c31949d645b49885",
+        "original_line": 7248
+      },
+      {
+        "name": "_atualizar_imagem_construcao",
+        "sha256": "eea411b53d07265d2fdea33cf82becfbe37d75e70090225fb7a2ab4a30cd5a57",
+        "original_line": 7619
+      }
+    ],
+    "tabuleiro_economia.gd": [
+      {
+        "name": "_obter_aluguel_tabela",
+        "sha256": "db95644b79e065f633215aecd9c6baecc3b1c6cfa1bca16a1b866485dda725a8",
+        "original_line": 465
+      },
+      {
+        "name": "_validar_tabelas_aluguel",
+        "sha256": "5f53bb2c73ade7615378a4f41a613b6d89dd08471bd77410dfb4dc45b19d0720",
+        "original_line": 476
+      },
+      {
+        "name": "_atualizar_menu_construcao",
+        "sha256": "8b4cda9b60255749867b2c18ea3d2a33f6a45534096c0789bfb3b15ffe444f52",
+        "original_line": 1745
+      },
+      {
+        "name": "_registrar_obrigacao_falencia",
+        "sha256": "37c8111322f159ddd514dba1a116ac85aa7e10fff701651bee79c9c5f684c7fb",
+        "original_line": 2078
+      },
+      {
+        "name": "_limpar_obrigacoes_falencia",
+        "sha256": "573836e7c317056922ede6a3d8ea3ce147d51a3d30bdd4fe59ba265e1a88a60b",
+        "original_line": 2104
+      },
+      {
+        "name": "_aplicar_mudanca_dinheiro_rede",
+        "sha256": "e32d982fd77975e83af9fdeb345612a2878559b1abefb8c0f01efc4e671720ca",
+        "original_line": 2109
+      },
+      {
+        "name": "_pagar_aluguel_rede",
+        "sha256": "aa62fd66694222baa59fd463cc29aa2fbb1c2cdd5194a4a7be9583da7048acd9",
+        "original_line": 2186
+      },
+      {
+        "name": "_efetuar_compra_rede",
+        "sha256": "3e1f28a1d551f7f9a9e9b89a8b8e780540628131fbf8a82d77898b6f857041be",
+        "original_line": 2315
+      },
+      {
+        "name": "_propriedades_do_jogador_para_carta",
+        "sha256": "18b1c1894e7b335ae6b645b8c97fbe07505adf4dd305e9115a0bab10252697ce",
+        "original_line": 2407
+      },
+      {
+        "name": "_conceder_propriedade_gratis_carta",
+        "sha256": "b51f365ddffbca19f8c42a9f0e6f945cf7c5c423d9c8de464bc43218bef705a0",
+        "original_line": 2427
+      },
+      {
+        "name": "_propriedade_vizinha_da_posicao",
+        "sha256": "54efa4c2ac29cbdba2f487da8f79c1bd4bae6d6898e7171cf4789b3fc7cf8c62",
+        "original_line": 2470
+      },
+      {
+        "name": "_iniciar_leilao_rede",
+        "sha256": "507ded8c5555be3b9554e73b26bfcc5b408e047ea2eccee3b1470d72c5e7b80f",
+        "original_line": 2703
+      },
+      {
+        "name": "_on_leilao_timeout_local",
+        "sha256": "100d90093d4e924d63059bc9d327eb28032a78aa4f9ed55d8305289942fb2179",
+        "original_line": 2806
+      },
+      {
+        "name": "_calcular_vencedor_leilao",
+        "sha256": "d6d5ca0c2b8f2be74fa79ac87513041e5731ef6b4d216f4a20d53d290a961908",
+        "original_line": 2865
+      },
+      {
+        "name": "_finalizar_leilao_rede",
+        "sha256": "4b5958f6805f5a8d93e584096459d08f8c1166b3ba31cb43dda3968b2f75a81f",
+        "original_line": 2891
+      },
+      {
+        "name": "_tem_monopolio",
+        "sha256": "3ec73745920a50271ef3205f2c5ea74300719cd684de6c381981f922409cc531",
+        "original_line": 3362
+      },
+      {
+        "name": "_pode_construir",
+        "sha256": "2d8d89254f0f2547d31fa51b7e76049ed87f54b0ca2f23e313ad5bcf9d0f292a",
+        "original_line": 3398
+      },
+      {
+        "name": "_construcao_bloqueada_por_efeito",
+        "sha256": "2150dc95168522de7e189a7010d261bf4b693240bd6dfc5e7c89e9a5f44f500e",
+        "original_line": 3502
+      },
+      {
+        "name": "_obter_aluguel_congelado",
+        "sha256": "d1f48d7b2defab12073777db0bba5eddc14a05ca48e3960a33d3f6151353d327",
+        "original_line": 3616
+      },
+      {
+        "name": "_aplicar_efeitos_ao_aluguel",
+        "sha256": "eab8cfe30fe6906b1dfef6ff358b0c3f9136f1ccaa664a30012ca94942e8f1ca",
+        "original_line": 3629
+      },
+      {
+        "name": "_calcular_valor_propriedade",
+        "sha256": "50524dd3c84a07f8d50a2e8a2c73a5842468f334f4147a6cec8d6509129d70b3",
+        "original_line": 3648
+      },
+      {
+        "name": "_calcular_preco_compra",
+        "sha256": "b1cf4a0f5e508e38915a4b503591b4282608dfa8476c979c002da31e42ac1b91",
+        "original_line": 3657
+      },
+      {
+        "name": "_multiplicador_preco_leilao",
+        "sha256": "fb51635e0c63a77bf128d87c62e744f3aa9dcf6e712893a386e4cfbbb77239ba",
+        "original_line": 3664
+      },
+      {
+        "name": "_calcular_custo_resgate_hipoteca",
+        "sha256": "09790c6a4c651c6423a6d751e286ac6f61b34d27202e771f2e3b703e51d0c7f9",
+        "original_line": 3680
+      },
+      {
+        "name": "_negociacoes_bloqueadas_por_efeito",
+        "sha256": "bf77120c8dba1b2d554003352e78536f3e8eeacd6ddbbb27656849db1f00a9aa",
+        "original_line": 3694
+      },
+      {
+        "name": "_calcular_aluguel",
+        "sha256": "137230671ccddda1728b57b2b30c5f87fbd2656512c67a4f9299bc3cc20d5ef7",
+        "original_line": 3711
+      },
+      {
+        "name": "_propriedades_com_grupos",
+        "sha256": "c260d5dc118f4d95c7482db57d39ac8411fcfdc4d5232f954ac3636aebeed531",
+        "original_line": 4199
+      },
+      {
+        "name": "_valor_total_propriedades",
+        "sha256": "93f68b41c2af667fe78427da5565ad3cd4c72d00aacf0107d4a060a4de64b309",
+        "original_line": 4212
+      },
+      {
+        "name": "_opcao_propriedade_evento",
+        "sha256": "6397b249217a8e9a6e45847c6c46fbc3073dac2948e056b0a22c90f866d291b9",
+        "original_line": 4740
+      },
+      {
+        "name": "_fluxo_vendaval_seguro",
+        "sha256": "0772799442722bba956d79e684383fbb0648b13221f9bb346d47e1eb7243f28f",
+        "original_line": 4759
+      },
+      {
+        "name": "_resolver_vendaval_rede",
+        "sha256": "8939efce8e957f9bf092a1506d652d89652812bd9722b9601ddafc92f57d06b6",
+        "original_line": 4840
+      },
+      {
+        "name": "_preco_compra_crise_credito",
+        "sha256": "813d9286fe6e97fdb3fd92657246e67e0bbf43fed459b2d83c365f13444981cf",
+        "original_line": 4956
+      },
+      {
+        "name": "_hipotecadas_disponiveis_para",
+        "sha256": "8822e70b0e55c05bcb477bc6c4ee86fd393f35cee69c65b899fbb862a3c7159f",
+        "original_line": 4959
+      },
+      {
+        "name": "_fluxo_crise_credito_compras",
+        "sha256": "22e75d7af6c08367479e030bb7b469609bd5273eb8ba1f68b49626b17e0f3860",
+        "original_line": 4982
+      },
+      {
+        "name": "_comprar_hipotecada_crise_rede",
+        "sha256": "93ede62ff0522287f41e326e030ed7c5e9e60285fb151c5002ea9bc35365de6d",
+        "original_line": 5042
+      },
+      {
+        "name": "_preco_venda_gentrificacao",
+        "sha256": "7a4424c07df65e00a50b1e1b4f87f92cacc77a8243eb601b8907d9895d85f5a3",
+        "original_line": 5088
+      },
+      {
+        "name": "_cinzas_vendaveis_do_jogador",
+        "sha256": "baab043b10ab20181539a45e18c1accf0ca5957612a7e436a68e6cf37e518836",
+        "original_line": 5091
+      },
+      {
+        "name": "_fluxo_gentrificacao_vendas",
+        "sha256": "d95a0cf845aaab806c93ca06df7d3e48f3ffb0082b2f7ab396979a21e37cb6c1",
+        "original_line": 5104
+      },
+      {
+        "name": "_fluxo_migracao_leilao_especial",
+        "sha256": "761bf358f341172129a9f2f52ba1fa66364ee65f4eb3f76266d5aa03651bcdd8",
+        "original_line": 5357
+      },
+      {
+        "name": "_iniciar_fila_leilao_evento_rede",
+        "sha256": "7bc2ceaef6828667e8c7d6eced14b7cef9aa7ba077b96d466e08d195f3b798b7",
+        "original_line": 5368
+      },
+      {
+        "name": "_iniciar_proximo_leilao_evento_agendado",
+        "sha256": "29fd7534a2fd938f07c51c44bae7e591f338963c59b5b99a6eb871a1a941e040",
+        "original_line": 5389
+      },
+      {
+        "name": "_iniciar_proximo_leilao_evento_rede",
+        "sha256": "a2a3e136fd766d2643b40a6ecbdc1406e381e4d9a24e15a4b3228141b8b315d7",
+        "original_line": 5397
+      },
+      {
+        "name": "_grupos_monopolio_atuais",
+        "sha256": "da59045cae947c0fa99185759eae1da73556ba17de050e9be733cbbcdba4b8b8",
+        "original_line": 5792
+      },
+      {
+        "name": "_verificar_novos_monopolios_xp",
+        "sha256": "dde99024774825c7ab3e100f937ecf129fc20a6cdb0dfe2d9864f22379284994",
+        "original_line": 5800
+      },
+      {
+        "name": "_marcar_perda_construcao_evento_xp",
+        "sha256": "0d235f34b3c273bf39a400929f8aab36f146987e818b19133d4be55b1a191dc5",
+        "original_line": 5824
+      },
+      {
+        "name": "_contar_monopolios_do_jogador",
+        "sha256": "b5996d2bffc4c28220eba2e5419fcef615a03b89075a5324d7c27e66b817b1a5",
+        "original_line": 5927
+      },
+      {
+        "name": "_propriedades_para_estatistica",
+        "sha256": "b90ff27562d98f9530a082211e79907847ba9fa4c6b138d1b211ab0c60adb60f",
+        "original_line": 5940
+      },
+      {
+        "name": "_nivel_destino_construcao",
+        "sha256": "c19c40e674eb3c8062e6fa4590d09c045377d73af899c56d0a7453b2d15065b1",
+        "original_line": 7419
+      },
+      {
+        "name": "_calcular_custo_construcao",
+        "sha256": "8910309c873ed1152fe80a8b2be0b0f1f0900c8a0cafad393c595c8993fc0395",
+        "original_line": 7429
+      },
+      {
+        "name": "_motivo_construcao_invalida",
+        "sha256": "ecdc07915211039b0bc10a863d109efba30d96213dfc29ef290e76345f36fc70",
+        "original_line": 7446
+      },
+      {
+        "name": "_on_hud_solicitar_construcao",
+        "sha256": "6dba39c088e8cd3d4dbc3dd032775672faa9315a76f18c9a262d32b4b5ca18b3",
+        "original_line": 7482
+      },
+      {
+        "name": "_efetuar_construcao_rede",
+        "sha256": "aa621166a5cfc0946847ede06126efd439eae06ade3f2cb8ba2e681036071e0e",
+        "original_line": 7511
+      },
+      {
+        "name": "_contar_hipotecas_do_jogador",
+        "sha256": "79f336d2d210a34683595b4369c200a849caeff82dad6f991907960459d65dfe",
+        "original_line": 7676
+      },
+      {
+        "name": "_registrar_aquisicao_propriedade",
+        "sha256": "f6f444ed6b97ffb25bcc99bf87bfd05a82cb85f2c137024be4de1f4e084cf2ff",
+        "original_line": 7801
+      },
+      {
+        "name": "_rodadas_com_propriedade",
+        "sha256": "b56eba1127929cf99db5ec8da03b1959cb40ded6ea2bf81a2656cc4afc1fd43b",
+        "original_line": 7809
+      },
+      {
+        "name": "_on_hud_solicitar_hipoteca",
+        "sha256": "d250d70ab1f4b5d3685c94818c5262c32badde278be3ce42b4e906a106d5400a",
+        "original_line": 8322
+      },
+      {
+        "name": "_hipotecar_rede",
+        "sha256": "9cff8759623839d4d372aa959c58cfa6b1c5921e1df3a025c760ef032a90b994",
+        "original_line": 8344
+      },
+      {
+        "name": "_resgatar_hipoteca_rede",
+        "sha256": "18bf985521fa70eccd4d7309c092a6791ba0f3f032fa02410fca7cf4fb939b95",
+        "original_line": 8383
+      },
+      {
+        "name": "_notificar_falha_fianca_local",
+        "sha256": "92121f2699f96621f54646b7e6417402d95827691ad1b9b3b85d53e9a8293ebd",
+        "original_line": 8449
+      },
+      {
+        "name": "_verificar_falencia",
+        "sha256": "24b5d2309ea02b9240372b9e0568aba5b003ab8df3b852acb3e7e8a5581fda16",
+        "original_line": 9374
+      },
+      {
+        "name": "_distribuir_caixa_remanescente_falencia",
+        "sha256": "a215b23eb14ddab28c65e343532f5ba1b1de6683358043ec2eaba7a584751c7a",
+        "original_line": 9657
+      },
+      {
+        "name": "_declarar_falencia_rede",
+        "sha256": "8e80fab58759d1f85cc1d1467e8d6bd6a1cffd0cd6f361d421845317847b063c",
+        "original_line": 9750
+      },
+      {
+        "name": "_iniciar_leilao_falencia_agendado",
+        "sha256": "3875175bc2be459e74f2805cda54db019fe1899e25d8740485dc4810b1562b4d",
+        "original_line": 9896
+      },
+      {
+        "name": "_iniciar_proximo_leilao_falencia",
+        "sha256": "0a2267f94102b7cc074e556e38da2f81c60cbde9ad171b9ff8e7f69c48465f07",
+        "original_line": 9911
+      },
+      {
+        "name": "_tem_monopolio_total",
+        "sha256": "bc151ea1d204f927ed4a76e39018322ef4c04b515f208d8ba6df24d47ca18325",
+        "original_line": 9967
+      },
+      {
+        "name": "_calcular_patrimonio",
+        "sha256": "a61e5e8e34eaaadc670c3f46de5b5fa2ff890be9cb493d8fe0c0b1724ae6698f",
+        "original_line": 10019
+      },
+      {
+        "name": "fornecer_dados_para_negociacao",
+        "sha256": "f83ec6c5f43054fe818a38dd2074e3ead556d4618d66b7c26f234c10695160ae",
+        "original_line": 10204
+      },
+      {
+        "name": "_on_hud_solicitar_negociacao",
+        "sha256": "399c7f9ad77f31d136121ff171170257833538392e3f30062141ed558b8dc6a3",
+        "original_line": 10227
+      },
+      {
+        "name": "_enviar_proposta_negociacao_rede",
+        "sha256": "26d65dc822bd972502612a77e4a6a25c08dfe8bc0dcefff909c06325dd77e188",
+        "original_line": 10300
+      },
+      {
+        "name": "_on_hud_responder_negociacao",
+        "sha256": "e7bc7eeb6584b3d677fb1ddc57da10e045e5d4ec7dcf17b9e3f7db9f741d79ae",
+        "original_line": 10444
+      },
+      {
+        "name": "_responder_proposta_negociacao_rede",
+        "sha256": "0f43ab45109f00c2ad55d05fbc4d548cd2da6e27e52346b89f1c9ac90b278fa9",
+        "original_line": 10450
+      },
+      {
+        "name": "_executar_negociacao_rede",
+        "sha256": "7fc2e77e1d7dae4a19a80e4a94f3fd3ae6ed5cfc06e0e2d156c7c0e6c5bee3b7",
+        "original_line": 10597
+      },
+      {
+        "name": "_verificar_monopolio_apos_negociacao",
+        "sha256": "b421865d47ad047d6a4e9cd15734867c32d89bdc1d19bd77817437d736f4a470",
+        "original_line": 10877
+      }
+    ],
+    "tabuleiro_eventos_cartas.gd": [
+      {
+        "name": "_sacar_carta_no_servidor",
+        "sha256": "67a1133ab670785d9ffe4058efecb7a8bc88cb294b8e741c8f5fdcd5b07cbafc",
+        "original_line": 2365
+      },
+      {
+        "name": "_aplicar_mudanca_carta",
+        "sha256": "0ab2aa60bc8a50af6e598439f7ef55cd67720ea8c8f4b405b0ab97cb4fa8373f",
+        "original_line": 2388
+      },
+      {
+        "name": "_indice_deterministico_carta",
+        "sha256": "486ed699e9d8606486fe5cc50410a29ce3eec95f7926373867bb049ceccfa995",
+        "original_line": 2421
+      },
+      {
+        "name": "_aplicar_carta_rede",
+        "sha256": "53d48e5fcb094fded70904b41320121b94ac2e677005436f1af6bc28810eaa49",
+        "original_line": 2491
+      },
+      {
+        "name": "_acoes_bloqueadas_por_evento",
+        "sha256": "2083efaaea38d9654bdd54bc7ce2f4b704af38e878ce02d2323454d05a5cbcf0",
+        "original_line": 3417
+      },
+      {
+        "name": "_acao_bloqueada_por_eleicao",
+        "sha256": "86149993f4ef8a52803a509e1d75bab0c4c73341a6674baa3c61725a0d91d024",
+        "original_line": 3426
+      },
+      {
+        "name": "_ativar_efeito_temporario",
+        "sha256": "da761247e6f9d13c9bdf375c6257beee19fe0ed7b4baba448a6668330da78892",
+        "original_line": 3443
+      },
+      {
+        "name": "_criar_efeito_unico",
+        "sha256": "f7267bf25ecc2462729cfed0feda48a7a817cd9fca74104ba7dd9b64296cf045",
+        "original_line": 3459
+      },
+      {
+        "name": "_tem_efeito_temporario",
+        "sha256": "c3093404d330a287a9938fa694b4a64d838b3f530a9aadaf804da93ef0fef119",
+        "original_line": 3467
+      },
+      {
+        "name": "_efeitos_ativos_por_tipo",
+        "sha256": "d11ff07ce109287609350a2279fd8d293f5c9b34e0f3cce43525cce3d330f3e1",
+        "original_line": 3472
+      },
+      {
+        "name": "_efeito_aplica_na_casa",
+        "sha256": "47560a7915ae45a5b7fac7e00e1d8b7550132d28fb9bc39870104e1021efe79a",
+        "original_line": 3479
+      },
+      {
+        "name": "_decrementar_efeitos_temporarios",
+        "sha256": "7c98d8913aab6426eb806cf2b7b3689dc0880fb1302f75497c4cadfa398e4a68",
+        "original_line": 3520
+      },
+      {
+        "name": "_ao_expirar_efeito_temporario",
+        "sha256": "bddd6f46162bd6cd0eda9f48458943a7427d782a204b7ea54bbfd8cf7c36f015",
+        "original_line": 3546
+      },
+      {
+        "name": "_processar_efeitos_periodicos_do_turno",
+        "sha256": "04d1c29e1c92363f80bc982979ae363bdf7368f031b107449f7b9b26c3f6a1b7",
+        "original_line": 3585
+      },
+      {
+        "name": "_habilidades_bloqueadas_por_efeito",
+        "sha256": "e8333522f63b8e6e3067c08333862a1c19da63fdc5caa480d731032b259faac9",
+        "original_line": 3704
+      },
+      {
+        "name": "_gerar_tendencias_yasmin",
+        "sha256": "c9a9f630533b6e539b30f1555905b6cff7252324338d8ddcf759cfbd0c0449df",
+        "original_line": 3821
+      },
+      {
+        "name": "_pre_sortear_proximo_evento",
+        "sha256": "5937cc2572b4a843419feac3399d676fc91fe7ebb3a4f0b39f93933aa4164637",
+        "original_line": 3862
+      },
+      {
+        "name": "_sortear_evento_global",
+        "sha256": "f8dac8ea2823b75f2d506132f6636e1ef3e410b6986ac886d0080b5c3b732f53",
+        "original_line": 3924
+      },
+      {
+        "name": "_aplicar_evento_global",
+        "sha256": "d4c8038aeac5388200fc2186c94199814a2da896f6c88bd7b7f3c36aef6db033",
+        "original_line": 3954
+      },
+      {
+        "name": "_deve_oferecer_imunidade_breno",
+        "sha256": "6565660433155044f287c4fe1c0e27a3eba320a62c1b60356a6d01eda5ed9382",
+        "original_line": 4014
+      },
+      {
+        "name": "_iniciar_decisao_imunidade_breno",
+        "sha256": "f3c2a11a1dc96d9b6124c865346db9c2de600946772fc8586749acaa8a0f04a0",
+        "original_line": 4022
+      },
+      {
+        "name": "_definir_bloqueio_imunidade_breno_rede",
+        "sha256": "75d6ee97e7ec84742e31258105ce0d3de6c4fe37e55d9c2a66d9eff84a401ddc",
+        "original_line": 4068
+      },
+      {
+        "name": "_resolver_evento_global_rede",
+        "sha256": "e6dd0676f4117dbecdf271dbcc79b6fa8b2f5f5f03b580fb51aa707d2df9371a",
+        "original_line": 4077
+      },
+      {
+        "name": "_breno_ignora_evento",
+        "sha256": "e81bccfcb43d43d2a0e4685e3590d6ca87916d3b8d45ddde7d5cf280843329c9",
+        "original_line": 4116
+      },
+      {
+        "name": "_aplicar_dano_evento_em_casa",
+        "sha256": "224309b47b69864195d6bb6fb4c1bd0227a143c9f19d08b4f12f9f082b3cf419",
+        "original_line": 4177
+      },
+      {
+        "name": "_processar_evento_gdd",
+        "sha256": "eb395982e2d0ca9e64c413e4cd120da5f5bcd32037e668116bba4b1c070fb557",
+        "original_line": 4219
+      },
+      {
+        "name": "_jogadores_ativos_para_evento",
+        "sha256": "0d55f7c65671374971dc071ffe08703d9471082318d1e9519dd4755319b97b3f",
+        "original_line": 4479
+      },
+      {
+        "name": "_iniciar_fluxo_evento_interativo",
+        "sha256": "2b9c272bdb687e8759a645c93bfb0e85e66c4890a14181990c505aa8d7d55aad",
+        "original_line": 4499
+      },
+      {
+        "name": "_executar_fluxo_evento_interativo",
+        "sha256": "016efc90292516f6246a769bf5e549fa3b174900f5cd66384c434ef87a45c056",
+        "original_line": 4510
+      },
+      {
+        "name": "_definir_bloqueio_evento_interativo_rede",
+        "sha256": "73fddb438c42cd37c2d5d12db2cc2dedbf32b65936463f29ee7d6b2e74f9fd97",
+        "original_line": 4541
+      },
+      {
+        "name": "_mostrar_espera_decisao_evento_rede",
+        "sha256": "4b4b812138a72bd213eec685f482bc09dca7657dabc7ac0a974b3e5679dbda1c",
+        "original_line": 4634
+      },
+      {
+        "name": "_mostrar_decisao_evento_rede",
+        "sha256": "3cc52d284b38a0ece9339f089811d25c0386b29e57807b09f8fa54fa01641eca",
+        "original_line": 4649
+      },
+      {
+        "name": "_fechar_decisao_evento_rede",
+        "sha256": "5a1b655927c1da0bd2d228dbfb7c1ea36245341c4ae17fd533c49f350172e2b9",
+        "original_line": 4675
+      },
+      {
+        "name": "_on_hud_decisao_evento",
+        "sha256": "0d557a501ff8709b022d29505c003affd76440e8270c000a94b3570a3f6cac2a",
+        "original_line": 4679
+      },
+      {
+        "name": "_receber_decisao_evento_servidor",
+        "sha256": "720c2e941d2de0cf1c351a991d13217404588395f9d194522313650a33bb53ac",
+        "original_line": 4688
+      },
+      {
+        "name": "_fluxo_estiagem_votacao",
+        "sha256": "48c57f45c6a7996d53f0b890a2d717b7b9433294a16bebce144214ad1a28107a",
+        "original_line": 4879
+      },
+      {
+        "name": "_processar_efeitos_imediatos_evento",
+        "sha256": "d61c3fcc111d7586b48550702ba6b982f2d8b98c1f5344f85a8bd206a3447277",
+        "original_line": 5419
+      },
+      {
+        "name": "_registrar_uso_habilidade_xp",
+        "sha256": "dbbdf5b709d56bb2357f3ced23d0ed7431ce0c200e93163ecb39b804d5b8ee99",
+        "original_line": 5784
+      },
+      {
+        "name": "_iniciar_rastreamento_evento_xp",
+        "sha256": "db18f1fb61a98b0475335fcdcb73022c007a740eb6ae135cb4a3eb929183b199",
+        "original_line": 5814
+      },
+      {
+        "name": "_finalizar_rastreamento_evento_xp",
+        "sha256": "1dc378383af75d77d57ad61434c5fed3382e1f5458571bde990a1089d737d40c",
+        "original_line": 5831
+      },
+      {
+        "name": "_aplicar_impacto_reputacao_evento",
+        "sha256": "54993cc206a69f1bed70a3824b5bab3207c3bd54e42b4c8a34c7a5f2819368d7",
+        "original_line": 5890
+      },
+      {
+        "name": "_nome_efeito_espectador",
+        "sha256": "8b6acb1cceecf4573e2e697c7425008cd996f02add7436e35d16fce6fc96e66c",
+        "original_line": 6029
+      },
+      {
+        "name": "_eventos_ativos_para_espectador",
+        "sha256": "3c14d709670bcda283b1febe78bfe04039700b7031e0024a90fb4ee114b77f20",
+        "original_line": 6038
+      },
+      {
+        "name": "_computar_opcoes_alvo_habilidade",
+        "sha256": "530a48b360a9d3006f674cfe692a9e65ba0cffa330b88fbeac336f83dd294be6",
+        "original_line": 7781
+      },
+      {
+        "name": "_yasmin_possui_terreno_no_grupo",
+        "sha256": "d79e834d9fe9dde355059db9dfe2103fd64f055817f8436aae9ab7a984f1006e",
+        "original_line": 7815
+      },
+      {
+        "name": "_yasmin_ja_usou_contra",
+        "sha256": "f48efb9096cf6b03d80100602b25749c3e5a6376e201cdb7dd96b2a5158f0973",
+        "original_line": 7827
+      },
+      {
+        "name": "_motivo_oferta_yasmin_invalida",
+        "sha256": "552aa1fe9fb9d8897f9a70f00741a97da9df3be3b684ab2308f21b2c8351b34b",
+        "original_line": 7834
+      },
+      {
+        "name": "_opcoes_yasmin",
+        "sha256": "931d6ef0728839d0de4cf0f0e227ab657e9800e75555475d474fda8c0e2c5fee",
+        "original_line": 7865
+      },
+      {
+        "name": "_opcoes_breno",
+        "sha256": "ceda42f837a4e10f68c90ea0e04754c799b2d9f2e5f7cfff0bc9f7567988082e",
+        "original_line": 7900
+      },
+      {
+        "name": "_opcoes_mira",
+        "sha256": "d9e579da9472248557671d0cfa953f588851f8d29ba9977a77c3661369675a2a",
+        "original_line": 7928
+      },
+      {
+        "name": "_opcoes_igor",
+        "sha256": "f0d765c5e2efadb0ad544a47778d20f0852cbe99f14c4e241b5fa2e45c3aa8f9",
+        "original_line": 7951
+      },
+      {
+        "name": "_opcoes_diana",
+        "sha256": "03da6249a998babb2a1d4c51096248441cf38b79fb24eae0efa22bf3a3614a80",
+        "original_line": 7974
+      },
+      {
+        "name": "_opcoes_kofi",
+        "sha256": "4c4368abf20af636e70e41b8fff62b452b6c6459a50bfa033607bba8d8e4c696",
+        "original_line": 7999
+      },
+      {
+        "name": "_on_hud_solicitar_habilidade",
+        "sha256": "60b6a282a95dbf35b2e8e7e4a318884caa8271f0bb6326a82deed7bc33e4fcbd",
+        "original_line": 8027
+      },
+      {
+        "name": "_ativar_habilidade_rede",
+        "sha256": "d17b26adc40f3191b97d148aee3e6fd81cfce87f78f600b2fb2ea11fb94b367e",
+        "original_line": 8053
+      },
+      {
+        "name": "_habilidade_yasmin",
+        "sha256": "d8d0121e0be40dea4e37fa849ac1d0d6b587e51f2b9f5b247d41a548913da4a4",
+        "original_line": 8095
+      },
+      {
+        "name": "_habilidade_breno",
+        "sha256": "0adaad49fda9f82ca9a7f6f57744119e1a0ac1d62968c2f54f40dc6d565af65b",
+        "original_line": 8159
+      },
+      {
+        "name": "_habilidade_mira",
+        "sha256": "be878b5736749c035487dddd8e6be2e984f6375a7d8aa917ea8157ec635902d6",
+        "original_line": 8206
+      },
+      {
+        "name": "_habilidade_igor",
+        "sha256": "e29f0188b985eeabedcc098dd70844d35e9e28a3fa9e58c4b72f80ce4cb19d73",
+        "original_line": 8240
+      },
+      {
+        "name": "_habilidade_diana",
+        "sha256": "3940bf37362b0ad1f6355e602b1804be6e90033c484d6f6c30102caa555e9fcf",
+        "original_line": 8268
+      },
+      {
+        "name": "_habilidade_kofi",
+        "sha256": "bc33ea0dbf33d2639b974ed31d01c0a9f8a418b3c02da2414580b8bfb4f4d353",
+        "original_line": 8285
+      },
+      {
+        "name": "_oferecer_abutre_igor",
+        "sha256": "776d2f5400fcadd3f867f6e10c1fa62e7b15dab1ef5bc39c6488fb89ee1ce445",
+        "original_line": 9516
+      },
+      {
+        "name": "_jogadores_elegiveis_para_eleicao",
+        "sha256": "78a4ace1b4e46a6725688dde4b331fd6fb4184fa9b31ad861a504f5c67c7fbd1",
+        "original_line": 11181
+      },
+      {
+        "name": "_on_hud_voto_eleicao",
+        "sha256": "6fcba8e73457f6d4bfd70ccfb4449e82c60d23d9a1f2cd0f3971ee1a91b1beb0",
+        "original_line": 11202
+      },
+      {
+        "name": "_receber_voto_eleicao",
+        "sha256": "110e845d315cdca67b601fc956e71881d5b54b786c90d5d384d1714c6dbb88a4",
+        "original_line": 11212
+      },
+      {
+        "name": "_mostrar_voto_recebido_rede",
+        "sha256": "3308478a26f04d9cc373d8c70a114a8ad9cc19512549f341d977f083e8dba4da",
+        "original_line": 11235
+      },
+      {
+        "name": "_iniciar_votacao_eleicao",
+        "sha256": "dc4573b95a7765fad9f0d7f7e79896aa41b081e32bd30bbc288fe7cde87e9b7e",
+        "original_line": 11241
+      },
+      {
+        "name": "_mostrar_painel_votacao_rede",
+        "sha256": "ef0830e516841350330e4285cf0eee720f01125ab8321f3d1bccfa50b78ec2e3",
+        "original_line": 11264
+      },
+      {
+        "name": "_iniciar_countdown_votacao",
+        "sha256": "b3e0a14a538d0812d702fa4b51e2b368a3bdaf1fc89285868005585e680ccafb",
+        "original_line": 11275
+      },
+      {
+        "name": "_finalizar_votacao_eleicao",
+        "sha256": "31bff8d6ea4bde08127a1166c9d7f9793e638ff9301ade973b083bb4bb99f14b",
+        "original_line": 11285
+      },
+      {
+        "name": "_anunciar_resultado_eleicao",
+        "sha256": "1f869b1c244bf063e8dfb4f55589e76b80d3d6f3b9a2d07946a8086a22885138",
+        "original_line": 11319
+      },
+      {
+        "name": "_aplicar_pacote_eleicao",
+        "sha256": "34395cb0532b61629bd5d6f2e6d2bb15d606302eedf36fedacf9716a2bd24ade",
+        "original_line": 11377
+      }
+    ],
+    "tabuleiro_turnos_movimento.gd": [
+      {
+        "name": "_on_dados_rolados_recebidos",
+        "sha256": "f4e3b9c68b1dd53a558ad7311c6dc22f49430bee1a84bc0d2373217a4263821b",
+        "original_line": 1412
+      },
+      {
+        "name": "_avancar_turno",
+        "sha256": "c8e07a32d471b2ad9370fa942e7b1e1aaada192a0670784c973222a77d523c98",
+        "original_line": 1526
+      },
+      {
+        "name": "_atualizar_hud_ciclo_turno",
+        "sha256": "f7fc2867363cc4710c54d08d6996c97fc1d7bd2142d8f14f51564ce14dec15e6",
+        "original_line": 1533
+      },
+      {
+        "name": "_atualizar_hud_minha_casa",
+        "sha256": "68ed3ba08da5e74c9eda2ed15f00fed15291f5e4a6a07e8901a1cab52c0cd661",
+        "original_line": 1665
+      },
+      {
+        "name": "_executar_casa_especial",
+        "sha256": "a92dc2f3b7409a88bd4cc7fa662611b6d3a1dbd93b659c884a8fff29f6d0482e",
+        "original_line": 1921
+      },
+      {
+        "name": "_ir_para_prisao_rede",
+        "sha256": "bf6d61b7b66917a4e3533e8c9c69887687cd40735f9dfa9d07c351d3ad08d9c9",
+        "original_line": 1999
+      },
+      {
+        "name": "_continuar_preso_passar_turno_rede",
+        "sha256": "f33d23c0394abc080232159fd6492babbf72c73952ac9f8425399788f71a6b2c",
+        "original_line": 2072
+      },
+      {
+        "name": "_proximo_jogador_ativo",
+        "sha256": "e1a7b763251bc76674a1fe0154a9b5fae696b0a76adf62968f38a791f3b6cf4c",
+        "original_line": 2458
+      },
+      {
+        "name": "_finalizar_pouso_e_passar_turno",
+        "sha256": "09e757a4bb08af25b8d43a584f4f9481063b4ef327adc3628e44cd9ff6b0aa46",
+        "original_line": 2955
+      },
+      {
+        "name": "_executar_portal_atalho",
+        "sha256": "5574c16a1bf1a5b9687c5dec4c83f638535dfde306ba0da63e7b37e4c5e125ee",
+        "original_line": 2978
+      },
+      {
+        "name": "_processar_passagem_de_turno",
+        "sha256": "fb0a6eb4f7b500cc3ca35adc2315b173fb86f185af3497119e37286e6989c98a",
+        "original_line": 3087
+      },
+      {
+        "name": "_avancar_turno_rede",
+        "sha256": "1896f287e0cdd237c11ce3885f9ae1f720becc19d15b10eaf8714a0233dc26fb",
+        "original_line": 3113
+      },
+      {
+        "name": "_mudar_turno_no_servidor",
+        "sha256": "f12bcdaa6a5780e72a758c42972751a06d36fdd4542e5966a7ab99daba2a86ce",
+        "original_line": 3330
+      },
+      {
+        "name": "_jogador_possui_grupo",
+        "sha256": "bc9e928e61deb5cc1cccc7244000979216712778545a4c36fae629245a80f28f",
+        "original_line": 3573
+      },
+      {
+        "name": "_jogador_possui_nome",
+        "sha256": "b904231f9f19e52c74668d73ae049dd060241fa0154dd2b41afaa806d51705bd",
+        "original_line": 3579
+      },
+      {
+        "name": "_probabilidade_trafego_jogador_1_turno",
+        "sha256": "4b0a0d56104e2482f376585262c6af3a01fea32f27e98c3ea37bd467967fed99",
+        "original_line": 3794
+      },
+      {
+        "name": "_proximos_jogadores_do_relatorio",
+        "sha256": "c18edca74093140dd90d718b3841e75382573ddcc0fe5b9ea916132505d94428",
+        "original_line": 3803
+      },
+      {
+        "name": "_garantir_meta_jogador",
+        "sha256": "3c4c4103234e41e706390255875d2c2fe162f60e3d8865381979f5feb5875843",
+        "original_line": 5728
+      },
+      {
+        "name": "obter_dados_espectador",
+        "sha256": "25e2dd92b7b7b9abde85962ba10a9facb9b22bc6df4b8382ee10ccb0d2c0e199",
+        "original_line": 6052
+      },
+      {
+        "name": "focar_na_casa",
+        "sha256": "77e0dd8b49539b8135ffa19c0625c19c6298007b74ea7d56c23e015d46e317b6",
+        "original_line": 6419
+      },
+      {
+        "name": "_get_tamanho_casa",
+        "sha256": "278b2375709997c2713e17a6d9a5a5a14da69f35ed66cdb93d02751407e39fc5",
+        "original_line": 6455
+      },
+      {
+        "name": "spawnar_pino",
+        "sha256": "50bb6e1e6b60a53a00835d377dddb456487a23d0c5f4033d540fa869ff698cdd",
+        "original_line": 6470
+      },
+      {
+        "name": "_desenhar_casa",
+        "sha256": "c0edbb483e1ce613715906e9e5e73c8c6f78443759eed5183d0daea803071b4b",
+        "original_line": 6522
+      },
+      {
+        "name": "_adicionar_pino_na_casa",
+        "sha256": "d5fdc8fca0f8d6612fce21b2648e925f4b37c959a2433a71648362d1fa7e1980",
+        "original_line": 6680
+      },
+      {
+        "name": "_remover_pino_da_casa",
+        "sha256": "4238e21d378a58863db4d0a21b22fca828382fed16d9749d0bf445cc68356a16",
+        "original_line": 6695
+      },
+      {
+        "name": "_obter_posicao_casa_segura",
+        "sha256": "4ea11ae2d1ec46f44ea3ee2136f4e27e85a69baad969916122775e49550730a2",
+        "original_line": 6738
+      },
+      {
+        "name": "_reposicionar_pinos_na_casa",
+        "sha256": "ca5757d81491e35f2945ae6fecb57c2df1b3cb453846fc5c55418df1a591b790",
+        "original_line": 6756
+      },
+      {
+        "name": "_grupo_zoneamento_permite_hotel_com_3_casas",
+        "sha256": "ce99badff40ce93905a14725c1b1fae7802db28d4de1134d8de5f40001bb3f84",
+        "original_line": 7416
+      },
+      {
+        "name": "_destruir_casa_aleatoria",
+        "sha256": "83ffe28e3588102b597ae73f32ca894f14c7613a60ce4f28cc860ce955d32bdc",
+        "original_line": 7648
+      },
+      {
+        "name": "_contar_hoteis_do_jogador",
+        "sha256": "d880847fe77d6199662e101ff3b7ab011eaa54f615b57e4b5a1e767d184fe98c",
+        "original_line": 7668
+      },
+      {
+        "name": "_on_hud_solicitar_fianca_prisao",
+        "sha256": "eda7360e935b0723b30acf3bf1afa97f0a8bc153bfa2a0aae001435552c10b7f",
+        "original_line": 8408
+      },
+      {
+        "name": "_solicitar_fianca_prisao_servidor",
+        "sha256": "def8bfa1d3137bda480fc0c60685172ccbab759a5e90669389caa1b906d1ca48",
+        "original_line": 8438
+      },
+      {
+        "name": "_init_jogadores_ativos",
+        "sha256": "4bcdc2cc7803ab17efb6ef2776337530c5e736c74eb1fcfbea9253acac0d068a",
+        "original_line": 10135
+      },
+      {
+        "name": "_processar_promessas_ao_avancar_turno",
+        "sha256": "cac9416717b356c4c59a26cab04ec88b6a29e1a95ec4c011c832d5df104af8a8",
+        "original_line": 11124
+      },
+      {
+        "name": "_cancelar_promessas_do_jogador",
+        "sha256": "49b31b6f051194a0dec6bc58e82605464d3fa541a19090c0e6eeb675a5038539",
+        "original_line": 11162
+      }
+    ],
+    "tabuleiro_hud_interface.gd": [
+      {
+        "name": "_mouse_sobre_hud",
+        "sha256": "521e98f104a13ec328120a19ea7d9004511c9f9c1caf8d7a61dbdaa15f50d352",
+        "original_line": 6178
+      },
+      {
+        "name": "_input",
+        "sha256": "5c7ea45681ec88610591d9ae44d85ffc6246c9cc2e206980a7a8b64f99a5a72a",
+        "original_line": 6201
+      },
+      {
+        "name": "_on_hud_solicitar_opcoes_alvo",
+        "sha256": "d3461d90eef3ec38dbf42baf0caff18344176e67659af2176a0de8b88b4f6035",
+        "original_line": 7744
+      },
+      {
+        "name": "_on_menu_pause_visibilidade_alterada",
+        "sha256": "9dcd7e34e6c185733c7b45a0d61ec0b90cd58bcd05bf1942d02cf20eb36e2c26",
+        "original_line": 8573
+      },
+      {
+        "name": "_conectar_sinais_hud_novos",
+        "sha256": "6a4dae9cdda8a75a2b3b6ee481416ebb636020ecd6e01b940cf01b1c8f5afcde",
+        "original_line": 10139
+      },
+      {
+        "name": "_on_hud_solicitar_alianca",
+        "sha256": "fc2a9d891f778cda85234eb7989ef015f7ff83901c941e919f60f2d2657a0a28",
+        "original_line": 10265
+      },
+      {
+        "name": "_on_hud_solicitar_criar_promessa",
+        "sha256": "15f722e7d9015f727c65b41d39d158436a24f37d20e515e04a89209bb5efb6a7",
+        "original_line": 11005
+      },
+      {
+        "name": "_on_hud_solicitar_quebrar_promessa",
+        "sha256": "6370d6a208995c46415e218196a88332502efb5e2ea2a9a949914117a26a23ad",
+        "original_line": 11038
+      },
+      {
+        "name": "_atualizar_hud_promessas",
+        "sha256": "2cf1288a083d16815a7d36ddadc335954bc091a6fa8827d4d83fd6604097d82c",
+        "original_line": 11174
+      }
+    ],
+    "tabuleiro_core.gd": [
+      {
+        "name": "_ready",
+        "sha256": "8290534b0333c818110ed9586421c12a46a694f8b18ad5e78b70ae14da9a5fe3",
+        "original_line": 605
+      },
+      {
+        "name": "_exit_tree",
+        "sha256": "f8f8474acfec5353ea891be8a505c28c501f25d76072650187a6f113dd87be04",
+        "original_line": 1056
+      },
+      {
+        "name": "_criar_estado_tabuleiro_mutavel",
+        "sha256": "76cf079a3bf377f53932d0adadf470d7f722b7dac34cb3849ab645700f46e03b",
+        "original_line": 1180
+      },
+      {
+        "name": "_aplicar_estado_tabuleiro_mutavel",
+        "sha256": "53de2457d72567322bd1dbf1caa87d124a1f6f47f6be72d44495dc6faad27de0",
+        "original_line": 1195
+      },
+      {
+        "name": "_processar_terreno_pousado",
+        "sha256": "9636663a26a74ef90cefd103747d50fe7efaf6846ea9ac750eb757093045ac19",
+        "original_line": 1808
+      },
+      {
+        "name": "_quantidade_linhas_metro",
+        "sha256": "dee810f3bcb43f2600931f8328fbbda18486bdf85115d7960058198fe72d5fcb",
+        "original_line": 2145
+      },
+      {
+        "name": "_conceder_passes_transporte",
+        "sha256": "014c192f73549f148f825938b70036342d418d2e78e94007f73ba5c51c323494",
+        "original_line": 2152
+      },
+      {
+        "name": "_consumir_passe_transporte",
+        "sha256": "94f36f4d587fed7410046903ae0f0617a45210576e672290e3ade84616531458",
+        "original_line": 2168
+      },
+      {
+        "name": "_disparar_inflacao_global",
+        "sha256": "1c7089360a4167fe6c55439df7d745362c43ef2c645ca042c1260eb5bcaa99f9",
+        "original_line": 2384
+      },
+      {
+        "name": "_grupo_bairro_vizinho_da_posicao",
+        "sha256": "605a04ecf6f21fc1ec205958db7db1a489d9534b264d9f4e2f5c699b0ef20ce9",
+        "original_line": 2484
+      },
+      {
+        "name": "_on_lance_local_recebido",
+        "sha256": "32f363d1513e3cd0802ddb3e7390a477ab2e1f81aaf1f1e6df04e4e3d7676025",
+        "original_line": 2813
+      },
+      {
+        "name": "_receber_lance_no_servidor",
+        "sha256": "f35fd94e31f175fdd78c37f2d35831affe0b3a8d4da45406744118a4b1eb18d1",
+        "original_line": 2819
+      },
+      {
+        "name": "_set_dupla_status_rede",
+        "sha256": "d3d6f2f96beb6ad47115938f5834adbda4bd8f1a58575a6665cf073dbfb8b42c",
+        "original_line": 2973
+      },
+      {
+        "name": "_e_imune_a_confisco",
+        "sha256": "50d42407a0a59bf457b993470d5ccaed3a8e03b7404055a037d2167784a5cb75",
+        "original_line": 3342
+      },
+      {
+        "name": "_sao_aliados",
+        "sha256": "be513faaf7cafcf6b2f0ab5cecd4cd34c045630cecf260ee880f4db50f1eb5f2",
+        "original_line": 3379
+      },
+      {
+        "name": "_ativar_inverno_startups_rede",
+        "sha256": "17e684b3a7af043857f6ae81b5ccebfab5affa90e06d156bc9f240cccbe10d01",
+        "original_line": 3557
+      },
+      {
+        "name": "_calcular_bonus_partida",
+        "sha256": "6319a1a28381c567d3e6e31eea039ccab6bc79a99ea6ea5943d25e675ebdea42",
+        "original_line": 3670
+      },
+      {
+        "name": "_acordo_silencio_bloqueia",
+        "sha256": "34a92f1c22151b53de4aa7ba8623dfd71a8e148d961ae4cec2afca7e3f05d28c",
+        "original_line": 3701
+      },
+      {
+        "name": "_posicao_final_para_relatorio",
+        "sha256": "ffd251dda2eb396d8b81cc9aacad64cff2b136f3e6b7c03c5de806c873f82800",
+        "original_line": 3782
+      },
+      {
+        "name": "_aplicar_taxa_drenagem_para_grupos",
+        "sha256": "77d4c80ef49dc802029cc6b75dba18d80410d54d2647a7c803ca7297f9703e8f",
+        "original_line": 4125
+      },
+      {
+        "name": "_aplicar_taxa_enem_apagao",
+        "sha256": "a1d9d6014317bfa4fa775eaf4e75eb84ac83badcba964cf437c164e1b6c8f213",
+        "original_line": 4142
+      },
+      {
+        "name": "_executar_sessao_decisoes",
+        "sha256": "ce432c3847e336ed1df8f1740ae457eca9fa157d838d87ed7c9b8372b639cd81",
+        "original_line": 4582
+      },
+      {
+        "name": "_resolver_estiagem_rede",
+        "sha256": "40826d4e8ff63050b979bf89a3bf5586f2697d3c1c55375c5594ae1e63d3626c",
+        "original_line": 4915
+      },
+      {
+        "name": "_aplicar_dano_gentrificacao_rede",
+        "sha256": "a8e0f86c7ad06c0374a7ca10aed9ea1236e6def365c8c890a0d8b8057a8f4752",
+        "original_line": 5169
+      },
+      {
+        "name": "_vender_cinza_ao_banco_rede",
+        "sha256": "b3d9c64ef764bca2679b5015f584a614372b3bd1ca6dbaa04c4a2f6c454f9e44",
+        "original_line": 5189
+      },
+      {
+        "name": "_grupos_residenciais_gdd",
+        "sha256": "0775fbaef6e23aa1f2041b8f95ec15987b93077b57a648a2189d56a4fc880ba6",
+        "original_line": 5216
+      },
+      {
+        "name": "_fluxo_nova_lei_zoneamento",
+        "sha256": "826f9fbdbb78c3f2d27bf26e60e12331de536d1d3e1b48e43fce3c6ea7bd46d8",
+        "original_line": 5219
+      },
+      {
+        "name": "_aplicar_nova_lei_zoneamento_rede",
+        "sha256": "a1b01a1a5428a1a9b28b9ed2aab40eefea25fbb22f0f8ccec8b337005603872e",
+        "original_line": 5274
+      },
+      {
+        "name": "_grupos_vulneraveis_clima",
+        "sha256": "639c65152788f3aee8fb880cb66dea987666812ac041b88bf5d56cfa6afe3f60",
+        "original_line": 5322
+      },
+      {
+        "name": "_selecionar_terrenos_migracao",
+        "sha256": "a82a6362a85f5605c35cfdc4b2ff0aec0d2cae0879677a3479906d3c7c3828ab",
+        "original_line": 5335
+      },
+      {
+        "name": "_mostrar_alerta_meio_da_tela",
+        "sha256": "f5fb1e4a34b0d587fce6c6738bc9069dc11122b9640184527a47d01cb112994e",
+        "original_line": 5693
+      },
+      {
+        "name": "_inicializar_meta_partida",
+        "sha256": "c5483c4211385a83cf9e8ef71b0331e8483caf093f5783b8dce1d962deb9e2b2",
+        "original_line": 5724
+      },
+      {
+        "name": "_conceder_xp_partida",
+        "sha256": "c3de8d28e6317da530e2171830a7cb4e9ed2e3fa038b1781f91a80523c4a2cd6",
+        "original_line": 5759
+      },
+      {
+        "name": "_creditar_eliminacao_xp",
+        "sha256": "2e9b129e89b259f48eda0e2a98dd0d11963faaf118d66f1999332cca0c0e3308",
+        "original_line": 5854
+      },
+      {
+        "name": "_alterar_reputacao",
+        "sha256": "ba90591e6f79097e23f4ecb2da8c91c921815396f1759fa234cf2d1f7ffcb98f",
+        "original_line": 5873
+      },
+      {
+        "name": "_registrar_acao",
+        "sha256": "27b1e2b59b385515652694a43abde69bfa559e09903eaaebd21ad8348b605346",
+        "original_line": 5906
+      },
+      {
+        "name": "_calcular_previsao_vitoria",
+        "sha256": "a19754ee29a87d115fafde71410efb69681f755e29b64d17678d52bf0bc61586",
+        "original_line": 5998
+      },
+      {
+        "name": "ativar_modo_espectador_local",
+        "sha256": "08f288adf43ca2f598e5d1da4bae8685ddbd13a7c889add8d7bf0d5c273be089",
+        "original_line": 6079
+      },
+      {
+        "name": "configurar_seguimento_espectador",
+        "sha256": "205caca9e9a249cd9a74f32801f09e17f8ca0698bfb56a7e8da304afd4a46e36",
+        "original_line": 6085
+      },
+      {
+        "name": "_persistir_progressao_local",
+        "sha256": "b3e70daf346bebeed390705ed48611d934621f3ab61ee32d0df89e0c6a9e4ea4",
+        "original_line": 6111
+      },
+      {
+        "name": "_montar_placar_final",
+        "sha256": "4047b4de0414f73d0081aab12da6f9da65fb3104b622527d4d5c5ad51b3dbca5",
+        "original_line": 6132
+      },
+      {
+        "name": "_process",
+        "sha256": "cfd5f6661a29a680d773e1c5784bc50bf30d62f9ed778be6e8f6c2bfb312a399",
+        "original_line": 6168
+      },
+      {
+        "name": "_coletar_controls_ativos",
+        "sha256": "fb523dd7ff5e9cd11f840b3ae4ee3f0665cd595282140ebe1cbc5898cbbb3fc0",
+        "original_line": 6189
+      },
+      {
+        "name": "_calcular_espiral",
+        "sha256": "34fdb49cf41a310b1dae36ffec0669cfd5c690f5d0e8aaae51ead191ef770bb8",
+        "original_line": 6425
+      },
+      {
+        "name": "_get_camada",
+        "sha256": "eb31a1d3191c7b7497c544b9669a05dc8caa3cbf254225390d9102c57f126edf",
+        "original_line": 6449
+      },
+      {
+        "name": "_get_ponto_borda",
+        "sha256": "18c068817706f722411d78cf04440f1370c25bdfd0eed3cbe3b09045e11a768b",
+        "original_line": 6459
+      },
+      {
+        "name": "_gerar_tabuleiro",
+        "sha256": "744d5d738fc0d9c4b54ea5949d77b2fc8d0eb78decdbb1b4604ef17f252fcdec",
+        "original_line": 6465
+      },
+      {
+        "name": "_desenhar_ruas",
+        "sha256": "d7e69468d6058325b51515659a93b7b8c4b4479de0124d7d2d0d37cfd7d5e7d2",
+        "original_line": 6488
+      },
+      {
+        "name": "_verificar_permissao_de_clique",
+        "sha256": "d835d3ddfda21520489142cabb078922de39bd470a2a36475c7813b28f27ef21",
+        "original_line": 6794
+      },
+      {
+        "name": "_contar_conexoes_rua",
+        "sha256": "ec7bce2a4d516c42860d1a516963ce44a6e616c765ee5858e58e6e2ea01dd085",
+        "original_line": 7189
+      },
+      {
+        "name": "_calcular_rotacao_bifurcacao",
+        "sha256": "e0c117e49357e01f1aaa82a7d8b23a6cae0116289471cbf5861d2254e96a76ee",
+        "original_line": 7213
+      },
+      {
+        "name": "_eh_rua_ou_praca",
+        "sha256": "c7fc88fa7ca07e48f684777600a480df82602f6801539e06c4ff1c53e9adad85",
+        "original_line": 7322
+      },
+      {
+        "name": "_criar_bloco",
+        "sha256": "f310fc969091b2ec30a485cfe1a916aea956d42638f561285f437dd13ee76eba",
+        "original_line": 7332
+      },
+      {
+        "name": "_criar_arvore",
+        "sha256": "460e4f7c79332c919f39fc7855b3ce40c91d05985a509aaa20b21cc70793e264",
+        "original_line": 7348
+      },
+      {
+        "name": "_criar_poste",
+        "sha256": "2e38f2519228c94896dd9519171f9c15b6599c41a7c861c62d5b80fa70044405",
+        "original_line": 7367
+      },
+      {
+        "name": "_criar_carro",
+        "sha256": "4d5f165f5b6aac8ecdd0d5e489be35aba54b373ed7159a9cab2caca20ace8359",
+        "original_line": 7382
+      },
+      {
+        "name": "_reduzir_nivel_em_grupo",
+        "sha256": "fb7b34fbe08ed7b39e66a48aaa392d960bd8260fbf6fd0217c5afb8ae09917d2",
+        "original_line": 7684
+      },
+      {
+        "name": "_preco_oferta_irrecusavel",
+        "sha256": "ef8d9da8c8c24ba6ff551521fb5849c51df674aa5ec9531d42000f9926897808",
+        "original_line": 7831
+      },
+      {
+        "name": "_servidor_processar_fianca",
+        "sha256": "02b057dea851f52afe7f984e93b3fcae5ec115341c9ec4287871831b20f48500",
+        "original_line": 8453
+      },
+      {
+        "name": "_aplicar_resultado_fianca_rede",
+        "sha256": "2f38b2413eabac9bd97a0ac536f4daad3a87389518171925ea18e796d48399dd",
+        "original_line": 8488
+      },
+      {
+        "name": "_personagem_local_pause",
+        "sha256": "7a9b78710128b44ffca3f100ce9a1f5f34e6b0f561b3df7818466685c94e16a4",
+        "original_line": 8555
+      },
+      {
+        "name": "_enfileirar_resolucao_abutre",
+        "sha256": "f9d16bd3527a6814f66cd029db7632e60622937c51cb7e3e24f7143c02090c85",
+        "original_line": 9583
+      },
+      {
+        "name": "_processar_fila_resolucoes_abutre",
+        "sha256": "8f0d04e3e47df4f46b7273bd8a02040536b1173a3a1c3a185bee77373ace53ef",
+        "original_line": 9591
+      },
+      {
+        "name": "_definir_bloqueio_abutre_rede",
+        "sha256": "341d11f3aba4bf62f91f3379d3d5368d0004da20a0d614021771fd8d0a19707c",
+        "original_line": 9605
+      },
+      {
+        "name": "_aplicar_resultado_abutre_rede",
+        "sha256": "55f112b169b67b8ed9522d7a71cd76400dfae8c31d661d928878352ab91d9734",
+        "original_line": 9614
+      },
+      {
+        "name": "_finalizar_resolucoes_abutre_rede",
+        "sha256": "057e9b71de189655ca25900f74f4ca51168af5eaaacf78721a7679f5cda37f09",
+        "original_line": 9647
+      },
+      {
+        "name": "_verificar_vitoria",
+        "sha256": "4b3ca718d2dfbfa3a00c733c9444233d995ceaa485261dbd73f1b055c16d835b",
+        "original_line": 9933
+      },
+      {
+        "name": "_aplicar_criterios_desempate",
+        "sha256": "7c8789bc4733768ddacdf4fe296977d3c5b701b7c26e2246feba3e96b64a515a",
+        "original_line": 9986
+      },
+      {
+        "name": "_declarar_vencedor_rede",
+        "sha256": "689528032aa9ee105892d043d3e9ac42a780cf684304e14eee29b59002dbe2a6",
+        "original_line": 10031
+      },
+      {
+        "name": "_agendar_timeout_proposta",
+        "sha256": "83ef6ddfe5566b89345bfed202880b5c1df8a0c1428e567e4da190e71b7ccd3a",
+        "original_line": 10427
+      },
+      {
+        "name": "_validar_proposta_para_execucao",
+        "sha256": "08b5ce1155fd6bc31548e57f2fd2350d0c69dd917e5865a390b918cfbccc4283",
+        "original_line": 10546
+      },
+      {
+        "name": "_validar_alianca_para_execucao",
+        "sha256": "1389158018f7ec304a2206f017846b4f830ac549bc8104b604f51cd3e9e77b3f",
+        "original_line": 10907
+      },
+      {
+        "name": "_executar_alianca_rede",
+        "sha256": "c4c98acbe8e3cd6cc107bfac5f28e76be32604d8c2ea03df60bac53732745000",
+        "original_line": 10932
+      },
+      {
+        "name": "_calcular_taxa_alianca",
+        "sha256": "e23213470f7776d45bd14f3100026ac6d40921862f99425938c11d13184e933b",
+        "original_line": 10988
+      },
+      {
+        "name": "_solicitar_criar_promessa_servidor",
+        "sha256": "e6f9afc7216a5edf3365e1c7c48e0ee947862a6fb7f0e888762fa53e7c7cfb70",
+        "original_line": 11018
+      },
+      {
+        "name": "_servidor_criar_promessa",
+        "sha256": "a1e33920f2c66d57a287930b3fc775672c3878b4e53efb784edb7dac946c3a72",
+        "original_line": 11024
+      },
+      {
+        "name": "_solicitar_quebrar_promessa_servidor",
+        "sha256": "5ff7a513abc29fbf3817942a6774838c4a8525c9dd068a96dc6a4cf3a591a57f",
+        "original_line": 11050
+      },
+      {
+        "name": "_servidor_reportar_quebra",
+        "sha256": "ca88c4c6bdcab7fad1ddb1ef9795fd633a43699fbab1731d58d42c5f64fc995d",
+        "original_line": 11056
+      },
+      {
+        "name": "_criar_promessa_rede",
+        "sha256": "a85a2972e5f40af25e06ee4d4856d6ff5aae46f4ad9e9e86851465f45dca2a53",
+        "original_line": 11072
+      },
+      {
+        "name": "_quebrar_promessa_rede",
+        "sha256": "3dc5c7e86bd990d2bfa5d3baa83a87815b67cf21571658fb9eda56d7a4e88fa3",
+        "original_line": 11099
+      },
+      {
+        "name": "_media_preco_grupo",
+        "sha256": "cb5e6d064ceb430c19a7470c2828f1a635d202ac0cbe56fffa77a9fadb85a1be",
+        "original_line": 11355
+      },
+      {
+        "name": "_grupos_residenciais_ordenados_por_preco",
+        "sha256": "cc69318c3598adad5fc7c23da15f26d2e11ee2d82db902ed36cf8ce218fe3089",
+        "original_line": 11367
+      }
+    ]
+  }
+}
