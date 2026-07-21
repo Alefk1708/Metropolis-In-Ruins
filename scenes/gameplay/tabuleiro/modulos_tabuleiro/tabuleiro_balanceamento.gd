@@ -9,14 +9,17 @@ extends "res://scenes/gameplay/tabuleiro/modulos_tabuleiro/tabuleiro_core.gd"
 #
 # Regras:
 # - A recarga diminui apenas quando começa o turno do dono da habilidade.
+# - Diana possui recarga de 4 turnos pessoais.
 # - Diana pode manter apenas um Vazamento Seletivo pendente por vez.
+# - O dossiê da Diana nunca abre sozinho durante atualizações da HUD.
 # - O excedente protegido pelo Hedge Fund do Igor é pago integralmente
 #   em quatro turnos pessoais, em vez de ter metade perdoada.
 #
 # Os valores exibidos na seleção continuam válidos:
-# Yasmin 5, Breno 5, Mira 4, Igor 6, Diana 3 e Kofi 4 turnos pessoais.
+# Yasmin 5, Breno 5, Mira 4, Igor 6, Diana 4 e Kofi 4 turnos pessoais.
 
 var _alvo_vazamento_diana: String = ""
+var _ultima_recarga_diana_observada: int = -1
 
 
 @rpc("authority", "call_local")
@@ -71,11 +74,65 @@ func _pagar_aluguel_rede(
 
 
 func _atualizar_hud_ciclo_turno():
+	# Guarda o estado escolhido manualmente pelo jogador. A Fonte Anônima pode
+	# atualizar o texto, mas não pode abrir o painel por conta própria.
+	var dossie_estava_aberto: bool = false
+	if hud != null and is_instance_valid(hud):
+		dossie_estava_aberto = bool(hud.get("dossie_aberto"))
+
 	# A habilidade da Diana é intencionalmente persistente, mas não deve
 	# acumular marcações em vários adversários. Uma nova marca substitui a
 	# anterior, mantendo a decisão estratégica sem permitir bloqueio em massa.
 	_normalizar_vazamento_diana()
+	_garantir_recarga_diana_quatro_turnos()
 	super._atualizar_hud_ciclo_turno()
+	_restaurar_dossie_fechado(dossie_estava_aberto)
+
+
+func _garantir_recarga_diana_quatro_turnos() -> void:
+	if not dados_economia_jogadores.has("diana"):
+		_ultima_recarga_diana_observada = -1
+		return
+
+	var dados_diana: Dictionary = dados_economia_jogadores["diana"]
+	var recarga_atual: int = int(dados_diana.get("recarga_hab", 0))
+
+	# O motor base ainda registra 3 ao confirmar a habilidade. A transição
+	# 0 -> 3 identifica uma nova utilização e converte a recarga para 4.
+	# Uma redução normal de 4 -> 3 não é alterada.
+	if recarga_atual == 3 and _ultima_recarga_diana_observada <= 0:
+		recarga_atual = 4
+		dados_diana["recarga_hab"] = recarga_atual
+
+	_ultima_recarga_diana_observada = recarga_atual
+
+
+func _restaurar_dossie_fechado(dossie_estava_aberto: bool) -> void:
+	if dossie_estava_aberto:
+		return
+	if hud == null or not is_instance_valid(hud):
+		return
+	if not bool(hud.get("dossie_aberto")):
+		return
+
+	# O HUD atual possui um helper que cancela o Tween, invalida a animação
+	# pendente e esconde o painel imediatamente.
+	var painel_variant: Variant = hud.get("panel_dossie")
+	if painel_variant is Control:
+		var painel: Control = painel_variant as Control
+		if hud.has_method("_ocultar_painel_imediato"):
+			hud.call("_ocultar_painel_imediato", painel)
+		else:
+			painel.visible = false
+			painel.modulate.a = 1.0
+			painel.scale = Vector2.ONE
+
+	hud.set("dossie_aberto", false)
+
+	var botao_variant: Variant = hud.get("btn_dossie")
+	if botao_variant is Button:
+		var botao: Button = botao_variant as Button
+		botao.text = "ABRIR DOSSIÊ"
 
 
 func _normalizar_vazamento_diana() -> void:
