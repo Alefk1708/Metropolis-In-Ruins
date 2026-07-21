@@ -1,5 +1,5 @@
-# Godot 4+ specific ignores
+# Godot 4+
 .godot/
-/android/
-/addon/fusion
+android/
+addons/fusion/
 photon/photon_config.cfg
