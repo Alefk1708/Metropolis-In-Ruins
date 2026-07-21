@@ -1,10 +1,14 @@
-[gd_scene format=3 uid="uid://bta2ghygh4674"]
+[gd_scene load_steps=2 format=3 uid="uid://bta2ghygh4674"]
 
-[ext_resource type="Script" uid="uid://tlr1y14dff25" path="res://scenes/ui/tutorial/tutorial_controller.gd" id="1_controller"]
-[ext_resource type="PackedScene" uid="uid://dpqawvwe4o5oq" path="res://scenes/gameplay/tabuleiro/tabuleiro.tscn" id="2_tabuleiro"]
+[ext_resource type="Script" path="res://scenes/ui/carregamento_partida/carregamento_partida.gd" id="1_loading"]
 
-[node name="Tutorial" type="Node" unique_id=2133061680]
-process_mode = 3
-script = ExtResource("1_controller")
-
-[node name="Tabuleiro" parent="." unique_id=1670387574 instance=ExtResource("2_tabuleiro")]
+[node name="CarregamentoTutorial" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_loading")
+cena_destino = "res://scenes/ui/tutorial/tutorial_jogo.tscn"
+mensagem = "PREPARANDO O TUTORIAL"

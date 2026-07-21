@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/tutorial/tutorial_controller.gd" id="1_controller"]
+[ext_resource type="PackedScene" path="res://scenes/gameplay/tabuleiro/tabuleiro_jogo.tscn" id="2_tabuleiro"]
+
+[node name="Tutorial" type="Node"]
+process_mode = 3
+script = ExtResource("1_controller")
+
+[node name="Tabuleiro" parent="." instance=ExtResource("2_tabuleiro")]

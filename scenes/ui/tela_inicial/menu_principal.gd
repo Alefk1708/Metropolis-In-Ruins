@@ -1523,7 +1523,7 @@ func _criar_camada_transicao_tela(cor_luz: Color) -> void:
 		0.0
 	)
 	_camada_transicao_tela.mouse_filter = Control.MOUSE_FILTER_STOP
-	_camada_transicao_tela.z_index = 4500
+	_camada_transicao_tela.z_index = 4096
 
 
 func _animar_transicao_tela(cor_luz: Color) -> void:
