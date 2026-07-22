@@ -26,6 +26,181 @@ var _token_retomada_bot_singleplayer: int = 0
 var _passagem_turno_bot_singleplayer_em_andamento: bool = false
 var _ultima_chave_fase_construcao_bot: String = ""
 
+# Somente executar_rolagem_bot() pode autorizar dados durante o turno da IA.
+# Um clique residual da HUD nunca altera o pino do bot.
+var _rolagem_bot_autorizada_singleplayer: bool = false
+
+
+
+# ============================================================================
+# PROTEÇÃO DO PAINEL DE DADOS NO TURNO DOS BOTS
+# ============================================================================
+#
+# Após várias pausas, uma abertura antiga do Centro_Dados podia concluir depois
+# do fechamento e tornar o painel visível novamente. Como o sinal dados_rolados
+# não carrega a identidade de quem clicou, esse botão residual conseguia rolar
+# em nome de jogador_atual_id — que naquele momento já era um bot.
+#
+# A correção possui três barreiras exclusivas do singleplayer:
+# 1. cancela imediatamente qualquer animação antiga do painel;
+# 2. mantém BotaoGirar desabilitado durante turnos da IA;
+# 3. rejeita no tabuleiro toda rolagem de bot que não tenha sido iniciada pelo
+#    próprio BotJogador através de executar_rolagem_bot().
+# ============================================================================
+
+
+func _process(delta):
+	super._process(delta)
+
+	# Não reabilita controles por frame. Apenas corrige o estado proibido,
+	# evitando interferir na animação normal dos dados do jogador humano.
+	if _deve_bloquear_dados_usuario_singleplayer():
+		_bloquear_painel_dados_singleplayer()
+
+
+func _verificar_permissao_de_clique() -> void:
+	super._verificar_permissao_de_clique()
+
+	if not _eh_singleplayer_local_sem_rede():
+		return
+
+	if _deve_bloquear_dados_usuario_singleplayer():
+		_bloquear_painel_dados_singleplayer()
+	else:
+		_liberar_botao_dados_singleplayer()
+
+
+func executar_rolagem_bot(
+	id_jogador: String,
+	dado1: int,
+	dado2: int
+) -> void:
+	if not _eh_singleplayer_local_sem_rede():
+		super.executar_rolagem_bot(id_jogador, dado1, dado2)
+		return
+
+	if (
+		not _eh_jogador_bot(id_jogador)
+		or id_jogador != jogador_atual_id
+		or _pausa_global_ativa
+		or _menu_pause_bloqueando_acoes
+		or get_tree().paused
+	):
+		_bloquear_painel_dados_singleplayer()
+		return
+
+	_rolagem_bot_autorizada_singleplayer = true
+	super.executar_rolagem_bot(id_jogador, dado1, dado2)
+	_rolagem_bot_autorizada_singleplayer = false
+
+
+func _on_dados_rolados_recebidos(d1: int, d2: int):
+	if (
+		_eh_singleplayer_local_sem_rede()
+		and _eh_jogador_bot(jogador_atual_id)
+		and not _rolagem_bot_autorizada_singleplayer
+	):
+		# Clique humano residual detectado. Não altera dados, duplas, prisão,
+		# movimento ou passagem de turno do bot.
+		_bloquear_painel_dados_singleplayer()
+		push_warning(
+			"[SINGLEPLAYER] Rolagem manual descartada durante turno do bot %s."
+			% jogador_atual_id
+		)
+		return
+
+	super._on_dados_rolados_recebidos(d1, d2)
+
+
+func _deve_bloquear_dados_usuario_singleplayer() -> bool:
+	if not _eh_singleplayer_local_sem_rede():
+		return false
+	if hud == null or not is_instance_valid(hud):
+		return false
+
+	if get_tree().paused or _pausa_global_ativa:
+		return true
+	if _menu_pause_bloqueando_acoes:
+		return true
+	if _eh_jogador_bot(jogador_atual_id):
+		return true
+
+	var personagem_local: String = str(
+		Global.escolhas_da_mesa.get(Global.meu_peer_id, "")
+	)
+	return (
+		personagem_local.is_empty()
+		or jogador_atual_id != personagem_local
+	)
+
+
+func _obter_centro_dados_singleplayer() -> Control:
+	if hud == null or not is_instance_valid(hud):
+		return null
+	return hud.get_node_or_null(
+		"Control/Centro_Dados"
+	) as Control
+
+
+func _obter_botao_girar_singleplayer() -> Button:
+	if hud == null or not is_instance_valid(hud):
+		return null
+	return hud.get_node_or_null(
+		"Control/Centro_Dados/BotaoGirar"
+	) as Button
+
+
+func _bloquear_painel_dados_singleplayer() -> void:
+	if not _eh_singleplayer_local_sem_rede():
+		return
+
+	var botao: Button = _obter_botao_girar_singleplayer()
+	if botao != null:
+		botao.disabled = true
+		botao.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		botao.release_focus()
+
+	var centro: Control = _obter_centro_dados_singleplayer()
+	if centro != null:
+		# O helper da HUD invalida o ID da animação pendente, mata o Tween e
+		# restaura escala/opacidade. É mais forte que o fechamento animado.
+		if hud.has_method("_ocultar_painel_imediato"):
+			hud.call("_ocultar_painel_imediato", centro)
+		else:
+			centro.visible = false
+			centro.modulate.a = 1.0
+			centro.scale = Vector2.ONE
+
+	# Uma tentativa residual pode ter deixado a HUD marcada como rodando.
+	# A IA não utiliza esse estado para lançar os próprios dados.
+	if _eh_jogador_bot(jogador_atual_id):
+		hud.set("rodando_dados", false)
+
+
+func _liberar_botao_dados_singleplayer() -> void:
+	if not _eh_singleplayer_local_sem_rede():
+		return
+	if _deve_bloquear_dados_usuario_singleplayer():
+		return
+
+	var botao: Button = _obter_botao_girar_singleplayer()
+	if botao != null:
+		botao.disabled = false
+		botao.mouse_filter = Control.MOUSE_FILTER_STOP
+
+
+func _vigiar_painel_dados_apos_retomada(
+	token_retomada: int
+) -> void:
+	# Cobre animações antigas que estavam aguardando process_frame quando a
+	# partida foi pausada. O _process continuará como proteção permanente.
+	for _frame in range(12):
+		if not _retomada_singleplayer_ainda_valida(token_retomada):
+			return
+		if _deve_bloquear_dados_usuario_singleplayer():
+			_bloquear_painel_dados_singleplayer()
+		await get_tree().process_frame
+
 
 @rpc("authority", "call_local", "reliable")
 func _aplicar_estado_pausa_rede(
@@ -38,6 +213,8 @@ func _aplicar_estado_pausa_rede(
 		# Invalida qualquer watchdog criado pela abertura/retomada anterior.
 		_token_retomada_bot_singleplayer += 1
 		if ativo:
+			# O painel é invalidado antes de o SceneTree ser congelado.
+			_bloquear_painel_dados_singleplayer()
 			# Precisa acontecer antes de o SceneTree ser congelado.
 			definir_bots_pausados(true)
 
@@ -48,12 +225,23 @@ func _aplicar_estado_pausa_rede(
 		nome_iniciador
 	)
 
-	if not Global.modo_singleplayer or ativo:
+	if not Global.modo_singleplayer:
+		return
+
+	# Recalcula imediatamente a autorização visual após qualquer transição.
+	if _deve_bloquear_dados_usuario_singleplayer():
+		_bloquear_painel_dados_singleplayer()
+
+	if ativo:
 		return
 
 	# Libera BotJogador._aguardar_liberacao() depois que o SceneTree voltou.
 	definir_bots_pausados(false)
 	var token_atual: int = _token_retomada_bot_singleplayer
+	call_deferred(
+		"_vigiar_painel_dados_apos_retomada",
+		token_atual
+	)
 	call_deferred(
 		"_retomar_turno_bot_singleplayer_apos_pausa",
 		token_atual
@@ -210,6 +398,7 @@ func _processar_passagem_de_turno():
 func _eh_singleplayer_local_sem_rede() -> bool:
 	return (
 		Global.modo_singleplayer
+		and not Global.modo_tutorial
 		and not Global.modo_online
 		and not OnlineTransport.esta_em_sala()
 		and not OnlineTransport.usando_photon()
