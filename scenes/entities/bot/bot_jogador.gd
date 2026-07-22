@@ -19,6 +19,7 @@ var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var _resultados_forcados: Array[Vector2i] = []
 var _pausado: bool = false
 var _executando_turno: bool = false
+var _geracao_execucao_turno: int = 0
 
 
 func configurar(tabuleiro: Node, id_jogador: String, semente: int = 0) -> void:
@@ -41,27 +42,64 @@ func definir_pausado(pausado: bool) -> void:
 	pausa_alterada.emit()
 
 
+func esta_executando_turno() -> bool:
+	return _executando_turno
+
+
+func reiniciar_turno_seguro() -> void:
+	# Invalida somente a corrotina que ficou presa antes/durante a pausa. Cada
+	# await valida esta geração antes de rolar, portanto a rotina antiga nunca
+	# consegue executar dados depois que a nova geração começa.
+	_geracao_execucao_turno += 1
+	_executando_turno = false
+	if _pausado:
+		_pausado = false
+		pausa_alterada.emit()
+	call_deferred("executar_turno")
+
+
 func executar_turno() -> void:
-	if _executando_turno or _tabuleiro == null or not is_instance_valid(_tabuleiro):
+	if (
+		_executando_turno
+		or _tabuleiro == null
+		or not is_instance_valid(_tabuleiro)
+	):
 		return
+
 	_executando_turno = true
+	var geracao_local: int = _geracao_execucao_turno
+
 	await _aguardar_liberacao()
-	if not is_inside_tree() or _tabuleiro == null or not is_instance_valid(_tabuleiro):
-		_executando_turno = false
+	if not _execucao_turno_valida(geracao_local):
+		_finalizar_execucao_se_atual(geracao_local)
 		return
+
 	await get_tree().create_timer(atraso_antes_de_jogar).timeout
 	await _aguardar_liberacao()
-	if not is_inside_tree() or _tabuleiro == null or not is_instance_valid(_tabuleiro):
-		_executando_turno = false
+	if not _execucao_turno_valida(geracao_local):
+		_finalizar_execucao_se_atual(geracao_local)
 		return
 
 	var resultado: Vector2i = _sortear_dados()
+	if not _execucao_turno_valida(geracao_local):
+		_finalizar_execucao_se_atual(geracao_local)
+		return
+
 	acao_executada.emit(
 		"rolar_dados",
-		{"jogador_id": jogador_id, "dado1": resultado.x, "dado2": resultado.y}
+		{
+			"jogador_id": jogador_id,
+			"dado1": resultado.x,
+			"dado2": resultado.y,
+		}
 	)
-	_tabuleiro.call("executar_rolagem_bot", jogador_id, resultado.x, resultado.y)
-	_executando_turno = false
+	_tabuleiro.call(
+		"executar_rolagem_bot",
+		jogador_id,
+		resultado.x,
+		resultado.y
+	)
+	_finalizar_execucao_se_atual(geracao_local)
 
 
 func decidir_compra(
@@ -83,7 +121,11 @@ func decidir_compra(
 	var comprar: bool = saldo - custo >= reserva
 	acao_executada.emit(
 		"decisao_compra",
-		{"jogador_id": jogador_id, "custo": custo, "comprar": comprar}
+		{
+			"jogador_id": jogador_id,
+			"custo": custo,
+			"comprar": comprar,
+		}
 	)
 	return comprar
 
@@ -93,10 +135,16 @@ func decidir_lance(
 	valor_propriedade: int,
 	saldo: int
 ) -> int:
-	var teto: int = mini(saldo - reserva_minima, int(valor_propriedade * 1.15))
+	var teto: int = mini(
+		saldo - reserva_minima,
+		int(valor_propriedade * 1.15)
+	)
 	if teto <= valor_atual:
 		return 0
-	return mini(teto, valor_atual + maxi(10, int(valor_propriedade * 0.08)))
+	return mini(
+		teto,
+		valor_atual + maxi(10, int(valor_propriedade * 0.08))
+	)
 
 
 func avaliar_negociacao(valor_recebido: int, valor_entregue: int) -> bool:
@@ -122,9 +170,27 @@ func escolher_construcao(opcoes: Array[Dictionary], saldo: int) -> int:
 func _sortear_dados() -> Vector2i:
 	if not _resultados_forcados.is_empty():
 		return _resultados_forcados.pop_front()
-	return Vector2i(_rng.randi_range(1, 6), _rng.randi_range(1, 6))
+	return Vector2i(
+		_rng.randi_range(1, 6),
+		_rng.randi_range(1, 6)
+	)
 
 
 func _aguardar_liberacao() -> void:
 	while _pausado and is_inside_tree():
 		await pausa_alterada
+
+
+func _execucao_turno_valida(geracao: int) -> bool:
+	return (
+		geracao == _geracao_execucao_turno
+		and is_inside_tree()
+		and _tabuleiro != null
+		and is_instance_valid(_tabuleiro)
+	)
+
+
+func _finalizar_execucao_se_atual(geracao: int) -> void:
+	# Uma corrotina invalidada não pode limpar a flag de uma geração mais nova.
+	if geracao == _geracao_execucao_turno:
+		_executando_turno = false

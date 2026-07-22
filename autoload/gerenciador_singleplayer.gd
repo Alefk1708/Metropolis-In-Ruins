@@ -6,14 +6,13 @@ const CENA_MENU_PRINCIPAL: String = (
 const CENA_SINGLEPLAYER: String = (
 	"res://scenes/ui/singleplayer/singleplayer.tscn"
 )
-const ICONE_SINGLEPLAYER: String = (
-	"res://assets/textures/PlayIcon.png"
-)
 
 var _ultima_cena: Node = null
 var _integracao_em_andamento: bool = false
 var _transicao_em_andamento: bool = false
+var _cena_menu: Node = null
 var _container_singleplayer: PanelContainer = null
+var _botao_singleplayer: Button = null
 
 
 func _ready() -> void:
@@ -27,7 +26,9 @@ func _process(_delta: float) -> void:
 		return
 
 	_ultima_cena = cena
+	_cena_menu = null
 	_container_singleplayer = null
+	_botao_singleplayer = null
 	_transicao_em_andamento = false
 	call_deferred("_integrar_cena_atual")
 
@@ -45,35 +46,66 @@ func _integrar_cena_atual() -> void:
 	if not _eh_menu_principal(cena):
 		return
 
+	_integracao_em_andamento = true
 	if Global.modo_singleplayer:
 		Global.limpar_partida_singleplayer()
 
-	_integracao_em_andamento = true
-
-	# Aguarda a cena calcular a posição do botão Tutorial.
-	for _tentativa: int in range(8):
-		if cena == null or not is_instance_valid(cena):
+	# O botão já existe no menu_principal.tscn. Esta espera serve somente para
+	# o layout calcular tamanhos e para o script do menu iniciar sua apresentação.
+	for _tentativa in range(8):
+		if not _eh_menu_principal(cena):
 			_integracao_em_andamento = false
 			return
 		await get_tree().process_frame
 
-	var tutorial_container: PanelContainer = cena.get_node_or_null(
-		"TutorialContainer"
-	) as PanelContainer
-	if tutorial_container == null:
-		_integracao_em_andamento = false
-		return
-
-	var existente: PanelContainer = cena.get_node_or_null(
+	var container: PanelContainer = cena.get_node_or_null(
 		"SingleplayerContainer"
 	) as PanelContainer
-	if existente != null:
-		_container_singleplayer = existente
+	var botao: Button = cena.get_node_or_null(
+		"SingleplayerContainer/BtnSingleplayer"
+	) as Button
+	var botao_tutorial: Button = cena.get_node_or_null(
+		"TutorialContainer/BtnTutorial"
+	) as Button
+
+	if container == null or botao == null:
+		push_error(
+			"SingleplayerContainer/BtnSingleplayer não foi encontrado em "
+			+ CENA_MENU_PRINCIPAL
+		)
 		_integracao_em_andamento = false
 		return
 
-	_criar_botao_singleplayer(cena, tutorial_container)
+	_cena_menu = cena
+	_container_singleplayer = container
+	_botao_singleplayer = botao
+
+	container.process_mode = Node.PROCESS_MODE_ALWAYS
+	container.pivot_offset = container.size * 0.5
+	container.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	container.modulate.a = 0.0
+	botao.process_mode = Node.PROCESS_MODE_ALWAYS
+	botao.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	botao.focus_mode = Control.FOCUS_NONE
+	botao.disabled = true
+	botao.modulate.a = 0.0
+
+	var callback_singleplayer := Callable(
+		self,
+		"_ao_btn_singleplayer_pressed"
+	)
+	if not botao.pressed.is_connected(callback_singleplayer):
+		botao.pressed.connect(callback_singleplayer)
+
+	if botao_tutorial != null:
+		botao_tutorial.focus_neighbor_bottom = (
+			botao_tutorial.get_path_to(botao)
+		)
+		botao.focus_neighbor_top = botao.get_path_to(botao_tutorial)
+
+	_conectar_limpeza_outros_modos(cena)
 	_integracao_em_andamento = false
+	await _animar_entrada_singleplayer(cena, container, botao)
 
 
 func _eh_menu_principal(cena: Node) -> bool:
@@ -84,128 +116,7 @@ func _eh_menu_principal(cena: Node) -> bool:
 	)
 
 
-func _criar_botao_singleplayer(
-	cena: Node,
-	tutorial_container: PanelContainer
-) -> void:
-	# Duplica a estrutura visual completa do Tutorial. O sinal original
-	# não é copiado, evitando que JOGAR SOLO também abra o tutorial.
-	var novo_container: PanelContainer = (
-		tutorial_container.duplicate(0) as PanelContainer
-	)
-	if novo_container == null:
-		return
-
-	novo_container.name = "SingleplayerContainer"
-	novo_container.modulate.a = 0.0
-	novo_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	cena.add_child(novo_container)
-
-	var posicao_final: Vector2 = (
-		tutorial_container.position
-		+ Vector2(0.0, tutorial_container.size.y + 16.0)
-	)
-	novo_container.position = posicao_final
-	novo_container.size = tutorial_container.size
-	novo_container.pivot_offset = novo_container.size * 0.5
-	novo_container.process_mode = Node.PROCESS_MODE_ALWAYS
-
-	var botao: Button = novo_container.get_node_or_null(
-		"BtnTutorial"
-	) as Button
-	if botao == null:
-		novo_container.queue_free()
-		return
-
-	botao.name = "BtnSingleplayer"
-	botao.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	botao.focus_mode = Control.FOCUS_NONE
-	botao.tooltip_text = (
-		"Jogue sozinho contra adversários controlados pela IA."
-	)
-	botao.process_mode = Node.PROCESS_MODE_ALWAYS
-
-	var label: Label = botao.get_node_or_null("Label") as Label
-	if label != null:
-		# Mantém exatamente a mesma fonte e tamanho usados pelo Tutorial.
-		label.text = "     JOGAR SOLO"
-
-	var icone: TextureRect = botao.get_node_or_null(
-		"TextureRect"
-	) as TextureRect
-	if (
-		icone != null
-		and ResourceLoader.exists(ICONE_SINGLEPLAYER)
-	):
-		icone.texture = load(ICONE_SINGLEPLAYER) as Texture2D
-		_diminuir_icone_play_centralizado(icone)
-
-	var botao_tutorial: Button = tutorial_container.get_node_or_null(
-		"BtnTutorial"
-	) as Button
-	if botao_tutorial != null:
-		botao_tutorial.focus_neighbor_bottom = (
-			botao_tutorial.get_path_to(botao)
-		)
-		botao.focus_neighbor_top = botao.get_path_to(botao_tutorial)
-
-	botao.pressed.connect(
-		_ao_btn_singleplayer_pressed.bind(
-			cena,
-			novo_container,
-			botao
-		)
-	)
-
-	_conectar_limpeza_outros_modos(cena, novo_container)
-
-	_container_singleplayer = novo_container
-	_animar_entrada_singleplayer(
-		cena,
-		novo_container,
-		posicao_final
-	)
-
-
-func _diminuir_icone_play_centralizado(
-	icone: TextureRect
-) -> void:
-	# Reduz somente o retângulo do ícone para 68% e conserva exatamente
-	# o centro usado pelo ícone do botão Tutorial.
-	const ESCALA_ICONE_PLAY: float = 0.68
-
-	var largura: float = icone.offset_right - icone.offset_left
-	var altura: float = icone.offset_bottom - icone.offset_top
-
-	if largura <= 0.0 or altura <= 0.0:
-		# Fallback para layouts cujo tamanho só é calculado depois do primeiro
-		# frame. O pivô mantém a redução centralizada.
-		icone.pivot_offset = icone.size * 0.5
-		icone.scale = Vector2(
-			ESCALA_ICONE_PLAY,
-			ESCALA_ICONE_PLAY
-		)
-		return
-
-	var centro := Vector2(
-		(icone.offset_left + icone.offset_right) * 0.5,
-		(icone.offset_top + icone.offset_bottom) * 0.5
-	)
-	var novo_tamanho := Vector2(
-		largura * ESCALA_ICONE_PLAY,
-		altura * ESCALA_ICONE_PLAY
-	)
-
-	icone.offset_left = centro.x - novo_tamanho.x * 0.5
-	icone.offset_right = centro.x + novo_tamanho.x * 0.5
-	icone.offset_top = centro.y - novo_tamanho.y * 0.5
-	icone.offset_bottom = centro.y + novo_tamanho.y * 0.5
-
-
-func _conectar_limpeza_outros_modos(
-	cena: Node,
-	container: PanelContainer
-) -> void:
+func _conectar_limpeza_outros_modos(cena: Node) -> void:
 	var caminhos_botoes: Array[String] = [
 		"ContainerBotoes/VBoxBotoes/BtnLocal",
 		"ContainerBotoes/VBoxBotoes/BtnOnline",
@@ -217,29 +128,30 @@ func _conectar_limpeza_outros_modos(
 		var botao: Button = cena.get_node_or_null(caminho) as Button
 		if botao == null:
 			continue
-
-		var callback := Callable(
-			self,
-			"_ao_abrir_outro_modo"
-		).bind(container)
-
+		var callback := Callable(self, "_ao_abrir_outro_modo")
 		if not botao.pressed.is_connected(callback):
 			botao.pressed.connect(callback)
 
 
-func _ao_abrir_outro_modo(
-	container: PanelContainer
-) -> void:
+func _ao_abrir_outro_modo() -> void:
 	if Global.modo_singleplayer:
 		Global.limpar_partida_singleplayer()
 
-	if container == null or not is_instance_valid(container):
+	if (
+		_container_singleplayer == null
+		or not is_instance_valid(_container_singleplayer)
+	):
 		return
 
 	var tween: Tween = create_tween()
 	(
 		tween
-		. tween_property(container, "modulate:a", 0.0, 0.18)
+		. tween_property(
+			_container_singleplayer,
+			"modulate:a",
+			0.0,
+			0.18
+		)
 		. set_trans(Tween.TRANS_QUAD)
 		. set_ease(Tween.EASE_IN)
 	)
@@ -248,35 +160,32 @@ func _ao_abrir_outro_modo(
 func _animar_entrada_singleplayer(
 	cena: Node,
 	container: PanelContainer,
-	posicao_final: Vector2
+	botao: Button
 ) -> void:
-	if container == null or not is_instance_valid(container):
-		return
-
-	# Mantém a sequência visual do menu. O botão aparece depois que os
-	# elementos originais já terminaram a apresentação.
-	for _tentativa: int in range(180):
-		if cena == null or not is_instance_valid(cena):
+	# O botão permanente permanece invisível até a apresentação original terminar.
+	for _tentativa in range(180):
+		if not _eh_menu_principal(cena):
 			return
 		if not bool(cena.get("_apresentacao_inicial_ativa")):
 			break
 		await get_tree().process_frame
 
-	if container == null or not is_instance_valid(container):
+	if (
+		container == null
+		or botao == null
+		or not is_instance_valid(container)
+		or not is_instance_valid(botao)
+	):
 		return
 
+	var posicao_final: Vector2 = container.position
+	container.pivot_offset = container.size * 0.5
 	container.position = posicao_final + Vector2(-58.0, -18.0)
 	container.scale = Vector2(0.86, 0.86)
 	container.rotation = deg_to_rad(-2.5)
 	container.modulate.a = 0.0
+	botao.modulate.a = 0.0
 
-	var botao_animado: Button = container.get_node_or_null(
-		"BtnSingleplayer"
-	) as Button
-	if botao_animado != null:
-		botao_animado.modulate.a = 0.0
-
-	# Mesmos valores usados pela animação original do botão Tutorial.
 	var tween: Tween = create_tween().set_parallel(true)
 	(
 		tween
@@ -302,67 +211,69 @@ func _animar_entrada_singleplayer(
 		. set_trans(Tween.TRANS_QUAD)
 		. set_ease(Tween.EASE_OUT)
 	)
-	if botao_animado != null:
-		(
-			tween
-			. tween_property(botao_animado, "modulate:a", 1.0, 0.42)
-			. set_delay(0.08)
-			. set_trans(Tween.TRANS_QUAD)
-			. set_ease(Tween.EASE_OUT)
-		)
+	(
+		tween
+		. tween_property(botao, "modulate:a", 1.0, 0.42)
+		. set_delay(0.08)
+		. set_trans(Tween.TRANS_QUAD)
+		. set_ease(Tween.EASE_OUT)
+	)
 
 	await tween.finished
-	if container == null or not is_instance_valid(container):
+	if not _eh_menu_principal(cena):
+		return
+	if not is_instance_valid(container) or not is_instance_valid(botao):
 		return
 
 	container.mouse_filter = Control.MOUSE_FILTER_PASS
-	var botao: Button = container.get_node_or_null(
-		"BtnSingleplayer"
-	) as Button
-	if botao != null:
-		botao.mouse_filter = Control.MOUSE_FILTER_STOP
-		botao.focus_mode = Control.FOCUS_ALL
+	botao.mouse_filter = Control.MOUSE_FILTER_STOP
+	botao.focus_mode = Control.FOCUS_ALL
+	botao.disabled = false
 
 
-func _ao_btn_singleplayer_pressed(
-	cena: Node,
-	container: PanelContainer,
-	botao: Button
-) -> void:
+func _ao_btn_singleplayer_pressed() -> void:
+	var cena: Node = get_tree().current_scene
 	if _transicao_em_andamento:
 		return
 	if not _eh_menu_principal(cena):
 		return
 	if bool(cena.get("_acao_em_andamento")):
 		return
+	if (
+		_container_singleplayer == null
+		or _botao_singleplayer == null
+		or not is_instance_valid(_container_singleplayer)
+		or not is_instance_valid(_botao_singleplayer)
+	):
+		return
 
 	_transicao_em_andamento = true
-	botao.disabled = true
+	_botao_singleplayer.disabled = true
 	get_viewport().gui_release_focus()
 
 	if NetworkManager.esta_em_sala():
-		NetworkManager.desconectar(
-			"Modo singleplayer iniciado."
-		)
+		NetworkManager.desconectar("Modo singleplayer iniciado.")
 
 	Global.preparar_modo_singleplayer(3)
 
-	botao.pivot_offset = botao.size * 0.5
+	_botao_singleplayer.pivot_offset = (
+		_botao_singleplayer.size * 0.5
+	)
 	var pulso: Tween = create_tween()
 	pulso.tween_property(
-		botao,
+		_botao_singleplayer,
 		"scale",
 		Vector2(0.96, 0.96),
 		0.08
 	)
 	pulso.tween_property(
-		botao,
+		_botao_singleplayer,
 		"scale",
 		Vector2(1.03, 1.03),
 		0.12
 	).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	pulso.tween_property(
-		botao,
+		_botao_singleplayer,
 		"scale",
 		Vector2.ONE,
 		0.14
@@ -370,9 +281,7 @@ func _ao_btn_singleplayer_pressed(
 
 	var camada := ColorRect.new()
 	camada.name = "TransicaoSingleplayer"
-	camada.set_anchors_and_offsets_preset(
-		Control.PRESET_FULL_RECT
-	)
+	camada.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	camada.color = Color(0.004, 0.005, 0.019, 0.0)
 	camada.mouse_filter = Control.MOUSE_FILTER_STOP
 	camada.z_index = 4096
@@ -393,7 +302,7 @@ func _ao_btn_singleplayer_pressed(
 	(
 		tween
 		. tween_property(
-			container,
+			_container_singleplayer,
 			"modulate:a",
 			0.0,
 			0.32
@@ -409,39 +318,31 @@ func _ao_btn_singleplayer_pressed(
 			"Cena singleplayer não encontrada: "
 			+ CENA_SINGLEPLAYER
 		)
-		_restaurar_menu_apos_falha(
-			container,
-			botao,
-			camada
-		)
+		_restaurar_menu_apos_falha(camada)
 		return
 
-	var erro: Error = get_tree().change_scene_to_file(
-		CENA_SINGLEPLAYER
-	)
+	var erro: Error = get_tree().change_scene_to_file(CENA_SINGLEPLAYER)
 	if erro != OK:
 		push_error(
 			"Não foi possível abrir o modo singleplayer. Código: %s"
 			% erro
 		)
-		_restaurar_menu_apos_falha(
-			container,
-			botao,
-			camada
-		)
+		_restaurar_menu_apos_falha(camada)
 
 
-func _restaurar_menu_apos_falha(
-	container: PanelContainer,
-	botao: Button,
-	camada: ColorRect
-) -> void:
+func _restaurar_menu_apos_falha(camada: ColorRect) -> void:
 	Global.limpar_partida_singleplayer()
 	_transicao_em_andamento = false
 
-	if botao != null and is_instance_valid(botao):
-		botao.disabled = false
-	if container != null and is_instance_valid(container):
-		container.modulate.a = 1.0
+	if (
+		_botao_singleplayer != null
+		and is_instance_valid(_botao_singleplayer)
+	):
+		_botao_singleplayer.disabled = false
+	if (
+		_container_singleplayer != null
+		and is_instance_valid(_container_singleplayer)
+	):
+		_container_singleplayer.modulate.a = 1.0
 	if camada != null and is_instance_valid(camada):
 		camada.queue_free()

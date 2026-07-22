@@ -1,13 +1,24 @@
 extends "res://scenes/gameplay/tabuleiro/modulos_tabuleiro/tabuleiro_balanceamento.gd"
 
 # ============================================================================
-# CORREÇÃO DO SINGLEPLAYER APÓS PAUSAR
+# RETOMADA SEGURA DOS BOTS NO SINGLEPLAYER
 # ============================================================================
 #
-# O SceneTree local é congelado durante a pausa, mas o BotJogador também possui
-# sua própria flag `_pausado`. A retomada agora libera explicitamente os dois
-# estados e verifica se o turno atual ainda pertence a um bot.
+# Pausar durante a abertura ou durante a espera do BotJogador podia deixar a
+# corrotina antiga marcada como `_executando_turno`, fazendo novas solicitações
+# serem descartadas. A retomada agora:
+# - libera a pausa interna dos bots;
+# - aguarda a cinematica inicial terminar;
+# - tenta primeiro o fluxo normal de permissão do tabuleiro;
+# - usa um watchdog somente se o turno continuar parado;
+# - reinicia a IA por geração, invalidando a corrotina antiga sem rolagem dupla.
 # ============================================================================
+
+const ESPERA_MAXIMA_ABERTURA_APOS_PAUSA: float = 12.0
+const ATRASO_WATCHDOG_RETORNO_BOT: float = 1.45
+const TENTATIVAS_WATCHDOG_RETORNO_BOT: int = 2
+
+var _token_retomada_bot_singleplayer: int = 0
 
 
 @rpc("authority", "call_local", "reliable")
@@ -17,9 +28,12 @@ func _aplicar_estado_pausa_rede(
 	personagem_iniciador: String,
 	nome_iniciador: String
 ) -> void:
-	# O bot precisa receber a pausa antes de o SceneTree ser congelado.
-	if ativo and Global.modo_singleplayer:
-		definir_bots_pausados(true)
+	if Global.modo_singleplayer:
+		# Invalida qualquer watchdog criado pela abertura/retomada anterior.
+		_token_retomada_bot_singleplayer += 1
+		if ativo:
+			# Precisa acontecer antes de o SceneTree ser congelado.
+			definir_bots_pausados(true)
 
 	super._aplicar_estado_pausa_rede(
 		ativo,
@@ -28,34 +42,108 @@ func _aplicar_estado_pausa_rede(
 		nome_iniciador
 	)
 
-	if ativo or not Global.modo_singleplayer:
+	if not Global.modo_singleplayer or ativo:
 		return
 
-	# Libera a espera interna presente em BotJogador._aguardar_liberacao().
+	# Libera BotJogador._aguardar_liberacao() depois que o SceneTree voltou.
 	definir_bots_pausados(false)
-	call_deferred("_garantir_retomada_turno_bot_singleplayer")
+	var token_atual: int = _token_retomada_bot_singleplayer
+	call_deferred(
+		"_retomar_turno_bot_singleplayer_apos_pausa",
+		token_atual
+	)
 
 
-func _garantir_retomada_turno_bot_singleplayer() -> void:
-	# Dois frames permitem que o MenuPause termine de ocultar a interface e que
-	# timers pausados retomem antes do watchdog verificar o turno.
+func _retomar_turno_bot_singleplayer_apos_pausa(
+	token_retomada: int
+) -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 
-	if not is_inside_tree():
-		return
-	if not Global.modo_singleplayer:
-		return
-	if get_tree().paused:
-		return
-	if _pausa_global_ativa or _menu_pause_bloqueando_acoes:
-		return
-	if not _eh_jogador_bot(jogador_atual_id):
+	var tempo_esperado: float = 0.0
+	while tempo_esperado < ESPERA_MAXIMA_ABERTURA_APOS_PAUSA:
+		if not _retomada_singleplayer_ainda_valida(token_retomada):
+			return
+		if (
+			not get_tree().paused
+			and not _pausa_global_ativa
+			and not _menu_pause_bloqueando_acoes
+			and _cinematica_abertura_concluida
+		):
+			break
+		await get_tree().process_frame
+		tempo_esperado += get_process_delta_time()
+
+	if not _retomada_pronta_para_turno(token_retomada):
 		return
 
-	# BotJogador possui proteção contra execução duplicada. Portanto, esta chamada
-	# apenas recupera um turno que ficou aguardando e não duplica uma jogada ativa.
-	_solicitar_turno_bot(jogador_atual_id)
+	# Reaplica o mesmo ponto de entrada utilizado quando a cinematica termina.
+	# Isso cobre a pausa feita antes do primeiro turno ser liberado.
+	_verificar_permissao_de_clique()
+
+	var bot_esperado: String = jogador_atual_id
+	for _tentativa in range(TENTATIVAS_WATCHDOG_RETORNO_BOT):
+		await get_tree().create_timer(
+			ATRASO_WATCHDOG_RETORNO_BOT,
+			true
+		).timeout
+
+		if not _retomada_singleplayer_ainda_valida(token_retomada):
+			return
+		if jogador_atual_id != bot_esperado:
+			return
+		if not _turno_bot_realmente_parado(bot_esperado):
+			return
+
+		_reiniciar_controlador_bot_singleplayer(bot_esperado)
+
+
+func _retomada_singleplayer_ainda_valida(token_retomada: int) -> bool:
+	return (
+		is_inside_tree()
+		and Global.modo_singleplayer
+		and token_retomada == _token_retomada_bot_singleplayer
+	)
+
+
+func _retomada_pronta_para_turno(token_retomada: int) -> bool:
+	return (
+		_retomada_singleplayer_ainda_valida(token_retomada)
+		and not get_tree().paused
+		and not _pausa_global_ativa
+		and not _menu_pause_bloqueando_acoes
+		and _cinematica_abertura_concluida
+	)
+
+
+func _turno_bot_realmente_parado(bot_id: String) -> bool:
+	if bot_id.is_empty() or bot_id != jogador_atual_id:
+		return false
+	if not _eh_jogador_bot(bot_id):
+		return false
+	if get_tree().paused or _pausa_global_ativa:
+		return false
+	if _menu_pause_bloqueando_acoes:
+		return false
+	if not _cinematica_abertura_concluida:
+		return false
+	if _processando_dados or _resolucao_turno_em_andamento:
+		return false
+	if _acoes_bloqueadas_por_evento() or leilao_em_andamento:
+		return false
+	return true
+
+
+func _reiniciar_controlador_bot_singleplayer(bot_id: String) -> void:
+	var bot: Node = _bots_jogadores.get(bot_id) as Node
+	if bot == null or not is_instance_valid(bot):
+		return
+
+	if bot.has_method("reiniciar_turno_seguro"):
+		bot.call("reiniciar_turno_seguro")
+	else:
+		# Compatibilidade com um controlador antigo, sem tocar em estado privado.
+		_solicitar_turno_bot(bot_id)
 
 
 # ============================================================================
