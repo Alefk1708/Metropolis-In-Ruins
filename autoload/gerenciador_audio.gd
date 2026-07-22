@@ -79,6 +79,7 @@ var _volume_geral: float = VOLUME_PADRAO_GERAL
 var _volume_musica: float = VOLUME_PADRAO_MUSICA
 var _volume_efeitos: float = VOLUME_PADRAO_EFEITOS
 var _volume_botoes: float = VOLUME_PADRAO_BOTOES
+var _musica_ativa: bool = true
 
 var _player_musica: AudioStreamPlayer
 var _player_dados: AudioStreamPlayer
@@ -121,6 +122,10 @@ func _ready() -> void:
 	call_deferred("_conectar_botoes_existentes")
 	call_deferred("_registrar_pinos_existentes")
 	call_deferred("_atualizar_cena_atual")
+	call_deferred(
+		"_integrar_check_musica_pausa",
+		get_tree().current_scene
+	)
 
 
 func _process(delta: float) -> void:
@@ -185,6 +190,9 @@ func _carregar_configuracao() -> void:
 	_volume_musica = clampf(float(
 		configuracao.get_value("audio", "musica", VOLUME_PADRAO_MUSICA)
 	), 0.0, 100.0)
+	_musica_ativa = bool(
+		configuracao.get_value("audio", "musica_ativa", true)
+	)
 	_volume_efeitos = clampf(float(
 		configuracao.get_value("audio", "efeitos", VOLUME_PADRAO_EFEITOS)
 	), 0.0, 100.0)
@@ -215,6 +223,7 @@ func _salvar_configuracao() -> void:
 	var configuracao := ConfigFile.new()
 	configuracao.set_value("audio", "geral", _volume_geral)
 	configuracao.set_value("audio", "musica", _volume_musica)
+	configuracao.set_value("audio", "musica_ativa", _musica_ativa)
 	configuracao.set_value("audio", "efeitos", _volume_efeitos)
 	configuracao.set_value("audio", "botoes", _volume_botoes)
 	var erro := configuracao.save(CAMINHO_CONFIGURACAO)
@@ -228,6 +237,7 @@ func _salvar_configuracao() -> void:
 func _aplicar_todos_os_volumes() -> void:
 	_aplicar_volume_barramento(&"Master", _volume_geral)
 	_aplicar_volume_barramento(BUS_MUSICA, _volume_musica)
+	_aplicar_estado_musica()
 	_aplicar_volume_barramento(BUS_EFEITOS, _volume_efeitos)
 	_aplicar_volume_barramento(BUS_BOTOES, _volume_botoes)
 
@@ -243,6 +253,17 @@ func _aplicar_volume_barramento(nome: StringName, valor: float) -> void:
 	AudioServer.set_bus_mute(indice, limitado <= 0.0)
 
 
+func _aplicar_estado_musica() -> void:
+	var indice: int = AudioServer.get_bus_index(BUS_MUSICA)
+	if indice < 0:
+		return
+
+	AudioServer.set_bus_mute(
+		indice,
+		not _musica_ativa or _volume_musica <= 0.0
+	)
+
+
 func definir_volume_geral(valor: float) -> void:
 	_volume_geral = clampf(valor, 0.0, 100.0)
 	_aplicar_volume_barramento(&"Master", _volume_geral)
@@ -252,7 +273,18 @@ func definir_volume_geral(valor: float) -> void:
 func definir_volume_musica(valor: float) -> void:
 	_volume_musica = clampf(valor, 0.0, 100.0)
 	_aplicar_volume_barramento(BUS_MUSICA, _volume_musica)
+	_aplicar_estado_musica()
 	_agendar_salvamento()
+
+
+func definir_musica_ativa(ativa: bool) -> void:
+	_musica_ativa = ativa
+	_aplicar_estado_musica()
+	_agendar_salvamento()
+
+
+func musica_esta_ativa() -> bool:
+	return _musica_ativa
 
 
 func definir_volume_efeitos(valor: float) -> void:
@@ -620,6 +652,8 @@ func _atualizar_cena_atual() -> void:
 	if _eh_cena_menu(cena):
 		call_deferred("_integrar_controles_opcoes", cena)
 
+	call_deferred("_integrar_check_musica_pausa", cena)
+
 	# Na seleção, a rede pode terminar de confirmar o estado alguns frames depois.
 	if cena != null and cena.scene_file_path == CENA_SELECAO:
 		_rever_trilha_selecao_depois()
@@ -716,6 +750,16 @@ func _ao_adicionar_no(no: Node) -> void:
 	if _eh_pino_personagem(no):
 		_registrar_pino(no)
 
+	if (
+		no.name == &"CheckTelaCheiaPause"
+		or no.name == &"PainelOpcoesPause"
+		or no.name == &"TelaOpcoesPause"
+	):
+		call_deferred(
+			"_integrar_check_musica_pausa",
+			get_tree().current_scene
+		)
+
 	# Se uma cena instanciar o tabuleiro depois do scene_changed,
 	# a trilha é reavaliada assim que a raiz jogável entrar na árvore.
 	if no.name == &"Tabuleiro" or no.name == &"Tabuleiro_Metropolis":
@@ -758,6 +802,81 @@ func _ao_botao_pressionado(botao: BaseButton) -> void:
 	# inicia o efeito sincronizado com a animação da rolagem.
 	if botao.name == &"BotaoGirar":
 		tocar_som_dados()
+
+
+# ============================================================================
+# CAIXA DE MÚSICA NAS OPÇÕES DO PAINEL DE PAUSA
+# ============================================================================
+
+func _integrar_check_musica_pausa(cena: Node) -> void:
+	for _tentativa: int in range(8):
+		if cena == null or not is_instance_valid(cena):
+			return
+
+		var check_tela_cheia: CheckButton = cena.find_child(
+			"CheckTelaCheiaPause",
+			true,
+			false
+		) as CheckButton
+
+		if check_tela_cheia != null:
+			var conteudo: VBoxContainer = (
+				check_tela_cheia.get_parent() as VBoxContainer
+			)
+			if conteudo != null:
+				_criar_ou_atualizar_check_musica_pausa(
+					conteudo,
+					check_tela_cheia
+				)
+				return
+
+		await get_tree().process_frame
+
+
+func _criar_ou_atualizar_check_musica_pausa(
+	conteudo: VBoxContainer,
+	check_tela_cheia: CheckButton
+) -> void:
+	var check_existente: CheckButton = conteudo.get_node_or_null(
+		"CheckMusicaPause"
+	) as CheckButton
+
+	if check_existente != null:
+		check_existente.set_pressed_no_signal(_musica_ativa)
+		return
+
+	var check_musica := CheckButton.new()
+	check_musica.name = "CheckMusicaPause"
+	check_musica.text = "MÚSICA DO JOGO"
+	check_musica.tooltip_text = (
+		"Desmarque para silenciar somente as músicas. "
+		+ "Botões, dados e pulos continuam ativos."
+	)
+	check_musica.custom_minimum_size = Vector2(0.0, 64.0)
+	check_musica.process_mode = Node.PROCESS_MODE_ALWAYS
+	check_musica.set_pressed_no_signal(_musica_ativa)
+	check_musica.add_theme_color_override(
+		"font_color",
+		Color.WHITE
+	)
+	check_musica.add_theme_color_override(
+		"font_hover_color",
+		Color(1.0, 0.78, 0.78)
+	)
+	_aplicar_fonte_ui(check_musica, 26, 3)
+	check_musica.toggled.connect(
+		_ao_check_musica_pausa_toggled
+	)
+
+	conteudo.add_child(check_musica)
+	conteudo.move_child(
+		check_musica,
+		check_tela_cheia.get_index()
+	)
+
+
+func _ao_check_musica_pausa_toggled(ativada: bool) -> void:
+	definir_musica_ativa(ativada)
 
 
 # ============================================================================
