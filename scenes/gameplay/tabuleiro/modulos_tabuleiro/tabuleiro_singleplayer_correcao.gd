@@ -18,7 +18,13 @@ const ESPERA_MAXIMA_ABERTURA_APOS_PAUSA: float = 12.0
 const ATRASO_WATCHDOG_RETORNO_BOT: float = 1.45
 const TENTATIVAS_WATCHDOG_RETORNO_BOT: int = 2
 
+# Administração econômica exclusiva dos bots no modo solo.
+const ATRASO_DECISAO_CONSTRUCAO_BOT: float = 0.42
+const RESERVA_MINIMA_CONSTRUCAO_BOT: int = 250
+
 var _token_retomada_bot_singleplayer: int = 0
+var _passagem_turno_bot_singleplayer_em_andamento: bool = false
+var _ultima_chave_fase_construcao_bot: String = ""
 
 
 @rpc("authority", "call_local", "reliable")
@@ -144,6 +150,407 @@ func _reiniciar_controlador_bot_singleplayer(bot_id: String) -> void:
 	else:
 		# Compatibilidade com um controlador antigo, sem tocar em estado privado.
 		_solicitar_turno_bot(bot_id)
+
+
+
+# ============================================================================
+# CONSTRUÇÃO AUTOMÁTICA DOS BOTS — SOMENTE SINGLEPLAYER
+# ============================================================================
+#
+# Esta camada não altera a função compartilhada de construção, o HUD nem os
+# módulos LAN/Photon. Ela apenas insere uma fase econômica antes da passagem
+# de turno quando TODAS estas condições forem verdadeiras:
+# - Global.modo_singleplayer;
+# - nenhuma sala LAN/Photon ativa;
+# - o jogador atual é um bot local.
+#
+# O bot realiza no máximo uma obra por turno e respeita:
+# monopólio completo, construção equilibrada, hipotecas, nível máximo,
+# bloqueios de eventos, custo real e reserva mínima de caixa.
+# ============================================================================
+
+
+func _processar_passagem_de_turno():
+	if not _eh_singleplayer_local_sem_rede():
+		await super._processar_passagem_de_turno()
+		return
+
+	var bot_id: String = jogador_atual_id
+	if not _eh_jogador_bot(bot_id):
+		await super._processar_passagem_de_turno()
+		return
+
+	# Algumas resoluções podem solicitar a passagem mais de uma vez no mesmo
+	# frame. Somente a primeira corrotina administra e avança o turno.
+	if _passagem_turno_bot_singleplayer_em_andamento:
+		return
+
+	_passagem_turno_bot_singleplayer_em_andamento = true
+
+	# O contador global permanece igual durante rolagens extras por dupla.
+	# A chave impede mais de uma obra no mesmo turno real do bot.
+	var chave_turno: String = "%d:%s" % [
+		_contador_turnos_globais,
+		bot_id,
+	]
+	if _ultima_chave_fase_construcao_bot != chave_turno:
+		_ultima_chave_fase_construcao_bot = chave_turno
+		await _executar_fase_construcao_bot_singleplayer(bot_id)
+
+	_passagem_turno_bot_singleplayer_em_andamento = false
+
+	if not is_inside_tree():
+		return
+
+	# Retoma exatamente o fluxo herdado. Humanos e rede nunca entram no bloco
+	# acima e, portanto, chegam aqui sem qualquer regra adicional.
+	await super._processar_passagem_de_turno()
+
+
+func _eh_singleplayer_local_sem_rede() -> bool:
+	return (
+		Global.modo_singleplayer
+		and not Global.modo_online
+		and not OnlineTransport.esta_em_sala()
+		and not OnlineTransport.usando_photon()
+	)
+
+
+func _executar_fase_construcao_bot_singleplayer(
+	bot_id: String
+) -> void:
+	if not _pode_bot_administrar_agora(bot_id):
+		return
+
+	var opcoes: Array[Dictionary] = (
+		_coletar_opcoes_construcao_bot_singleplayer(bot_id)
+	)
+	if opcoes.is_empty():
+		return
+
+	var bot: Node = _bots_jogadores.get(bot_id) as Node
+	if (
+		bot == null
+		or not is_instance_valid(bot)
+		or not bot.has_method("escolher_construcao")
+	):
+		return
+
+	await get_tree().create_timer(
+		ATRASO_DECISAO_CONSTRUCAO_BOT
+	).timeout
+
+	if not _pode_bot_administrar_agora(bot_id):
+		return
+
+	# Recalcula tudo depois da espera. Uma votação, carta, pausa ou evento pode
+	# ter alterado saldo, propriedade, hipoteca ou bloqueio nesse intervalo.
+	opcoes = _coletar_opcoes_construcao_bot_singleplayer(bot_id)
+	if opcoes.is_empty():
+		return
+
+	var saldo: int = int(
+		dados_economia_jogadores
+		.get(bot_id, {})
+		.get("dinheiro", 0)
+	)
+	var escolha_variant: Variant = bot.call(
+		"escolher_construcao",
+		opcoes,
+		saldo
+	)
+	var casa_id: int = int(escolha_variant)
+	if casa_id < 0:
+		return
+
+	await _aplicar_construcao_bot_singleplayer(
+		bot_id,
+		casa_id
+	)
+
+
+func _pode_bot_administrar_agora(bot_id: String) -> bool:
+	if not _eh_singleplayer_local_sem_rede():
+		return false
+	if bot_id.is_empty() or jogador_atual_id != bot_id:
+		return false
+	if not _eh_jogador_bot(bot_id):
+		return false
+	if not dados_economia_jogadores.has(bot_id):
+		return false
+	if bool(
+		dados_economia_jogadores[bot_id].get("falido", false)
+	):
+		return false
+	if get_tree().paused or _pausa_global_ativa:
+		return false
+	if _menu_pause_bloqueando_acoes or _bots_pausados:
+		return false
+	if _acoes_bloqueadas_por_evento():
+		return false
+	if (
+		leilao_em_andamento
+		or _leilao_evento_ativo
+		or _leilao_falencia_ativo
+	):
+		return false
+	if not _construcoes_visuais_em_andamento.is_empty():
+		return false
+	return true
+
+
+func _coletar_opcoes_construcao_bot_singleplayer(
+	bot_id: String
+) -> Array[Dictionary]:
+	var opcoes: Array[Dictionary] = []
+	if not _pode_bot_administrar_agora(bot_id):
+		return opcoes
+
+	var saldo: int = int(
+		dados_economia_jogadores[bot_id].get("dinheiro", 0)
+	)
+
+	for casa_variant: Variant in tabuleiro.keys():
+		var casa_id: int = int(casa_variant)
+		if not tabuleiro.has(casa_id):
+			continue
+
+		var dados_casa: Dictionary = tabuleiro[casa_id]
+		if str(dados_casa.get("tipo", "")) != "propriedade":
+			continue
+		if str(registro_propriedades.get(casa_id, "")) != bot_id:
+			continue
+
+		var grupo: String = str(dados_casa.get("grupo", ""))
+		# Nesta implementação o bot constrói somente ao possuir o monopólio
+		# completo. Passivas especiais não ampliam esta regra automaticamente.
+		if not _tem_monopolio(bot_id, grupo):
+			continue
+		if bool(dados_casa.get("hipotecada", false)):
+			continue
+
+		var nivel_atual: int = int(dados_casa.get("nivel", 0))
+		if nivel_atual < 0 or nivel_atual >= 5:
+			continue
+		if _construcao_bloqueada_por_efeito(bot_id, casa_id):
+			continue
+		if not _construcao_equilibrada_para_bot(
+			bot_id,
+			grupo,
+			casa_id
+		):
+			continue
+
+		var nivel_destino: int = int(
+			_nivel_destino_construcao(casa_id)
+		)
+		if (
+			nivel_destino <= nivel_atual
+			or nivel_destino > 5
+		):
+			continue
+
+		var custo: int = int(
+			_calcular_custo_construcao(bot_id, casa_id)
+		)
+		if custo <= 0:
+			continue
+		if saldo - custo < RESERVA_MINIMA_CONSTRUCAO_BOT:
+			continue
+
+		opcoes.append({
+			"id": casa_id,
+			"nome": str(dados_casa.get("nome", "")),
+			"nivel": nivel_atual,
+			"nivel_destino": nivel_destino,
+			"custo": custo,
+			"saldo_jogador": saldo,
+			"pode_construir": true,
+			"aluguel_atual": int(
+				_calcular_aluguel(casa_id, bot_id)
+			),
+		})
+
+	return opcoes
+
+
+func _construcao_equilibrada_para_bot(
+	bot_id: String,
+	grupo: String,
+	casa_id: int
+) -> bool:
+	var menor_nivel: int = 6
+	var encontrou: bool = false
+
+	for outra_variant: Variant in tabuleiro.keys():
+		var outra_id: int = int(outra_variant)
+		var dados_outra: Dictionary = tabuleiro.get(
+			outra_id,
+			{}
+		)
+		if str(dados_outra.get("tipo", "")) != "propriedade":
+			continue
+		if str(dados_outra.get("grupo", "")) != grupo:
+			continue
+
+		# Monopólio hipotecado não recebe novas obras. Isso evita construir numa
+		# rua enquanto outra propriedade do mesmo grupo está dada ao banco.
+		if str(registro_propriedades.get(outra_id, "")) != bot_id:
+			return false
+		if bool(dados_outra.get("hipotecada", false)):
+			return false
+
+		encontrou = true
+		menor_nivel = mini(
+			menor_nivel,
+			int(dados_outra.get("nivel", 0))
+		)
+
+	if not encontrou:
+		return false
+
+	return int(
+		tabuleiro.get(casa_id, {}).get("nivel", 0)
+	) == menor_nivel
+
+
+func _aplicar_construcao_bot_singleplayer(
+	bot_id: String,
+	casa_id: int
+) -> bool:
+	if not _pode_bot_administrar_agora(bot_id):
+		return false
+
+	# Procura novamente a opção validada para impedir qualquer alteração entre
+	# a decisão da IA e a aplicação econômica.
+	var opcao_atual: Dictionary = {}
+	for opcao: Dictionary in (
+		_coletar_opcoes_construcao_bot_singleplayer(bot_id)
+	):
+		if int(opcao.get("id", -1)) == casa_id:
+			opcao_atual = opcao
+			break
+
+	if opcao_atual.is_empty():
+		return false
+
+	var custo: int = int(opcao_atual.get("custo", 0))
+	var nivel_destino: int = int(
+		opcao_atual.get("nivel_destino", -1)
+	)
+	var saldo_atual: int = int(
+		dados_economia_jogadores[bot_id].get("dinheiro", 0)
+	)
+	if (
+		custo <= 0
+		or nivel_destino <= int(
+			tabuleiro[casa_id].get("nivel", 0)
+		)
+		or nivel_destino > 5
+		or saldo_atual - custo
+			< RESERVA_MINIMA_CONSTRUCAO_BOT
+	):
+		return false
+
+	dados_economia_jogadores[bot_id]["dinheiro"] = (
+		saldo_atual - custo
+	)
+	tabuleiro[casa_id]["nivel"] = nivel_destino
+
+	_atualizar_imagem_construcao(casa_id)
+
+	var nome_bot: String = str(
+		dados_economia_jogadores[bot_id].get("nome", bot_id)
+	)
+	var nome_casa: String = str(
+		tabuleiro[casa_id].get("nome", "propriedade")
+	).replace("\n", " ")
+
+	_registrar_acao(
+		"construcao",
+		"%s construiu o nível %d em %s por $%d."
+		% [nome_bot, nivel_destino, nome_casa, custo],
+		bot_id,
+		{
+			"casa_id": casa_id,
+			"nivel": nivel_destino,
+			"custo": custo,
+			"origem": "bot_singleplayer",
+		}
+	)
+
+	if pinos_jogadores.has(bot_id):
+		pinos_jogadores[bot_id].mostrar_texto_flutuante(
+			"OBRA CONCLUÍDA!\n-$%d" % custo,
+			Color(0.45, 0.9, 1.0)
+		)
+
+	var gerenciador_audio: Node = get_node_or_null(
+		"/root/GerenciadorAudio"
+	)
+	if (
+		gerenciador_audio != null
+		and gerenciador_audio.has_method(
+			"tocar_som_construcao"
+		)
+	):
+		gerenciador_audio.call("tocar_som_construcao")
+
+	await _animar_construcao_bot_singleplayer(casa_id)
+
+	if not is_inside_tree():
+		return true
+
+	_atualizar_hud_minha_casa()
+	_atualizar_hud_ciclo_turno()
+	_atualizar_menu_construcao()
+	GerenciadorSalvamento.marcar_estado_alterado(self)
+	return true
+
+
+func _animar_construcao_bot_singleplayer(
+	casa_id: int
+) -> void:
+	var camada: Node = get_node_or_null("Camada_02_Predios")
+	if camada == null:
+		return
+
+	var container: Node2D = camada.get_node_or_null(
+		"Casa_%d/ContainerConstrucao" % casa_id
+	) as Node2D
+	if container == null:
+		return
+
+	_construcoes_visuais_em_andamento[casa_id] = true
+	container.scale = Vector2(0.80, 0.80)
+	container.modulate.a = 0.42
+
+	var tween: Tween = create_tween().set_parallel(true)
+	(
+		tween
+		.tween_property(
+			container,
+			"scale",
+			Vector2.ONE,
+			0.36
+		)
+		.set_trans(Tween.TRANS_BACK)
+		.set_ease(Tween.EASE_OUT)
+	)
+	(
+		tween
+		.tween_property(
+			container,
+			"modulate:a",
+			1.0,
+			0.24
+		)
+		.set_trans(Tween.TRANS_QUAD)
+		.set_ease(Tween.EASE_OUT)
+	)
+
+	await tween.finished
+	_construcoes_visuais_em_andamento.erase(casa_id)
 
 
 # ============================================================================
