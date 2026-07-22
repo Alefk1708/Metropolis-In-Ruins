@@ -137,9 +137,8 @@ func _criar_botao_singleplayer(
 		icone != null
 		and ResourceLoader.exists(ICONE_SINGLEPLAYER)
 	):
-		# Troca apenas a textura. Dimensões e posição continuam idênticas
-		# às do ícone existente no botão Tutorial.
 		icone.texture = load(ICONE_SINGLEPLAYER) as Texture2D
+		_diminuir_icone_play_centralizado(icone)
 
 	var botao_tutorial: Button = tutorial_container.get_node_or_null(
 		"BtnTutorial"
@@ -166,6 +165,41 @@ func _criar_botao_singleplayer(
 		novo_container,
 		posicao_final
 	)
+
+
+func _diminuir_icone_play_centralizado(
+	icone: TextureRect
+) -> void:
+	# Reduz somente o retângulo do ícone para 68% e conserva exatamente
+	# o centro usado pelo ícone do botão Tutorial.
+	const ESCALA_ICONE_PLAY: float = 0.68
+
+	var largura: float = icone.offset_right - icone.offset_left
+	var altura: float = icone.offset_bottom - icone.offset_top
+
+	if largura <= 0.0 or altura <= 0.0:
+		# Fallback para layouts cujo tamanho só é calculado depois do primeiro
+		# frame. O pivô mantém a redução centralizada.
+		icone.pivot_offset = icone.size * 0.5
+		icone.scale = Vector2(
+			ESCALA_ICONE_PLAY,
+			ESCALA_ICONE_PLAY
+		)
+		return
+
+	var centro := Vector2(
+		(icone.offset_left + icone.offset_right) * 0.5,
+		(icone.offset_top + icone.offset_bottom) * 0.5
+	)
+	var novo_tamanho := Vector2(
+		largura * ESCALA_ICONE_PLAY,
+		altura * ESCALA_ICONE_PLAY
+	)
+
+	icone.offset_left = centro.x - novo_tamanho.x * 0.5
+	icone.offset_right = centro.x + novo_tamanho.x * 0.5
+	icone.offset_top = centro.y - novo_tamanho.y * 0.5
+	icone.offset_bottom = centro.y + novo_tamanho.y * 0.5
 
 
 func _conectar_limpeza_outros_modos(
