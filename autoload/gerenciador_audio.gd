@@ -10,7 +10,7 @@ extends Node
 # - Partida no tabuleiro
 #
 # A seleção de personagens mantém a trilha do modo de rede ativo.
-# Todos os BaseButton usam ui_pop_01.wav.
+# Todos os BaseButton que emitem pressed usam ui_pop_01.wav.
 # Volumes separados: Geral, Música e Botões.
 # Preferências: user://configuracao_audio.cfg.
 # ============================================================================
@@ -54,6 +54,9 @@ const MUSICA_PARTIDA: AudioStreamOggVorbis = preload(
 const SOM_BOTAO: AudioStreamWAV = preload(
 	"res://assets/audio/ui/ui_pop_01.wav"
 )
+const SOM_DADOS_GIRANDO: AudioStreamWAV = preload(
+	"res://assets/audio/sfx/dados_girando_simples.wav"
+)
 const FONTE_UI: Font = preload("res://assets/fonts/m5x7.ttf")
 
 enum TipoTrilha {
@@ -69,6 +72,7 @@ var _volume_musica: float = VOLUME_PADRAO_MUSICA
 var _volume_botoes: float = VOLUME_PADRAO_BOTOES
 
 var _player_musica: AudioStreamPlayer
+var _player_dados: AudioStreamPlayer
 var _players_botoes: Array[AudioStreamPlayer] = []
 var _indice_player_botao: int = 0
 var _tween_musica: Tween
@@ -257,6 +261,14 @@ func _criar_players() -> void:
 	_player_musica.process_mode = Node.PROCESS_MODE_ALWAYS
 	add_child(_player_musica)
 
+	_player_dados = AudioStreamPlayer.new()
+	_player_dados.name = "SomDadosGirando"
+	_player_dados.bus = BUS_BOTOES
+	_player_dados.stream = SOM_DADOS_GIRANDO
+	_player_dados.volume_db = -3.0
+	_player_dados.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(_player_dados)
+
 	for indice in range(4):
 		var player := AudioStreamPlayer.new()
 		player.name = "SomBotao%02d" % (indice + 1)
@@ -272,10 +284,21 @@ func tocar_som_botao() -> void:
 	if _players_botoes.is_empty():
 		return
 
-	var player := _players_botoes[_indice_player_botao]
+	var player: AudioStreamPlayer = _players_botoes[_indice_player_botao]
 	_indice_player_botao = (_indice_player_botao + 1) % _players_botoes.size()
 	player.pitch_scale = 1.0
 	player.play()
+
+
+func tocar_som_dados() -> void:
+	if _player_dados == null or not is_instance_valid(_player_dados):
+		return
+
+	# Garante sincronização com o primeiro quadro da animação mesmo se uma
+	# rolagem anterior tiver sido interrompida por troca de cena.
+	_player_dados.stop()
+	_player_dados.pitch_scale = 1.0
+	_player_dados.play()
 
 
 func _solicitar_trilha(tipo: int) -> void:
@@ -524,7 +547,9 @@ func _eh_cena_menu(cena: Node) -> bool:
 
 func _ao_adicionar_no(no: Node) -> void:
 	if no is BaseButton:
-		call_deferred("_conectar_botao", no)
+		# O sinal node_added acontece assim que o botão entra na árvore.
+		# Conectar imediatamente garante som também em botões dinâmicos.
+		_conectar_botao(no)
 
 	# Se uma cena instanciar o tabuleiro depois do scene_changed,
 	# a trilha é reavaliada assim que a raiz jogável entrar na árvore.
@@ -558,11 +583,16 @@ func _conectar_botao(no: Node) -> void:
 func _ao_botao_pressionado(botao: BaseButton) -> void:
 	if botao == null or not is_instance_valid(botao):
 		return
-	if botao.disabled:
-		return
-	if bool(botao.get_meta("sem_som_ui", false)):
-		return
+
+	# Esta função só é executada depois que o BaseButton realmente emite
+	# pressed. Não verifica disabled aqui, pois muitos botões se desativam
+	# dentro do próprio callback antes de o gerenciador receber o sinal.
 	tocar_som_botao()
+
+	# GIRAR DADOS recebe o mesmo pop dos demais botões e, no mesmo instante,
+	# inicia o efeito sincronizado com a animação da rolagem.
+	if botao.name == &"BotaoGirar":
+		tocar_som_dados()
 
 
 # ============================================================================
