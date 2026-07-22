@@ -62,6 +62,15 @@ const SOM_DADOS_GIRANDO: AudioStreamWAV = preload(
 const CAMINHO_SOM_PULO_PINO: String = (
 	"res://assets/audio/sfx/pulo_pino_ultra_simples.ogg"
 )
+const CAMINHO_SOM_COMPRA: String = (
+	"res://assets/audio/sfx/comprar_casa_shiim.ogg"
+)
+const CAMINHO_SOM_CONSTRUCAO: String = (
+	"res://assets/audio/sfx/construir_montagem_simples.ogg"
+)
+const CAMINHO_SOM_HABILIDADE: String = (
+	"res://assets/audio/sfx/ativar_habilidade_ligando_simples.ogg"
+)
 const CAMINHO_SCRIPT_PINO: String = (
 	"res://scenes/gameplay/tabuleiro/pino_personagem.gd"
 )
@@ -84,6 +93,9 @@ var _musica_ativa: bool = true
 var _player_musica: AudioStreamPlayer
 var _player_dados: AudioStreamPlayer
 var _player_pulo_pino: AudioStreamPlayer
+var _player_compra: AudioStreamPlayer
+var _player_construcao: AudioStreamPlayer
+var _player_habilidade: AudioStreamPlayer
 var _players_botoes: Array[AudioStreamPlayer] = []
 var _indice_player_botao: int = 0
 
@@ -120,6 +132,7 @@ func _ready() -> void:
 
 	set_process(true)
 	call_deferred("_conectar_botoes_existentes")
+	call_deferred("_conectar_sinais_acoes_existentes")
 	call_deferred("_registrar_pinos_existentes")
 	call_deferred("_atualizar_cena_atual")
 	call_deferred(
@@ -351,6 +364,22 @@ func _criar_players() -> void:
 
 	add_child(_player_pulo_pino)
 
+	_player_compra = _criar_player_efeito_ogg(
+		"SomCompraCasa",
+		CAMINHO_SOM_COMPRA,
+		-5.0
+	)
+	_player_construcao = _criar_player_efeito_ogg(
+		"SomConstrucao",
+		CAMINHO_SOM_CONSTRUCAO,
+		-5.5
+	)
+	_player_habilidade = _criar_player_efeito_ogg(
+		"SomAtivarHabilidade",
+		CAMINHO_SOM_HABILIDADE,
+		-5.0
+	)
+
 	for indice in range(4):
 		var player := AudioStreamPlayer.new()
 		player.name = "SomBotao%02d" % (indice + 1)
@@ -360,6 +389,39 @@ func _criar_players() -> void:
 		player.process_mode = Node.PROCESS_MODE_ALWAYS
 		add_child(player)
 		_players_botoes.append(player)
+
+
+func _criar_player_efeito_ogg(
+	nome_player: String,
+	caminho: String,
+	volume_db: float
+) -> AudioStreamPlayer:
+	var player := AudioStreamPlayer.new()
+	player.name = nome_player
+	player.bus = BUS_EFEITOS
+	player.volume_db = volume_db
+	player.process_mode = Node.PROCESS_MODE_ALWAYS
+
+	# O carregamento é protegido para que um arquivo de áudio ausente
+	# nunca impeça o projeto inteiro de abrir.
+	if ResourceLoader.exists(caminho):
+		player.stream = load(caminho) as AudioStream
+
+	add_child(player)
+	return player
+
+
+func _reiniciar_player_efeito(player: AudioStreamPlayer) -> void:
+	if (
+		player == null
+		or not is_instance_valid(player)
+		or player.stream == null
+	):
+		return
+
+	player.stop()
+	player.pitch_scale = 1.0
+	player.play()
 
 
 func tocar_som_botao() -> void:
@@ -394,6 +456,18 @@ func tocar_som_pulo_pino() -> void:
 	_player_pulo_pino.stop()
 	_player_pulo_pino.pitch_scale = 1.0
 	_player_pulo_pino.play()
+
+
+func tocar_som_compra_casa() -> void:
+	_reiniciar_player_efeito(_player_compra)
+
+
+func tocar_som_construcao() -> void:
+	_reiniciar_player_efeito(_player_construcao)
+
+
+func tocar_som_ativar_habilidade() -> void:
+	_reiniciar_player_efeito(_player_habilidade)
 
 
 func _solicitar_trilha(tipo: int) -> void:
@@ -742,6 +816,8 @@ func _eh_cena_menu(cena: Node) -> bool:
 # ============================================================================
 
 func _ao_adicionar_no(no: Node) -> void:
+	_conectar_sinais_acoes_hud(no)
+
 	if no is BaseButton:
 		# O sinal node_added acontece assim que o botão entra na árvore.
 		# Conectar imediatamente garante som também em botões dinâmicos.
@@ -764,6 +840,96 @@ func _ao_adicionar_no(no: Node) -> void:
 	# a trilha é reavaliada assim que a raiz jogável entrar na árvore.
 	if no.name == &"Tabuleiro" or no.name == &"Tabuleiro_Metropolis":
 		call_deferred("_atualizar_cena_atual")
+
+
+func _conectar_sinais_acoes_existentes() -> void:
+	_conectar_sinais_acoes_recursivamente(get_tree().root)
+
+
+func _conectar_sinais_acoes_recursivamente(no: Node) -> void:
+	if no == null or not is_instance_valid(no):
+		return
+
+	_conectar_sinais_acoes_hud(no)
+
+	for filho: Node in no.get_children():
+		_conectar_sinais_acoes_recursivamente(filho)
+
+
+func _conectar_sinais_acoes_hud(no: Node) -> void:
+	if no == null or not is_instance_valid(no):
+		return
+	if no.has_meta("gerenciador_audio_acoes_conectado"):
+		return
+
+	var conectou: bool = false
+
+	if no.has_signal("acao_terreno_escolhida"):
+		var callback_compra := Callable(
+			self,
+			"_ao_acao_terreno_escolhida"
+		)
+		if not no.is_connected(
+			&"acao_terreno_escolhida",
+			callback_compra
+		):
+			no.connect(
+				&"acao_terreno_escolhida",
+				callback_compra
+			)
+		conectou = true
+
+	if no.has_signal("solicitar_construcao"):
+		var callback_construcao := Callable(
+			self,
+			"_ao_solicitar_construcao"
+		)
+		if not no.is_connected(
+			&"solicitar_construcao",
+			callback_construcao
+		):
+			no.connect(
+				&"solicitar_construcao",
+				callback_construcao
+			)
+		conectou = true
+
+	if no.has_signal("solicitar_habilidade"):
+		var callback_habilidade := Callable(
+			self,
+			"_ao_solicitar_habilidade"
+		)
+		if not no.is_connected(
+			&"solicitar_habilidade",
+			callback_habilidade
+		):
+			no.connect(
+				&"solicitar_habilidade",
+				callback_habilidade
+			)
+		conectou = true
+
+	if conectou:
+		no.set_meta(
+			"gerenciador_audio_acoes_conectado",
+			true
+		)
+
+
+func _ao_acao_terreno_escolhida(comprou: bool) -> void:
+	if comprou:
+		tocar_som_compra_casa()
+
+
+func _ao_solicitar_construcao(_casa_id: int) -> void:
+	tocar_som_construcao()
+
+
+func _ao_solicitar_habilidade(
+	_alvo_id: String,
+	_casa_id: int
+) -> void:
+	tocar_som_ativar_habilidade()
 
 
 func _conectar_botoes_existentes() -> void:
