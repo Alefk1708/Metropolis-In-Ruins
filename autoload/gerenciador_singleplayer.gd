@@ -50,9 +50,9 @@ func _integrar_cena_atual() -> void:
 	if Global.modo_singleplayer:
 		Global.limpar_partida_singleplayer()
 
-	# O botão já existe no menu_principal.tscn. Esta espera serve somente para
-	# o layout calcular tamanhos e para o script do menu iniciar sua apresentação.
-	for _tentativa in range(8):
+	# O botão já existe no menu_principal.tscn. Dois frames são suficientes para
+	# o layout calcular os tamanhos antes de preparar sua animação.
+	for _tentativa in range(2):
 		if not _eh_menu_principal(cena):
 			_integracao_em_andamento = false
 			return
@@ -162,13 +162,38 @@ func _animar_entrada_singleplayer(
 	container: PanelContainer,
 	botao: Button
 ) -> void:
-	# O botão permanente permanece invisível até a apresentação original terminar.
+	# Aguarda somente a animação do Tutorial. Antes, o botão solo esperava toda a
+	# sequência dos botões principais, fazendo sua entrada parecer atrasada.
+	var tutorial_container: PanelContainer = cena.get_node_or_null(
+		"TutorialContainer"
+	) as PanelContainer
+	var botao_tutorial: Button = cena.get_node_or_null(
+		"TutorialContainer/BtnTutorial"
+	) as Button
 	for _tentativa in range(180):
 		if not _eh_menu_principal(cena):
 			return
+
+		var tutorial_pronto: bool = (
+			tutorial_container != null
+			and botao_tutorial != null
+			and is_instance_valid(tutorial_container)
+			and is_instance_valid(botao_tutorial)
+			and tutorial_container.modulate.a >= 0.98
+			and botao_tutorial.modulate.a >= 0.98
+			and tutorial_container.scale.distance_to(Vector2.ONE) <= 0.02
+			and absf(tutorial_container.rotation) <= 0.02
+		)
+		if tutorial_pronto:
+			break
+
+		# Fallback para mudanças futuras no menu que removam a animação do Tutorial.
 		if not bool(cena.get("_apresentacao_inicial_ativa")):
 			break
 		await get_tree().process_frame
+
+	# Um único frame separa visualmente as duas entradas sem criar demora.
+	await get_tree().process_frame
 
 	if (
 		container == null
@@ -189,32 +214,32 @@ func _animar_entrada_singleplayer(
 	var tween: Tween = create_tween().set_parallel(true)
 	(
 		tween
-		. tween_property(container, "position", posicao_final, 0.66)
+		. tween_property(container, "position", posicao_final, 0.46)
 		. set_trans(Tween.TRANS_QUINT)
 		. set_ease(Tween.EASE_OUT)
 	)
 	(
 		tween
-		. tween_property(container, "scale", Vector2.ONE, 0.72)
+		. tween_property(container, "scale", Vector2.ONE, 0.50)
 		. set_trans(Tween.TRANS_BACK)
 		. set_ease(Tween.EASE_OUT)
 	)
 	(
 		tween
-		. tween_property(container, "rotation", 0.0, 0.62)
+		. tween_property(container, "rotation", 0.0, 0.44)
 		. set_trans(Tween.TRANS_BACK)
 		. set_ease(Tween.EASE_OUT)
 	)
 	(
 		tween
-		. tween_property(container, "modulate:a", 1.0, 0.34)
+		. tween_property(container, "modulate:a", 1.0, 0.24)
 		. set_trans(Tween.TRANS_QUAD)
 		. set_ease(Tween.EASE_OUT)
 	)
 	(
 		tween
-		. tween_property(botao, "modulate:a", 1.0, 0.42)
-		. set_delay(0.08)
+		. tween_property(botao, "modulate:a", 1.0, 0.28)
+		. set_delay(0.03)
 		. set_trans(Tween.TRANS_QUAD)
 		. set_ease(Tween.EASE_OUT)
 	)
