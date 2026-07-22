@@ -1,1 +1,1 @@
-extends "res://scenes/gameplay/tabuleiro/modulos_tabuleiro/tabuleiro_balanceamento.gd"
+extends "res://scenes/gameplay/tabuleiro/modulos_tabuleiro/tabuleiro_singleplayer_correcao.gd"

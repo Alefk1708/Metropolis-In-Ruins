@@ -19,6 +19,7 @@ const CENA_MENU_PRINCIPAL: String = "res://scenes/ui/tela_inicial/menu_principal
 const CENA_LAN: String = "res://scenes/ui/lobby/lobby.tscn"
 const CENA_ONLINE: String = "res://scenes/ui/online/online_menu.tscn"
 const CENA_SELECAO: String = "res://scenes/ui/selecao_personagem/selecao_personagem.tscn"
+const CENA_SINGLEPLAYER: String = "res://scenes/ui/singleplayer/singleplayer.tscn"
 
 # tabuleiro.tscn é somente a tela de carregamento.
 # tabuleiro_jogo.tscn é o tabuleiro realmente executado por LAN, Online e local.
@@ -778,6 +779,8 @@ func _determinar_trilha(cena: Node) -> int:
 
 	match caminho:
 		CENA_MENU_PRINCIPAL:
+			return TipoTrilha.MENU
+		CENA_SINGLEPLAYER:
 			return TipoTrilha.MENU
 		CENA_LAN:
 			return TipoTrilha.LAN
