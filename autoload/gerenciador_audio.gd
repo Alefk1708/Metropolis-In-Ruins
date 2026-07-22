@@ -279,15 +279,45 @@ func tocar_som_botao() -> void:
 
 
 func _solicitar_trilha(tipo: int) -> void:
-	_trilha_solicitada = tipo
-	_token_troca_musica += 1
-	var token := _token_troca_musica
-
-	if tipo == _trilha_atual and _player_musica.playing:
+	if _player_musica == null or not is_instance_valid(_player_musica):
 		return
 
-	if _tween_musica != null and _tween_musica.is_valid():
+	var tween_ativo: bool = (
+		_tween_musica != null
+		and _tween_musica.is_valid()
+	)
+
+	# O watchdog e os sinais de cena podem solicitar a mesma faixa várias
+	# vezes enquanto o fade ainda está em andamento. Não reinicia essa troca:
+	# isso permite que o callback de _iniciar_trilha seja finalmente executado.
+	if tipo == _trilha_solicitada:
+		if tipo == _trilha_atual and _player_musica.playing:
+			# Recupera uma faixa que tenha ficado silenciosa devido a uma
+			# transição antiga interrompida antes desta correção.
+			if (
+				not tween_ativo
+				and _player_musica.volume_db
+				< VOLUME_BASE_PLAYER_MUSICA_DB - 0.1
+			):
+				_restaurar_volume_musica()
+			return
+
+		# A mesma troca ainda está sendo processada. Mantém o Tween existente.
+		if tween_ativo:
+			return
+
+	_trilha_solicitada = tipo
+	_token_troca_musica += 1
+	var token: int = _token_troca_musica
+
+	if tween_ativo:
 		_tween_musica.kill()
+
+	# A cena voltou para a faixa atual enquanto ela estava diminuindo.
+	# Em vez de manter o player em -45 dB, restaura o volume suavemente.
+	if tipo == _trilha_atual and _player_musica.playing:
+		_restaurar_volume_musica()
+		return
 
 	if not _player_musica.playing:
 		_iniciar_trilha(tipo, token)
@@ -302,6 +332,36 @@ func _solicitar_trilha(tipo: int) -> void:
 		0.42
 	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	_tween_musica.tween_callback(_iniciar_trilha.bind(tipo, token))
+
+
+func _restaurar_volume_musica() -> void:
+	if _player_musica == null or not is_instance_valid(_player_musica):
+		return
+
+	if _tween_musica != null and _tween_musica.is_valid():
+		_tween_musica.kill()
+
+	if not _player_musica.playing:
+		_player_musica.volume_db = VOLUME_BASE_PLAYER_MUSICA_DB
+		return
+
+	if (
+		absf(
+			_player_musica.volume_db
+			- VOLUME_BASE_PLAYER_MUSICA_DB
+		) <= 0.1
+	):
+		_player_musica.volume_db = VOLUME_BASE_PLAYER_MUSICA_DB
+		return
+
+	_tween_musica = create_tween()
+	_tween_musica.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	_tween_musica.tween_property(
+		_player_musica,
+		"volume_db",
+		VOLUME_BASE_PLAYER_MUSICA_DB,
+		0.24
+	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 
 func _iniciar_trilha(tipo: int, token: int) -> void:
