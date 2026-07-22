@@ -32,6 +32,7 @@ const CAMINHO_CONFIGURACAO: String = "user://configuracao_audio.cfg"
 const BUS_MUSICA: StringName = &"Musica"
 const BUS_EFEITOS: StringName = &"Efeitos"
 const BUS_BOTOES: StringName = &"Botoes"
+const GRUPO_CONTROLES_MUSICA: StringName = &"controles_musica"
 
 const VOLUME_PADRAO_GERAL: float = 100.0
 const VOLUME_PADRAO_MUSICA: float = 55.0
@@ -293,7 +294,21 @@ func definir_volume_musica(valor: float) -> void:
 func definir_musica_ativa(ativa: bool) -> void:
 	_musica_ativa = ativa
 	_aplicar_estado_musica()
+	_sincronizar_checks_musica()
 	_agendar_salvamento()
+
+
+func _sincronizar_checks_musica() -> void:
+	if get_tree() == null:
+		return
+
+	for no: Node in get_tree().get_nodes_in_group(
+		GRUPO_CONTROLES_MUSICA
+	):
+		var check: CheckButton = no as CheckButton
+		if check == null or not is_instance_valid(check):
+			continue
+		check.set_pressed_no_signal(_musica_ativa)
 
 
 func musica_esta_ativa() -> bool:
@@ -1008,6 +1023,12 @@ func _criar_ou_atualizar_check_musica_pausa(
 	) as CheckButton
 
 	if check_existente != null:
+		if not check_existente.is_in_group(
+			GRUPO_CONTROLES_MUSICA
+		):
+			check_existente.add_to_group(
+				GRUPO_CONTROLES_MUSICA
+			)
 		check_existente.set_pressed_no_signal(_musica_ativa)
 		return
 
@@ -1020,6 +1041,7 @@ func _criar_ou_atualizar_check_musica_pausa(
 	)
 	check_musica.custom_minimum_size = Vector2(0.0, 64.0)
 	check_musica.process_mode = Node.PROCESS_MODE_ALWAYS
+	check_musica.add_to_group(GRUPO_CONTROLES_MUSICA)
 	check_musica.set_pressed_no_signal(_musica_ativa)
 	check_musica.add_theme_color_override(
 		"font_color",
@@ -1086,7 +1108,7 @@ func _configurar_vbox_opcoes(vbox: VBoxContainer, modal: Node) -> void:
 
 	var painel := modal.find_child("PainelOpcoes", true, false) as PanelContainer
 	if painel != null:
-		painel.custom_minimum_size = Vector2(720.0, 820.0)
+		painel.custom_minimum_size = Vector2(720.0, 900.0)
 
 	var linha_volume_geral := _encontrar_linha_volume_geral(vbox)
 	if linha_volume_geral == null:
@@ -1113,6 +1135,11 @@ func _configurar_vbox_opcoes(vbox: VBoxContainer, modal: Node) -> void:
 	indice_insercao += 1
 	vbox.add_child(linha_musica)
 	vbox.move_child(linha_musica, indice_insercao)
+	indice_insercao += 1
+
+	var check_musica := _criar_check_musica_menu()
+	vbox.add_child(check_musica)
+	vbox.move_child(check_musica, indice_insercao)
 	indice_insercao += 1
 
 	var controles_efeitos := _criar_controle_volume(
@@ -1155,6 +1182,37 @@ func _configurar_vbox_opcoes(vbox: VBoxContainer, modal: Node) -> void:
 	var slider_botoes := controles_botoes.get("slider") as HSlider
 	if slider_botoes != null:
 		slider_botoes.drag_ended.connect(_ao_terminar_arraste_volume_botoes)
+
+
+func _criar_check_musica_menu() -> CheckButton:
+	var check_musica := CheckButton.new()
+	check_musica.name = "CheckMusicaMenu"
+	check_musica.text = "MÚSICA DO JOGO"
+	check_musica.tooltip_text = (
+		"Desmarque para silenciar somente as músicas. "
+		+ "Botões e efeitos continuam ativos."
+	)
+	check_musica.custom_minimum_size = Vector2(0.0, 58.0)
+	check_musica.process_mode = Node.PROCESS_MODE_ALWAYS
+	check_musica.add_to_group(GRUPO_CONTROLES_MUSICA)
+	check_musica.set_pressed_no_signal(_musica_ativa)
+	check_musica.add_theme_color_override(
+		"font_color",
+		Color.WHITE
+	)
+	check_musica.add_theme_color_override(
+		"font_hover_color",
+		Color(1.0, 0.78, 0.78)
+	)
+	_aplicar_fonte_ui(check_musica, 27, 3)
+	check_musica.toggled.connect(
+		_ao_check_musica_menu_toggled
+	)
+	return check_musica
+
+
+func _ao_check_musica_menu_toggled(ativada: bool) -> void:
+	definir_musica_ativa(ativada)
 
 
 func _encontrar_linha_volume_geral(vbox: VBoxContainer) -> HBoxContainer:
