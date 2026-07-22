@@ -11,7 +11,7 @@ extends Node
 #
 # A seleção de personagens mantém a trilha do modo de rede ativo.
 # Todos os BaseButton que emitem pressed usam ui_pop_01.wav.
-# Volumes separados: Geral, Música e Botões.
+# Volumes separados: Geral, Música, Efeitos e Botões.
 # Preferências: user://configuracao_audio.cfg.
 # ============================================================================
 
@@ -30,10 +30,12 @@ const CENA_TUTORIAL_JOGO: String = "res://scenes/ui/tutorial/tutorial_jogo.tscn"
 const CAMINHO_CONFIGURACAO: String = "user://configuracao_audio.cfg"
 
 const BUS_MUSICA: StringName = &"Musica"
+const BUS_EFEITOS: StringName = &"Efeitos"
 const BUS_BOTOES: StringName = &"Botoes"
 
 const VOLUME_PADRAO_GERAL: float = 100.0
 const VOLUME_PADRAO_MUSICA: float = 55.0
+const VOLUME_PADRAO_EFEITOS: float = 70.0
 const VOLUME_PADRAO_BOTOES: float = 75.0
 const VOLUME_BASE_PLAYER_MUSICA_DB: float = -8.0
 const OFFSET_LOOP_PARTIDA_SEGUNDOS: float = 12.0
@@ -57,6 +59,12 @@ const SOM_BOTAO: AudioStreamWAV = preload(
 const SOM_DADOS_GIRANDO: AudioStreamWAV = preload(
 	"res://assets/audio/sfx/dados_girando_simples.wav"
 )
+const CAMINHO_SOM_PULO_PINO: String = (
+	"res://assets/audio/sfx/pulo_pino_ultra_simples.ogg"
+)
+const CAMINHO_SCRIPT_PINO: String = (
+	"res://scenes/gameplay/tabuleiro/pino_personagem.gd"
+)
 const FONTE_UI: Font = preload("res://assets/fonts/m5x7.ttf")
 
 enum TipoTrilha {
@@ -69,12 +77,19 @@ enum TipoTrilha {
 
 var _volume_geral: float = VOLUME_PADRAO_GERAL
 var _volume_musica: float = VOLUME_PADRAO_MUSICA
+var _volume_efeitos: float = VOLUME_PADRAO_EFEITOS
 var _volume_botoes: float = VOLUME_PADRAO_BOTOES
 
 var _player_musica: AudioStreamPlayer
 var _player_dados: AudioStreamPlayer
+var _player_pulo_pino: AudioStreamPlayer
 var _players_botoes: Array[AudioStreamPlayer] = []
 var _indice_player_botao: int = 0
+
+# WeakRef evita manter pinos removidos vivos.
+var _pinos_rastreados: Dictionary = {}
+var _casa_anterior_pinos: Dictionary = {}
+var _movimento_anterior_pinos: Dictionary = {}
 var _tween_musica: Tween
 var _timer_salvar: Timer
 
@@ -104,10 +119,13 @@ func _ready() -> void:
 
 	set_process(true)
 	call_deferred("_conectar_botoes_existentes")
+	call_deferred("_registrar_pinos_existentes")
 	call_deferred("_atualizar_cena_atual")
 
 
 func _process(delta: float) -> void:
+	_verificar_pulos_pinos()
+
 	var cena_atual: Node = get_tree().current_scene
 
 	# Detecta inclusive atribuições manuais a SceneTree.current_scene.
@@ -139,6 +157,7 @@ func _process(delta: float) -> void:
 
 func _garantir_barramentos() -> void:
 	_garantir_barramento(BUS_MUSICA)
+	_garantir_barramento(BUS_EFEITOS)
 	_garantir_barramento(BUS_BOTOES)
 
 
@@ -165,6 +184,9 @@ func _carregar_configuracao() -> void:
 	), 0.0, 100.0)
 	_volume_musica = clampf(float(
 		configuracao.get_value("audio", "musica", VOLUME_PADRAO_MUSICA)
+	), 0.0, 100.0)
+	_volume_efeitos = clampf(float(
+		configuracao.get_value("audio", "efeitos", VOLUME_PADRAO_EFEITOS)
 	), 0.0, 100.0)
 	_volume_botoes = clampf(float(
 		configuracao.get_value("audio", "botoes", VOLUME_PADRAO_BOTOES)
@@ -193,6 +215,7 @@ func _salvar_configuracao() -> void:
 	var configuracao := ConfigFile.new()
 	configuracao.set_value("audio", "geral", _volume_geral)
 	configuracao.set_value("audio", "musica", _volume_musica)
+	configuracao.set_value("audio", "efeitos", _volume_efeitos)
 	configuracao.set_value("audio", "botoes", _volume_botoes)
 	var erro := configuracao.save(CAMINHO_CONFIGURACAO)
 	if erro != OK:
@@ -205,6 +228,7 @@ func _salvar_configuracao() -> void:
 func _aplicar_todos_os_volumes() -> void:
 	_aplicar_volume_barramento(&"Master", _volume_geral)
 	_aplicar_volume_barramento(BUS_MUSICA, _volume_musica)
+	_aplicar_volume_barramento(BUS_EFEITOS, _volume_efeitos)
 	_aplicar_volume_barramento(BUS_BOTOES, _volume_botoes)
 
 
@@ -231,6 +255,12 @@ func definir_volume_musica(valor: float) -> void:
 	_agendar_salvamento()
 
 
+func definir_volume_efeitos(valor: float) -> void:
+	_volume_efeitos = clampf(valor, 0.0, 100.0)
+	_aplicar_volume_barramento(BUS_EFEITOS, _volume_efeitos)
+	_agendar_salvamento()
+
+
 func definir_volume_botoes(valor: float) -> void:
 	_volume_botoes = clampf(valor, 0.0, 100.0)
 	_aplicar_volume_barramento(BUS_BOTOES, _volume_botoes)
@@ -243,6 +273,10 @@ func obter_volume_geral() -> float:
 
 func obter_volume_musica() -> float:
 	return _volume_musica
+
+
+func obter_volume_efeitos() -> float:
+	return _volume_efeitos
 
 
 func obter_volume_botoes() -> float:
@@ -263,11 +297,27 @@ func _criar_players() -> void:
 
 	_player_dados = AudioStreamPlayer.new()
 	_player_dados.name = "SomDadosGirando"
-	_player_dados.bus = BUS_BOTOES
+	_player_dados.bus = BUS_EFEITOS
 	_player_dados.stream = SOM_DADOS_GIRANDO
 	_player_dados.volume_db = -3.0
 	_player_dados.process_mode = Node.PROCESS_MODE_ALWAYS
 	add_child(_player_dados)
+
+	_player_pulo_pino = AudioStreamPlayer.new()
+	_player_pulo_pino.name = "SomPuloPino"
+	_player_pulo_pino.bus = BUS_EFEITOS
+	_player_pulo_pino.volume_db = -8.0
+	_player_pulo_pino.process_mode = Node.PROCESS_MODE_ALWAYS
+
+	# Carregamento protegido: a ausência do arquivo não impede o projeto
+	# inteiro de abrir. Com o OGG presente, o efeito funciona normalmente.
+	if ResourceLoader.exists(CAMINHO_SOM_PULO_PINO):
+		var stream_pulo: AudioStream = load(
+			CAMINHO_SOM_PULO_PINO
+		) as AudioStream
+		_player_pulo_pino.stream = stream_pulo
+
+	add_child(_player_pulo_pino)
 
 	for indice in range(4):
 		var player := AudioStreamPlayer.new()
@@ -299,6 +349,19 @@ func tocar_som_dados() -> void:
 	_player_dados.stop()
 	_player_dados.pitch_scale = 1.0
 	_player_dados.play()
+
+
+func tocar_som_pulo_pino() -> void:
+	if (
+		_player_pulo_pino == null
+		or not is_instance_valid(_player_pulo_pino)
+		or _player_pulo_pino.stream == null
+	):
+		return
+
+	_player_pulo_pino.stop()
+	_player_pulo_pino.pitch_scale = 1.0
+	_player_pulo_pino.play()
 
 
 func _solicitar_trilha(tipo: int) -> void:
@@ -444,6 +507,105 @@ func _obter_stream_trilha(tipo: int) -> AudioStreamOggVorbis:
 # DETECÇÃO AUTOMÁTICA DAS CENAS
 # ============================================================================
 
+func _eh_pino_personagem(no: Node) -> bool:
+	if no == null or not is_instance_valid(no):
+		return false
+
+	var script_pino: Script = no.get_script() as Script
+	return (
+		script_pino != null
+		and script_pino.resource_path == CAMINHO_SCRIPT_PINO
+	)
+
+
+func _registrar_pino(pino: Node) -> void:
+	if not _eh_pino_personagem(pino):
+		return
+
+	var identificador: int = pino.get_instance_id()
+	_pinos_rastreados[identificador] = weakref(pino)
+	_casa_anterior_pinos[identificador] = int(
+		pino.get("casa_atual")
+	)
+	_movimento_anterior_pinos[identificador] = bool(
+		pino.get("esta_movendo")
+	)
+
+
+func _registrar_pinos_existentes() -> void:
+	_registrar_pinos_recursivamente(get_tree().root)
+
+
+func _registrar_pinos_recursivamente(no: Node) -> void:
+	if _eh_pino_personagem(no):
+		_registrar_pino(no)
+
+	for filho: Node in no.get_children():
+		_registrar_pinos_recursivamente(filho)
+
+
+func _remover_rastreamento_pino(
+	identificador: int
+) -> void:
+	_pinos_rastreados.erase(identificador)
+	_casa_anterior_pinos.erase(identificador)
+	_movimento_anterior_pinos.erase(identificador)
+
+
+func _verificar_pulos_pinos() -> void:
+	for identificador_variant: Variant in (
+		_pinos_rastreados.keys()
+	):
+		var identificador: int = int(
+			identificador_variant
+		)
+		var referencia: WeakRef = (
+			_pinos_rastreados.get(
+				identificador
+			) as WeakRef
+		)
+		if referencia == null:
+			_remover_rastreamento_pino(identificador)
+			continue
+
+		var pino: Node = referencia.get_ref() as Node
+		if pino == null or not is_instance_valid(pino):
+			_remover_rastreamento_pino(identificador)
+			continue
+
+		var casa_atual: int = int(
+			pino.get("casa_atual")
+		)
+		var casa_anterior: int = int(
+			_casa_anterior_pinos.get(
+				identificador,
+				casa_atual
+			)
+		)
+		var movendo_agora: bool = bool(
+			pino.get("esta_movendo")
+		)
+		var movia_antes: bool = bool(
+			_movimento_anterior_pinos.get(
+				identificador,
+				false
+			)
+		)
+
+		if casa_atual != casa_anterior:
+			_casa_anterior_pinos[identificador] = (
+				casa_atual
+			)
+			# Somente movimentos animados produzem o tic.
+			# O estado anterior captura também o último salto.
+			if movendo_agora or movia_antes:
+				tocar_som_pulo_pino()
+
+		_movimento_anterior_pinos[identificador] = (
+			movendo_agora
+		)
+
+
 func _ao_mudar_cena() -> void:
 	call_deferred("_atualizar_cena_atual")
 
@@ -551,6 +713,9 @@ func _ao_adicionar_no(no: Node) -> void:
 		# Conectar imediatamente garante som também em botões dinâmicos.
 		_conectar_botao(no)
 
+	if _eh_pino_personagem(no):
+		_registrar_pino(no)
+
 	# Se uma cena instanciar o tabuleiro depois do scene_changed,
 	# a trilha é reavaliada assim que a raiz jogável entrar na árvore.
 	if no.name == &"Tabuleiro" or no.name == &"Tabuleiro_Metropolis":
@@ -636,7 +801,7 @@ func _configurar_vbox_opcoes(vbox: VBoxContainer, modal: Node) -> void:
 
 	var painel := modal.find_child("PainelOpcoes", true, false) as PanelContainer
 	if painel != null:
-		painel.custom_minimum_size = Vector2(720.0, 690.0)
+		painel.custom_minimum_size = Vector2(720.0, 820.0)
 
 	var linha_volume_geral := _encontrar_linha_volume_geral(vbox)
 	if linha_volume_geral == null:
@@ -664,6 +829,28 @@ func _configurar_vbox_opcoes(vbox: VBoxContainer, modal: Node) -> void:
 	vbox.add_child(linha_musica)
 	vbox.move_child(linha_musica, indice_insercao)
 	indice_insercao += 1
+
+	var controles_efeitos := _criar_controle_volume(
+		"VOLUME DOS EFEITOS",
+		_volume_efeitos,
+		_ao_alterar_volume_efeitos_menu
+	)
+	var rotulo_efeitos := controles_efeitos.get("rotulo") as Label
+	var linha_efeitos := controles_efeitos.get("linha") as HBoxContainer
+	if rotulo_efeitos == null or linha_efeitos == null:
+		return
+	vbox.add_child(rotulo_efeitos)
+	vbox.move_child(rotulo_efeitos, indice_insercao)
+	indice_insercao += 1
+	vbox.add_child(linha_efeitos)
+	vbox.move_child(linha_efeitos, indice_insercao)
+	indice_insercao += 1
+
+	var slider_efeitos := controles_efeitos.get("slider") as HSlider
+	if slider_efeitos != null:
+		slider_efeitos.drag_ended.connect(
+			_ao_terminar_arraste_volume_efeitos
+		)
 
 	var controles_botoes := _criar_controle_volume(
 		"VOLUME DOS BOTÕES",
@@ -775,12 +962,27 @@ func _ao_alterar_volume_musica_menu(
 	_atualizar_percentual(percentual, valor)
 
 
+func _ao_alterar_volume_efeitos_menu(
+	valor: float,
+	percentual: Label
+) -> void:
+	definir_volume_efeitos(valor)
+	_atualizar_percentual(percentual, valor)
+
+
 func _ao_alterar_volume_botoes_menu(
 	valor: float,
 	percentual: Label
 ) -> void:
 	definir_volume_botoes(valor)
 	_atualizar_percentual(percentual, valor)
+
+
+func _ao_terminar_arraste_volume_efeitos(
+	valor_alterado: bool
+) -> void:
+	if valor_alterado:
+		tocar_som_pulo_pino()
 
 
 func _ao_terminar_arraste_volume_botoes(valor_alterado: bool) -> void:
