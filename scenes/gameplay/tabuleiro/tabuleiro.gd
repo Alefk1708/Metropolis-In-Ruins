@@ -1,1 +1,1 @@
-extends "res://scenes/gameplay/tabuleiro/modulos_tabuleiro/tabuleiro_dados_aleatorios_correcao.gd"
+extends "res://scenes/gameplay/tabuleiro/modulos_tabuleiro/tabuleiro_android_painel_propriedades.gd"
