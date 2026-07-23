@@ -107,3 +107,79 @@ func _atualizar_fonte_anonima_diana_local(
 		proximo_evento_global,
 		proximo_evento_descricao
 	)
+
+
+# ============================================================================
+# PRESERVAÇÃO DO EVENTO PREVISTO
+# ============================================================================
+#
+# O fluxo de rodada chama _pre_sortear_proximo_evento() tanto depois de revelar
+# um Evento Global quanto na rodada seguinte de Mercado Estável. Sem esta trava,
+# o segundo chamado substituía o evento já mostrado à Diana antes do reveal.
+# ============================================================================
+
+
+func _pre_sortear_proximo_evento() -> void:
+	if not OnlineTransport.is_host():
+		return
+
+	# Há um evento futuro válido aguardando reveal. Enquanto ele for diferente
+	# do evento atualmente ativo, ele não pode ser substituído.
+	if (
+		not proximo_evento_global.is_empty()
+		and proximo_evento_global != evento_ativo
+	):
+		_restaurar_fonte_anonima_diana_do_estado()
+		return
+
+	# O campo está vazio ou contém o evento que acabou de ser revelado.
+	# Nesse caso, o motor original pode escolher o próximo evento normalmente.
+	super._pre_sortear_proximo_evento()
+
+
+func aplicar_snapshot_online(snapshot: Dictionary) -> void:
+	super.aplicar_snapshot_online(snapshot)
+
+	# Em reconexões Photon, o snapshot restaura a previsão no estado antes de a
+	# HUD do convidado terminar de montar. O deferred reaplica a informação no
+	# dossiê quando a interface já está pronta.
+	call_deferred(
+		"_restaurar_fonte_anonima_diana_do_estado"
+	)
+
+
+func _ready() -> void:
+	super._ready()
+
+	# Também cobre partidas retomadas localmente ou por LAN, nas quais o estado
+	# salvo pode já conter uma previsão válida quando a cena é aberta.
+	call_deferred(
+		"_restaurar_fonte_anonima_diana_do_estado"
+	)
+
+
+func _restaurar_fonte_anonima_diana_do_estado() -> void:
+	await get_tree().process_frame
+
+	if not is_inside_tree():
+		return
+	if not dados_economia_jogadores.has("diana"):
+		return
+	if not lista_turnos.has("diana"):
+		return
+
+	var evento_previsto: String = str(
+		dados_economia_jogadores["diana"].get(
+			"fonte_anonima_evento_previsto",
+			""
+		)
+	)
+	if evento_previsto.is_empty():
+		return
+	if evento_previsto != proximo_evento_global:
+		return
+
+	_atualizar_fonte_anonima_diana_local(
+		evento_previsto
+	)
+
