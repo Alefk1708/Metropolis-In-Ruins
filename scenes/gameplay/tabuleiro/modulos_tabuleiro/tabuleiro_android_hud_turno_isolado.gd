@@ -1,25 +1,34 @@
-extends "res://scenes/gameplay/tabuleiro/modulos_tabuleiro/tabuleiro_android_hud_incremental.gd"
+extends "res://scenes/gameplay/tabuleiro/modulos_tabuleiro/tabuleiro_android_painel_propriedades.gd"
 
 # ============================================================================
-# ANDROID — TURNO ISOLADO DOS PAINÉIS PESADOS
+# GODOT 4.7 — HUD INCREMENTAL CONSOLIDADA
 # ============================================================================
 #
-# Refinamento da HUD incremental:
+# Esta versão não herda mais de tabuleiro_android_hud_incremental.gd.
+# Toda a lógica incremental necessária está neste arquivo, evitando que um erro
+# ou arquivo intermediário ausente impeça o Godot de resolver a classe.
 #
-# 1. jogador_atual_id não participa mais da assinatura de dinheiro.
-# 2. jogador_atual_id não participa mais da assinatura do menu de construção.
-# 3. turno possui assinatura própria e atualiza somente nome do jogador atual,
-#    permissões e câmera do espectador.
-# 4. promessas usam _promessas_globais, que é a fonte real do painel.
-# 5. dossiê da Diana é reconstruído diretamente, sem chamar a atualização geral.
-# 6. relatório da Yasmin continua exclusivo do início da rodada.
-#
-# Uma troca de turno comum não percorre cards, não refaz o dossiê, não reescreve
-# dinheiro e não alimenta o relatório.
+# Domínios:
+# - turno: jogador atual, permissões e câmera de espectador;
+# - básico: dinheiro, propriedades, reputação, XP, recarga e cartas;
+# - social: imunidades, alianças e promessas globais;
+# - construção: cards persistentes do módulo pai;
+# - casa atual: somente quando a casa ou seus modificadores mudam;
+# - Diana: dossiê dedicado;
+# - Yasmin: relatório continua exclusivo do início da rodada.
 # ============================================================================
 
 
-var _android_hud_assinatura_turno_isolado: String = ""
+var _android_hud_inicializada: bool = false
+var _android_hud_personagem_local: String = ""
+var _android_hud_processando_super: bool = false
+
+var _android_hud_assinatura_turno: String = ""
+var _android_hud_assinatura_basica: String = ""
+var _android_hud_assinatura_social: String = ""
+var _android_hud_assinatura_menu: String = ""
+var _android_hud_assinatura_casa: String = ""
+var _android_hud_assinatura_dossie: String = ""
 
 
 func _atualizar_hud_ciclo_turno() -> void:
@@ -29,91 +38,127 @@ func _atualizar_hud_ciclo_turno() -> void:
 		return
 
 	var personagem_local: String = _android_hud_obter_personagem_local()
-	if (
-		personagem_local.is_empty()
-		or not dados_economia_jogadores.has(personagem_local)
-	):
+	if personagem_local.is_empty():
+		return
+	if not dados_economia_jogadores.has(personagem_local):
 		return
 
 	if (
 		not _android_hud_inicializada
 		or personagem_local != _android_hud_personagem_local
 	):
-		_android_hud_executar_super_completo()
+		_android_hud_executar_atualizacao_inicial()
 		_android_hud_capturar_assinaturas(personagem_local)
-		_android_hud_assinatura_turno_isolado = (
-			_android_hud_criar_assinatura_turno()
-		)
 		_android_hud_inicializada = true
 		_android_hud_personagem_local = personagem_local
 		return
 
-	var assinatura_turno: String = (
-		_android_hud_criar_assinatura_turno()
+	var nova_turno: String = _android_hud_assinatura_do_turno()
+	var nova_basica: String = _android_hud_assinatura_basica_atual(
+		personagem_local
 	)
-	var assinatura_basica: String = (
-		_android_hud_criar_assinatura_basica(personagem_local)
+	var nova_social: String = _android_hud_assinatura_social_atual(
+		personagem_local
 	)
-	var assinatura_social: String = (
-		_android_hud_criar_assinatura_social(personagem_local)
+	var nova_menu: String = _android_hud_assinatura_menu_atual(
+		personagem_local
 	)
-	var assinatura_menu: String = (
-		_android_hud_criar_assinatura_menu(personagem_local)
-	)
-	var assinatura_casa: String = (
-		_android_hud_criar_assinatura_casa(personagem_local)
+	var nova_casa: String = _android_hud_assinatura_casa_atual(
+		personagem_local
 	)
 
 	var algo_mudou: bool = false
 
-	if (
-		assinatura_turno
-		!= _android_hud_assinatura_turno_isolado
-	):
-		_android_hud_atualizar_turno_isolado()
-		_android_hud_assinatura_turno_isolado = assinatura_turno
+	if nova_turno != _android_hud_assinatura_turno:
+		_android_hud_atualizar_turno()
+		_android_hud_assinatura_turno = nova_turno
 		algo_mudou = true
 
-	if assinatura_basica != _android_hud_assinatura_basica:
+	if nova_basica != _android_hud_assinatura_basica:
 		_android_hud_atualizar_basico(personagem_local)
-		_android_hud_assinatura_basica = assinatura_basica
+		_android_hud_assinatura_basica = nova_basica
 		algo_mudou = true
 
-	if assinatura_social != _android_hud_assinatura_social:
+	if nova_social != _android_hud_assinatura_social:
 		_android_hud_atualizar_social(personagem_local)
-		_android_hud_assinatura_social = assinatura_social
+		_android_hud_assinatura_social = nova_social
 		algo_mudou = true
 
-	if assinatura_menu != _android_hud_assinatura_menu:
-		# Cards persistentes. Mudanças de saldo apenas reavaliam botões; a troca
-		# de turno, sozinha, não entra mais nesta assinatura.
+	if nova_menu != _android_hud_assinatura_menu:
 		_atualizar_menu_construcao()
-		_android_hud_assinatura_menu = assinatura_menu
+		_android_hud_assinatura_menu = nova_menu
 		algo_mudou = true
 
-	if assinatura_casa != _android_hud_assinatura_casa:
+	if nova_casa != _android_hud_assinatura_casa:
 		_atualizar_hud_minha_casa()
-		_android_hud_assinatura_casa = assinatura_casa
+		_android_hud_assinatura_casa = nova_casa
 		algo_mudou = true
 
 	if personagem_local == "diana":
-		var assinatura_dossie: String = (
-			_android_hud_criar_assinatura_dossie()
-		)
-		if assinatura_dossie != _android_hud_assinatura_dossie:
+		var nova_dossie: String = _android_hud_assinatura_dossie_atual()
+		if nova_dossie != _android_hud_assinatura_dossie:
 			_android_hud_atualizar_dossie_diana()
-			_android_hud_assinatura_dossie = assinatura_dossie
+			_android_hud_assinatura_dossie = nova_dossie
 			algo_mudou = true
 
-	# Permissões são deliberadamente leves e também precisam reagir a bloqueios
-	# de eventos que podem mudar sem alterar os outros domínios.
+	# Permissões são leves e também podem ser alteradas por modais ou eventos
+	# sem que dinheiro, propriedade ou turno mudem.
 	_android_hud_atualizar_permissoes()
 
 	if algo_mudou:
 		GerenciadorSalvamento.marcar_estado_alterado(self)
 
 
-func _android_hud_criar_assinatura_turno() -> String:
+func _android_hud_executar_atualizacao_inicial() -> void:
+	_android_hud_processando_super = true
+	super._atualizar_hud_ciclo_turno()
+	_android_hud_processando_super = false
+
+
+func _android_hud_capturar_assinaturas(
+	personagem_local: String
+) -> void:
+	_android_hud_assinatura_turno = _android_hud_assinatura_do_turno()
+	_android_hud_assinatura_basica = (
+		_android_hud_assinatura_basica_atual(personagem_local)
+	)
+	_android_hud_assinatura_social = (
+		_android_hud_assinatura_social_atual(personagem_local)
+	)
+	_android_hud_assinatura_menu = (
+		_android_hud_assinatura_menu_atual(personagem_local)
+	)
+	_android_hud_assinatura_casa = (
+		_android_hud_assinatura_casa_atual(personagem_local)
+	)
+	if personagem_local == "diana":
+		_android_hud_assinatura_dossie = (
+			_android_hud_assinatura_dossie_atual()
+		)
+	else:
+		_android_hud_assinatura_dossie = ""
+
+
+func _android_hud_obter_personagem_local() -> String:
+	return str(
+		Global.escolhas_da_mesa.get(
+			Global.meu_peer_id,
+			""
+		)
+	)
+
+
+func _android_hud_contar_propriedades(
+	personagem_id: String
+) -> int:
+	var total: int = 0
+	for dono_variant: Variant in registro_propriedades.values():
+		if str(dono_variant) == personagem_id:
+			total += 1
+	return total
+
+
+func _android_hud_assinatura_do_turno() -> String:
 	return "|".join(
 		PackedStringArray(
 			[
@@ -126,7 +171,7 @@ func _android_hud_criar_assinatura_turno() -> String:
 	)
 
 
-func _android_hud_criar_assinatura_basica(
+func _android_hud_assinatura_basica_atual(
 	personagem_local: String
 ) -> String:
 	var dados: Dictionary = dados_economia_jogadores.get(
@@ -139,17 +184,8 @@ func _android_hud_criar_assinatura_basica(
 				personagem_local,
 				str(dados.get("nome", personagem_local)),
 				str(int(dados.get("dinheiro", 0))),
-				str(
-					int(
-						dados.get(
-							"propriedades_compradas",
-							_android_hud_contar_propriedades(
-								personagem_local
-							)
-						)
-					)
-				),
-				str(int(dados.get("reputacao", REPUTACAO_INICIAL))),
+				str(_android_hud_contar_propriedades(personagem_local)),
+				str(int(dados.get("reputacao", 0))),
 				str(int(dados.get("xp_partida", 0))),
 				str(int(dados.get("recarga_hab", 0))),
 				str(int(dados.get("cartas_construcao_gratis", 0))),
@@ -160,7 +196,7 @@ func _android_hud_criar_assinatura_basica(
 	)
 
 
-func _android_hud_criar_assinatura_social(
+func _android_hud_assinatura_social_atual(
 	personagem_local: String
 ) -> String:
 	var dados: Dictionary = dados_economia_jogadores.get(
@@ -178,16 +214,13 @@ func _android_hud_criar_assinatura_social(
 	)
 
 
-func _android_hud_criar_assinatura_menu(
+func _android_hud_assinatura_menu_atual(
 	personagem_local: String
 ) -> String:
 	var dados_locais: Dictionary = dados_economia_jogadores.get(
 		personagem_local,
 		{}
 	)
-
-	# O saldo permanece porque altera SEM DINHEIRO/RESGATAR, mas o turno não.
-	# Isso atualiza apenas os botões dos cards persistentes.
 	var partes: PackedStringArray = PackedStringArray(
 		[
 			personagem_local,
@@ -221,7 +254,38 @@ func _android_hud_criar_assinatura_menu(
 	return "|".join(partes)
 
 
-func _android_hud_criar_assinatura_dossie() -> String:
+func _android_hud_assinatura_casa_atual(
+	personagem_local: String
+) -> String:
+	var casa_id: int = int(
+		posicoes_jogadores.get(
+			personagem_local,
+			0
+		)
+	)
+	if pinos_jogadores.has(personagem_local):
+		var pino_variant: Variant = pinos_jogadores[personagem_local]
+		if pino_variant != null and is_instance_valid(pino_variant):
+			casa_id = int(pino_variant.get("casa_atual"))
+
+	var dados_casa: Dictionary = tabuleiro.get(casa_id, {})
+	return "|".join(
+		PackedStringArray(
+			[
+				personagem_local,
+				str(casa_id),
+				str(registro_propriedades.get(casa_id, "")),
+				str(dados_casa.get("nivel", 0)),
+				str(dados_casa.get("hipotecada", false)),
+				str(dados_casa.get("grupo", "")),
+				str(evento_ativo),
+				str(multiplicador_inflacao_global),
+			]
+		)
+	)
+
+
+func _android_hud_assinatura_dossie_atual() -> String:
 	var partes: PackedStringArray = PackedStringArray(
 		[
 			str(_promessas_globais),
@@ -242,25 +306,11 @@ func _android_hud_criar_assinatura_dossie() -> String:
 						jogador_id,
 						str(dados.get("nome", jogador_id)),
 						str(int(dados.get("dinheiro", 0))),
-						str(
-							int(
-								dados.get(
-									"propriedades_compradas",
-									0
-								)
-							)
-						),
+						str(_android_hud_contar_propriedades(jogador_id)),
 						str(dados.get("imunidades", [])),
 						str(dados.get("aliancas", [])),
 						str(bool(dados.get("falido", false))),
-						str(
-							int(
-								dados.get(
-									"reputacao",
-									REPUTACAO_INICIAL
-								)
-							)
-						),
+						str(int(dados.get("reputacao", 0))),
 						str(int(dados.get("xp_partida", 0))),
 						str(
 							dados.get(
@@ -272,6 +322,18 @@ func _android_hud_criar_assinatura_dossie() -> String:
 				)
 			)
 		)
+
+	var propriedades_ordenadas: Array = registro_propriedades.keys()
+	propriedades_ordenadas.sort()
+	for casa_variant: Variant in propriedades_ordenadas:
+		var casa_id: int = int(casa_variant)
+		partes.append(
+			"%d:%s" % [
+				casa_id,
+				str(registro_propriedades.get(casa_id, "")),
+			]
+		)
+
 	return "\n".join(partes)
 
 
@@ -289,11 +351,8 @@ func _android_hud_atualizar_basico(
 		)
 	)
 	var dinheiro: int = int(dados.get("dinheiro", 0))
-	var propriedades: int = int(
-		dados.get(
-			"propriedades_compradas",
-			_android_hud_contar_propriedades(personagem_local)
-		)
+	var propriedades: int = _android_hud_contar_propriedades(
+		personagem_local
 	)
 
 	if hud.has_method("atualizar_status_jogador"):
@@ -307,19 +366,14 @@ func _android_hud_atualizar_basico(
 	if hud.has_method("atualizar_reputacao_jogador"):
 		hud.call(
 			"atualizar_reputacao_jogador",
-			int(dados.get("reputacao", REPUTACAO_INICIAL)),
+			int(dados.get("reputacao", 0)),
 			int(dados.get("xp_partida", 0))
 		)
 
 	if hud.has_method("atualizar_habilidade"):
 		hud.call(
 			"atualizar_habilidade",
-			str(
-				NOMES_HABILIDADES.get(
-					personagem_local,
-					"Poder Especial"
-				)
-			),
+			_android_hud_nome_habilidade(personagem_local),
 			int(dados.get("recarga_hab", 0))
 		)
 
@@ -329,6 +383,26 @@ func _android_hud_atualizar_basico(
 			int(dados.get("cartas_construcao_gratis", 0)),
 			int(dados.get("cartas_sair_prisao", 0))
 		)
+
+
+func _android_hud_nome_habilidade(
+	personagem_local: String
+) -> String:
+	match personagem_local:
+		"yasmin":
+			return "Oferta Irrecusável"
+		"breno":
+			return "Decreto Emergencial"
+		"mira":
+			return "Retrofit Urbano"
+		"igor":
+			return "Especulação Imobiliária"
+		"diana":
+			return "Vazamento Seletivo"
+		"kofi":
+			return "Mutirão"
+		_:
+			return "Poder Especial"
 
 
 func _android_hud_atualizar_social(
@@ -350,11 +424,13 @@ func _android_hud_atualizar_social(
 			"atualizar_painel_imunidades",
 			imunidades
 		)
+
 	if hud.has_method("atualizar_painel_aliancas"):
 		hud.call(
 			"atualizar_painel_aliancas",
 			aliancas
 		)
+
 	if hud.has_method("atualizar_painel_promessas"):
 		_android_hud_chamar_flexivel(
 			"atualizar_painel_promessas",
@@ -365,7 +441,7 @@ func _android_hud_atualizar_social(
 		)
 
 
-func _android_hud_atualizar_turno_isolado() -> void:
+func _android_hud_atualizar_turno() -> void:
 	var nome_atual: String = jogador_atual_id.capitalize()
 	if dados_economia_jogadores.has(jogador_atual_id):
 		nome_atual = str(
@@ -375,12 +451,12 @@ func _android_hud_atualizar_turno_isolado() -> void:
 			)
 		)
 
-	# Compatibilidade com versões da HUD que possuam um indicador dedicado.
-	for metodo: String in [
+	for metodo_variant: Variant in [
 		"atualizar_jogador_atual",
 		"atualizar_nome_turno",
 		"atualizar_turno",
 	]:
+		var metodo: String = str(metodo_variant)
 		if hud.has_method(metodo):
 			_android_hud_chamar_flexivel(
 				metodo,
@@ -393,20 +469,14 @@ func _android_hud_atualizar_turno_isolado() -> void:
 
 	_android_hud_atualizar_permissoes()
 
-	# A câmera de espectador deve acompanhar a troca. Para jogadores normais,
-	# o movimento do pino continua sendo a fonte da câmera e não é duplicado.
-	if (
-		modo_espectador_local
-		and has_method("_atualizar_alvo_camera_espectador")
-	):
-		call("_atualizar_alvo_camera_espectador")
+	if modo_espectador_local:
+		if has_method("_atualizar_alvo_camera_espectador"):
+			call("_atualizar_alvo_camera_espectador")
 
 
 func _android_hud_atualizar_dossie_diana() -> void:
-	if hud == null or not is_instance_valid(hud):
-		return
-
 	var payload: Array = []
+
 	for id_variant: Variant in lista_turnos:
 		var jogador_id: String = str(id_variant)
 		if jogador_id == "diana":
@@ -422,38 +492,18 @@ func _android_hud_atualizar_dossie_diana() -> void:
 			{
 				"nome": str(dados.get("nome", jogador_id)),
 				"dinheiro": int(dados.get("dinheiro", 0)),
-				"props": int(
-					dados.get(
-						"propriedades_compradas",
-						_android_hud_contar_propriedades(
-							jogador_id
-						)
-					)
+				"props": _android_hud_contar_propriedades(jogador_id),
+				"imunidades": _android_hud_formatar_imunidades(
+					dados.get("imunidades", [])
 				),
-				"imunidades": (
-					_android_hud_formatar_imunidades_dossie(
-						dados.get("imunidades", [])
-					)
+				"aliancas": _android_hud_formatar_aliancas(
+					dados.get("aliancas", [])
 				),
-				"aliancas": (
-					_android_hud_formatar_aliancas_dossie(
-						dados.get("aliancas", [])
-					)
+				"promessas": _android_hud_formatar_promessas(
+					jogador_id
 				),
-				"promessas": (
-					_android_hud_formatar_promessas_dossie(
-						jogador_id
-					)
-				),
-				"reputacao": int(
-					dados.get(
-						"reputacao",
-						REPUTACAO_INICIAL
-					)
-				),
-				"xp_partida": int(
-					dados.get("xp_partida", 0)
-				),
+				"reputacao": int(dados.get("reputacao", 0)),
+				"xp_partida": int(dados.get("xp_partida", 0)),
 			}
 		)
 
@@ -463,9 +513,7 @@ func _android_hud_atualizar_dossie_diana() -> void:
 			payload
 		)
 
-	var container_variant: Variant = hud.get(
-		"container_dossie"
-	)
+	var container_variant: Variant = hud.get("container_dossie")
 	if container_variant is CanvasItem:
 		var container: CanvasItem = container_variant
 		container.visible = true
@@ -491,11 +539,12 @@ func _android_hud_atualizar_dossie_diana() -> void:
 		)
 
 
-func _android_hud_formatar_imunidades_dossie(
+func _android_hud_formatar_imunidades(
 	valor: Variant
 ) -> String:
 	if not valor is Array:
 		return "nenhuma"
+
 	var imunidades: Array = valor
 	if imunidades.is_empty():
 		return "nenhuma"
@@ -504,6 +553,7 @@ func _android_hud_formatar_imunidades_dossie(
 	for item_variant: Variant in imunidades:
 		if not item_variant is Dictionary:
 			continue
+
 		var item: Dictionary = item_variant
 		var de_id: String = str(item.get("de", ""))
 		var nome: String = str(
@@ -518,6 +568,7 @@ func _android_hud_formatar_imunidades_dossie(
 		var espaco: int = nome.find(" ")
 		if espaco > 0:
 			nome = nome.substr(0, espaco)
+
 		partes.append(
 			"%s(%dv/%dT)" % [
 				nome,
@@ -525,14 +576,18 @@ func _android_hud_formatar_imunidades_dossie(
 				int(item.get("turnos_restantes", 0)),
 			]
 		)
-	return ", ".join(partes) if not partes.is_empty() else "nenhuma"
+
+	if partes.is_empty():
+		return "nenhuma"
+	return ", ".join(partes)
 
 
-func _android_hud_formatar_aliancas_dossie(
+func _android_hud_formatar_aliancas(
 	valor: Variant
 ) -> String:
 	if not valor is Array:
 		return "nenhuma"
+
 	var aliancas: Array = valor
 	if aliancas.is_empty():
 		return "nenhuma"
@@ -541,6 +596,7 @@ func _android_hud_formatar_aliancas_dossie(
 	for item_variant: Variant in aliancas:
 		if not item_variant is Dictionary:
 			continue
+
 		var item: Dictionary = item_variant
 		var com_id: String = str(item.get("com", ""))
 		var nome: String = str(
@@ -555,26 +611,33 @@ func _android_hud_formatar_aliancas_dossie(
 		var espaco: int = nome.find(" ")
 		if espaco > 0:
 			nome = nome.substr(0, espaco)
+
 		partes.append(
 			"%s(%dT)" % [
 				nome,
 				int(item.get("turnos_restantes", 0)),
 			]
 		)
-	return ", ".join(partes) if not partes.is_empty() else "nenhuma"
+
+	if partes.is_empty():
+		return "nenhuma"
+	return ", ".join(partes)
 
 
-func _android_hud_formatar_promessas_dossie(
+func _android_hud_formatar_promessas(
 	jogador_id: String
 ) -> String:
 	var feitas: int = 0
 	var quebradas: int = 0
+
 	for promessa_variant: Variant in _promessas_globais:
 		if not promessa_variant is Dictionary:
 			continue
+
 		var promessa: Dictionary = promessa_variant
 		if str(promessa.get("autor_id", "")) != jogador_id:
 			continue
+
 		feitas += 1
 		if bool(promessa.get("quebrada", false)):
 			quebradas += 1
@@ -583,3 +646,57 @@ func _android_hud_formatar_promessas_dossie(
 	if quebradas > 0:
 		texto += " (%d quebradas!)" % quebradas
 	return texto
+
+
+func _android_hud_como_array(
+	valor: Variant
+) -> Array:
+	if valor is Array:
+		return valor
+	return []
+
+
+func _android_hud_chamar_flexivel(
+	metodo: String,
+	argumentos_disponiveis: Array
+) -> void:
+	var quantidade_argumentos: int = -1
+
+	for info_variant: Variant in hud.get_method_list():
+		if not info_variant is Dictionary:
+			continue
+
+		var info: Dictionary = info_variant
+		if str(info.get("name", "")) != metodo:
+			continue
+
+		var argumentos_variant: Variant = info.get("args", [])
+		if argumentos_variant is Array:
+			quantidade_argumentos = argumentos_variant.size()
+		break
+
+	if quantidade_argumentos < 0:
+		return
+
+	var argumentos: Array = []
+	var limite: int = mini(
+		quantidade_argumentos,
+		argumentos_disponiveis.size()
+	)
+	for indice: int in range(limite):
+		argumentos.append(
+			argumentos_disponiveis[indice]
+		)
+
+	hud.callv(
+		metodo,
+		argumentos
+	)
+
+
+func _android_hud_atualizar_permissoes() -> void:
+	if has_method("_verificar_permissao_de_clique"):
+		call("_verificar_permissao_de_clique")
+
+	if has_method("_atualizar_estado_hud_espectador"):
+		call("_atualizar_estado_hud_espectador")
