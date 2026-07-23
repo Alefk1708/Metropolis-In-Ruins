@@ -1030,7 +1030,7 @@ grow_vertical = 2
 texture = ExtResource("14_i7rb2")
 expand_mode = 1
 
-[node name="SingleplayerContainer" type="PanelContainer" parent="." unique_id=1255058424]
+[node name="SingleplayerContainer" type="PanelContainer" parent="." unique_id=919584881]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 57.0
@@ -1040,7 +1040,7 @@ offset_bottom = 319.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StylePanel")
 
-[node name="BtnSingleplayer" type="Button" parent="SingleplayerContainer" unique_id=1273286572]
+[node name="BtnSingleplayer" type="Button" parent="SingleplayerContainer" unique_id=258478746]
 layout_mode = 2
 tooltip_text = "Jogue sozinho contra adversários controlados pela IA."
 focus_mode = 0
@@ -1051,7 +1051,7 @@ theme_override_styles/hover = SubResource("StyleButtonHover")
 theme_override_styles/focus = SubResource("StyleButtonFocus")
 disabled = true
 
-[node name="Label" type="Label" parent="SingleplayerContainer/BtnSingleplayer" unique_id=1194885804]
+[node name="Label" type="Label" parent="SingleplayerContainer/BtnSingleplayer" unique_id=1521895894]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1070,7 +1070,7 @@ text = "     JOGAR SOLO"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="SingleplayerContainer/BtnSingleplayer" unique_id=1323059486]
+[node name="TextureRect" type="TextureRect" parent="SingleplayerContainer/BtnSingleplayer" unique_id=628850303]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5

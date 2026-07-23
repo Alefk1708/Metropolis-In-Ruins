@@ -14,8 +14,9 @@ extends "res://scenes/gameplay/tabuleiro/modulos_tabuleiro/tabuleiro_singleplaye
 # - fonte_anonima_evento_previsto nunca era preenchido;
 # - o dossiê da Diana não recebia a seção "FONTE ANÔNIMA".
 #
-# A passiva concede UMA previsão por partida. O evento pré-sorteado continua
-# sendo a fonte autoritativa usada pelo motor no próximo reveal.
+# A passiva é contínua: sempre que um novo Evento Global é pré-sorteado,
+# Diana recebe a previsão. O evento pré-sorteado continua sendo a fonte
+# autoritativa usada pelo motor no próximo reveal.
 # ============================================================================
 
 
@@ -39,48 +40,48 @@ func _sincronizar_proximo_evento_rede(
 	if bool(dados_diana.get("falido", false)):
 		return
 
-	var evento_ja_registrado: String = str(
-		dados_diana.get(
-			"fonte_anonima_evento_previsto",
-			""
-		)
-	)
-	var previsao_ja_concedida: bool = bool(
-		dados_diana.get(
-			"fonte_anonima_previsao_concedida",
-			false
-		)
-	)
-
-	# Compatibilidade com partidas salvas por versões intermediárias: se já há
-	# um evento previsto, considera a passiva concedida mesmo sem a nova flag.
-	if not evento_ja_registrado.is_empty():
-		previsao_ja_concedida = true
-		dados_diana[
+	# Remove a trava antiga das partidas salvas. A Fonte Anônima agora é uma
+	# passiva contínua e não possui mais limite de uso por partida.
+	if dados_diana.has("fonte_anonima_previsao_concedida"):
+		dados_diana.erase(
 			"fonte_anonima_previsao_concedida"
-		] = true
+		)
 
-	# Fonte Anônima revela somente o primeiro próximo evento válido da partida.
-	# A flag permanece true depois que o evento for revelado e o campo de evento
-	# for limpo pelo fluxo atual, impedindo previsões infinitas.
-	if (
-		not previsao_ja_concedida
-		and evento_ja_registrado.is_empty()
-		and not nome_evento.is_empty()
-	):
+	if nome_evento.is_empty():
 		dados_diana[
 			"fonte_anonima_evento_previsto"
-		] = nome_evento
-		dados_diana[
-			"fonte_anonima_previsao_concedida"
-		] = true
-		evento_ja_registrado = nome_evento
+		] = ""
+		_limpar_fonte_anonima_diana_local()
+		GerenciadorSalvamento.marcar_estado_alterado(self)
+		return
+
+	# Cada novo evento pré-sorteado substitui a previsão anterior. Como o motor
+	# preserva proximo_evento_global até o reveal, Diana sempre vê exatamente o
+	# evento que será aplicado.
+	dados_diana[
+		"fonte_anonima_evento_previsto"
+	] = nome_evento
 
 	_atualizar_fonte_anonima_diana_local(
-		evento_ja_registrado
+		nome_evento
 	)
 
 	GerenciadorSalvamento.marcar_estado_alterado(self)
+
+
+func _limpar_fonte_anonima_diana_local() -> void:
+	var personagem_local: String = str(
+		Global.escolhas_da_mesa.get(
+			Global.meu_peer_id,
+			""
+		)
+	)
+	if personagem_local != "diana":
+		return
+	if hud == null or not is_instance_valid(hud):
+		return
+	if hud.has_method("limpar_previsao_evento"):
+		hud.limpar_previsao_evento()
 
 
 func _atualizar_fonte_anonima_diana_local(
@@ -129,7 +130,8 @@ func _pre_sortear_proximo_evento() -> void:
 		not proximo_evento_global.is_empty()
 		and proximo_evento_global != evento_ativo
 	):
-		_restaurar_fonte_anonima_diana_do_estado()
+		# O evento já está no dossiê. Não reaplica a HUD aqui para não reabrir
+		# o painel caso a jogadora tenha decidido fechá-lo.
 		return
 
 	# O campo está vazio ou contém o evento que acabou de ser revelado.
