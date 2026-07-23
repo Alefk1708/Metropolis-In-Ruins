@@ -1,1 +1,1 @@
-extends "res://scenes/gameplay/tabuleiro/modulos_tabuleiro/tabuleiro_android_hud_turno_isolado.gd"
+extends "res://scenes/gameplay/tabuleiro/modulos_tabuleiro/tabuleiro_dados_aleatorios_correcao.gd"

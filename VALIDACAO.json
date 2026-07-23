@@ -1,0 +1,52 @@
+{
+  "package": "Metropolis-In-Ruins_Recuperacao_Estrutural_Godot47",
+  "target": "Godot 4.7 stable/mono",
+  "root_flat_zip": true,
+  "fixes": {
+    "audio_bus_resource_type": true,
+    "stable_tabuleiro_entrypoint": true,
+    "experimental_hud_removed_from_active_chain": true
+  },
+  "active_chain": [
+    "scenes/gameplay/tabuleiro/tabuleiro.gd",
+    "scenes/gameplay/tabuleiro/modulos_tabuleiro/tabuleiro_dados_aleatorios_correcao.gd",
+    "scenes/gameplay/tabuleiro/modulos_tabuleiro/tabuleiro_diana_correcao.gd",
+    "scenes/gameplay/tabuleiro/modulos_tabuleiro/tabuleiro_singleplayer_correcao.gd"
+  ],
+  "obsolete_files_to_delete": [
+    "scenes/gameplay/tabuleiro/modulos_tabuleiro/tabuleiro_android_hud_turno_isolado.gd",
+    "scenes/gameplay/tabuleiro/modulos_tabuleiro/tabuleiro_android_hud_incremental.gd",
+    "scenes/gameplay/tabuleiro/modulos_tabuleiro/tabuleiro_android_painel_propriedades.gd"
+  ],
+  "runtime_test": "Godot executable was not available in the execution container; the package was validated structurally and against the user's log.",
+  "files": {
+    "COMMIT.txt": {
+      "sha256": "6abcd50b7d5bdd6728c144ba10391c21457c3d7221189b28f7e8bf1b5239a035",
+      "size_bytes": 380
+    },
+    "LEIA-ME_RECUPERACAO.txt": {
+      "sha256": "595a1f08265042c16e23200c65aca7764c0ae2159156aa5b1bfaa00262140552",
+      "size_bytes": 2234
+    },
+    "REMOVER_ARQUIVOS_OBSOLETOS.txt": {
+      "sha256": "17da32f5f74a9759e4b27d6e6f07b573e112f1175d80de3898dac919153af1db",
+      "size_bytes": 649
+    },
+    "default_bus_layout.tres": {
+      "sha256": "b0a3053dfc2bd8de2755e79520163969ed31933998d696cb65c6cfd4a06c670e",
+      "size_bytes": 572
+    },
+    "scenes/gameplay/tabuleiro/modulos_tabuleiro/tabuleiro_dados_aleatorios_correcao.gd": {
+      "sha256": "16bad50ac98c7d68b1b92538aa0e31bfd493ab8f6708bfc9ba460590d4e3826d",
+      "size_bytes": 3914
+    },
+    "scenes/gameplay/tabuleiro/modulos_tabuleiro/tabuleiro_diana_correcao.gd": {
+      "sha256": "8c2dae5bf40927645ff7e3cf04e935377a529ccb0e6e91e1d8b1052f1d968c3f",
+      "size_bytes": 5658
+    },
+    "scenes/gameplay/tabuleiro/tabuleiro.gd": {
+      "sha256": "5d93d3754cbd261de03f452f26348cec0b935337b0c100d636cfb14590a4809b",
+      "size_bytes": 99
+    }
+  }
+}
