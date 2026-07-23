@@ -20,6 +20,218 @@ extends "res://scenes/gameplay/tabuleiro/modulos_tabuleiro/tabuleiro_singleplaye
 # ============================================================================
 
 
+# ============================================================================
+# ANDROID — CACHE DAS INFORMAÇÕES DA CASA EM FOCO
+# ============================================================================
+#
+# _atualizar_hud_minha_casa() é chamado por vários fluxos do tabuleiro.
+# A implementação original duplica o dicionário da casa, recalcula aluguel,
+# percorre propriedades e jogadores e remonta o texto completo mesmo quando
+# nenhum dado visual mudou.
+#
+# Esta substituição cria uma assinatura barata do estado relevante e só chama
+# a implementação original quando essa assinatura muda.
+# ============================================================================
+
+
+var _hud_casa_ultima_chave: String = ""
+
+
+func _atualizar_hud_minha_casa():
+	if hud == null or not is_instance_valid(hud):
+		_hud_casa_ultima_chave = ""
+		return
+
+	var personagem_local: String = str(
+		Global.escolhas_da_mesa.get(
+			Global.meu_peer_id,
+			""
+		)
+	)
+	if (
+		personagem_local.is_empty()
+		or not pinos_jogadores.has(personagem_local)
+	):
+		_hud_casa_ultima_chave = ""
+		return
+
+	var pino_variant: Variant = pinos_jogadores.get(
+		personagem_local
+	)
+	if (
+		pino_variant == null
+		or not is_instance_valid(pino_variant)
+	):
+		_hud_casa_ultima_chave = ""
+		return
+
+	var pino: Node = pino_variant as Node
+	var casa_id: int = int(pino.get("casa_atual"))
+	if not tabuleiro.has(casa_id):
+		_hud_casa_ultima_chave = ""
+		return
+
+	var chave_atual: String = _hud_casa_criar_chave(
+		personagem_local,
+		casa_id,
+		pino
+	)
+	if chave_atual == _hud_casa_ultima_chave:
+		# O botão antigo foi movido para Gestão de Propriedades. Essa operação
+		# é barata e continua sendo garantida mesmo quando o painel não muda.
+		_hud_casa_esconder_botao_hipoteca()
+		return
+
+	# Executa a implementação original somente quando existe uma mudança real.
+	super._atualizar_hud_minha_casa()
+	_hud_casa_ultima_chave = chave_atual
+
+
+func _hud_casa_criar_chave(
+	personagem_local: String,
+	casa_id: int,
+	pino: Node
+) -> String:
+	var dados_casa: Dictionary = tabuleiro.get(
+		casa_id,
+		{}
+	)
+	var grupo: String = str(
+		dados_casa.get("grupo", "")
+	)
+	var dono_id: String = str(
+		registro_propriedades.get(
+			casa_id,
+			""
+		)
+	)
+	var dono_nome: String = ""
+	if (
+		not dono_id.is_empty()
+		and dados_economia_jogadores.has(dono_id)
+	):
+		dono_nome = str(
+			dados_economia_jogadores[dono_id].get(
+				"nome",
+				dono_id
+			)
+		)
+
+	var partes: PackedStringArray = PackedStringArray(
+		[
+			str(hud.get_instance_id()),
+			personagem_local,
+			str(pino.get_instance_id()),
+			str(casa_id),
+			dono_id,
+			dono_nome,
+			str(dados_casa),
+			str(evento_ativo),
+			str(multiplicador_inflacao_global),
+			str(ultimo_dado1),
+			str(ultimo_dado2),
+			_hud_casa_assinatura_posse_grupo(grupo),
+			_hud_casa_assinatura_habilidades(),
+			_hud_casa_assinatura_efeitos_aluguel(),
+		]
+	)
+	return "|".join(partes)
+
+
+func _hud_casa_assinatura_posse_grupo(
+	grupo: String
+) -> String:
+	# Monopólios, quantidade de transportes e quantidade de utilidades dependem
+	# da posse das outras casas do mesmo grupo.
+	var partes: PackedStringArray = PackedStringArray()
+	var ids: Array = tabuleiro.keys()
+	ids.sort()
+
+	for id_variant: Variant in ids:
+		var id_casa: int = int(id_variant)
+		var dados_variant: Variant = tabuleiro.get(
+			id_casa,
+			{}
+		)
+		if not dados_variant is Dictionary:
+			continue
+		var dados: Dictionary = dados_variant
+		if str(dados.get("grupo", "")) != grupo:
+			continue
+		partes.append(
+			"%d:%s" % [
+				id_casa,
+				str(
+					registro_propriedades.get(
+						id_casa,
+						""
+					)
+				),
+			]
+		)
+
+	return ",".join(partes)
+
+
+func _hud_casa_assinatura_habilidades() -> String:
+	# O texto e o aluguel podem ser alterados pelo Decreto do Breno e pela
+	# Especulação do Igor. Somente esses campos entram na chave.
+	var partes: PackedStringArray = PackedStringArray()
+
+	for jogador_variant: Variant in lista_turnos:
+		var jogador_id: String = str(
+			jogador_variant
+		)
+		var dados: Dictionary = (
+			dados_economia_jogadores.get(
+				jogador_id,
+				{}
+			)
+		)
+		partes.append(
+			"%s:%d:%s:%d:%d" % [
+				jogador_id,
+				int(dados.get("decreto_turnos", 0)),
+				str(dados.get("decreto_grupo", "")),
+				int(dados.get("especulacao_turnos", 0)),
+				int(dados.get("especulacao_casa", -1)),
+			]
+		)
+
+	return ",".join(partes)
+
+
+func _hud_casa_assinatura_efeitos_aluguel() -> String:
+	# O motor central pode modificar o aluguel sem trocar evento_ativo. Por
+	# exemplo: votação, congelamento, interdição ou carta com duração.
+	var partes: PackedStringArray = PackedStringArray()
+
+	for tipo_variant: Variant in [
+		"congelar_aluguel",
+		"aluguel_zero",
+		"interdicao",
+		"multiplicador_aluguel",
+	]:
+		var tipo: String = str(tipo_variant)
+		partes.append(
+			"%s:%s" % [
+				tipo,
+				str(_efeitos_ativos_por_tipo(tipo)),
+			]
+		)
+
+	return ",".join(partes)
+
+
+func _hud_casa_esconder_botao_hipoteca() -> void:
+	if (
+		hud != null
+		and is_instance_valid(hud)
+		and hud.has_method("esconder_botao_hipoteca")
+	):
+		hud.call("esconder_botao_hipoteca")
+
+
 @rpc("authority", "call_local", "reliable")
 func _sincronizar_proximo_evento_rede(
 	nome_evento: String,
