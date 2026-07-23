@@ -104,10 +104,24 @@ func _atualizar_fonte_anonima_diana_local(
 	if not hud.has_method("alimentar_previsao_evento"):
 		return
 
+	# alimentar_previsao_evento() também abre o painel quando dossie_aberto é
+	# false. A Fonte Anônima deve atualizar apenas o conteúdo, preservando a
+	# decisão da jogadora de manter o dossiê fechado.
+	var dossie_estava_aberto: bool = bool(
+		hud.get("dossie_aberto")
+	)
+	if not dossie_estava_aberto:
+		# O estado temporário impede somente o bloco de abertura automática.
+		# Nenhum botão, painel ou animação é alterado.
+		hud.set("dossie_aberto", true)
+
 	hud.alimentar_previsao_evento(
 		proximo_evento_global,
 		proximo_evento_descricao
 	)
+
+	if not dossie_estava_aberto:
+		hud.set("dossie_aberto", false)
 
 
 # ============================================================================
