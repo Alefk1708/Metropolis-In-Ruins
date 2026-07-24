@@ -34,7 +34,6 @@ GerenciadorSalvamento="*res://autoload/gerenciador_salvamento.gd"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/mode=1
 window/size/initial_position_type=0
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"

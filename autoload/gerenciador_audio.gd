@@ -55,6 +55,9 @@ const MUSICA_ONLINE: AudioStreamOggVorbis = preload(
 const MUSICA_PARTIDA: AudioStreamOggVorbis = preload(
 	"res://assets/audio/music/tema_partida_loop.ogg"
 )
+const MUSICA_EASTER_EGG: AudioStreamOggVorbis = preload(
+	"res://assets/audio/music/easter_egg_celestial_original.ogg"
+)
 const SOM_BOTAO: AudioStreamWAV = preload(
 	"res://assets/audio/ui/ui_pop_01.wav"
 )
@@ -84,6 +87,7 @@ enum TipoTrilha {
 	LAN,
 	ONLINE,
 	PARTIDA,
+	EASTER_EGG,
 }
 
 var _volume_geral: float = VOLUME_PADRAO_GERAL
@@ -111,6 +115,11 @@ var _timer_salvar: Timer
 var _trilha_atual: int = TipoTrilha.NENHUMA
 var _trilha_solicitada: int = TipoTrilha.NENHUMA
 var _token_troca_musica: int = 0
+
+# Easter egg exclusivo desta build. Não é salvo no arquivo de configuração.
+var _easter_egg_ativo: bool = false
+var _easter_egg_cliques: int = 0
+var _easter_egg_ultimo_clique_ms: int = -5000
 
 # A tela de carregamento define current_scene manualmente depois de instanciar
 # o destino, então também observamos diretamente a cena atual.
@@ -622,6 +631,8 @@ func _obter_stream_trilha(tipo: int) -> AudioStreamOggVorbis:
 			return MUSICA_ONLINE
 		TipoTrilha.PARTIDA:
 			return MUSICA_PARTIDA
+		TipoTrilha.EASTER_EGG:
+			return MUSICA_EASTER_EGG
 	return null
 
 
@@ -736,6 +747,11 @@ func _atualizar_cena_atual() -> void:
 	var cena: Node = get_tree().current_scene
 	_ultima_cena_observada = cena
 
+	# O segredo só permanece ativo enquanto o jogador está no menu inicial.
+	if not _eh_cena_menu(cena):
+		_easter_egg_ativo = false
+		_easter_egg_cliques = 0
+
 	var trilha: int = _determinar_trilha(cena)
 	_solicitar_trilha(trilha)
 
@@ -779,8 +795,8 @@ func _determinar_trilha(cena: Node) -> int:
 
 	match caminho:
 		CENA_MENU_PRINCIPAL:
-			return TipoTrilha.MENU
-		CENA_SINGLEPLAYER:
+			if _easter_egg_ativo:
+				return TipoTrilha.EASTER_EGG
 			return TipoTrilha.MENU
 		CENA_LAN:
 			return TipoTrilha.LAN
@@ -1109,6 +1125,10 @@ func _configurar_vbox_opcoes(vbox: VBoxContainer, modal: Node) -> void:
 
 	vbox.add_theme_constant_override("separation", 14)
 
+	var titulo_opcoes := _encontrar_titulo_opcoes(vbox)
+	if titulo_opcoes != null:
+		_configurar_gatilho_easter_egg(titulo_opcoes)
+
 	var painel := modal.find_child("PainelOpcoes", true, false) as PanelContainer
 	if painel != null:
 		painel.custom_minimum_size = Vector2(720.0, 900.0)
@@ -1185,6 +1205,81 @@ func _configurar_vbox_opcoes(vbox: VBoxContainer, modal: Node) -> void:
 	var slider_botoes := controles_botoes.get("slider") as HSlider
 	if slider_botoes != null:
 		slider_botoes.drag_ended.connect(_ao_terminar_arraste_volume_botoes)
+
+
+func _encontrar_titulo_opcoes(
+	vbox: VBoxContainer
+) -> Label:
+	for filho: Node in vbox.get_children():
+		if filho is Label and (filho as Label).text == "OPÇÕES":
+			return filho as Label
+	return null
+
+
+func _configurar_gatilho_easter_egg(titulo: Label) -> void:
+	if titulo.has_meta("easter_egg_audio_conectado"):
+		return
+
+	titulo.set_meta("easter_egg_audio_conectado", true)
+	titulo.mouse_filter = Control.MOUSE_FILTER_STOP
+	titulo.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+
+	var callback := Callable(
+		self,
+		"_ao_titulo_opcoes_gui_input"
+	)
+	if not titulo.gui_input.is_connected(callback):
+		titulo.gui_input.connect(callback)
+
+
+func _ao_titulo_opcoes_gui_input(evento: InputEvent) -> void:
+	var clique: InputEventMouseButton = (
+		evento as InputEventMouseButton
+	)
+	if clique == null:
+		return
+	if (
+		clique.button_index != MOUSE_BUTTON_LEFT
+		or not clique.pressed
+	):
+		return
+
+	# A combinação precisa ser exata para evitar ativação acidental.
+	if (
+		int(round(_volume_efeitos)) != 7
+		or int(round(_volume_botoes)) != 7
+	):
+		_easter_egg_cliques = 0
+		return
+
+	var agora: int = Time.get_ticks_msec()
+	if agora - _easter_egg_ultimo_clique_ms > 1200:
+		_easter_egg_cliques = 0
+
+	_easter_egg_ultimo_clique_ms = agora
+	_easter_egg_cliques += 1
+
+	if _easter_egg_cliques < 2:
+		return
+
+	_easter_egg_cliques = 0
+	_ativar_easter_egg_menu()
+
+
+func _ativar_easter_egg_menu() -> void:
+	var cena: Node = get_tree().current_scene
+	if not _eh_cena_menu(cena):
+		return
+	if _easter_egg_ativo:
+		return
+
+	_easter_egg_ativo = true
+
+	# Garante que o segredo seja audível mesmo se a música estava desmarcada.
+	if not _musica_ativa:
+		definir_musica_ativa(true)
+
+	_solicitar_trilha(TipoTrilha.EASTER_EGG)
 
 
 func _criar_check_musica_menu() -> CheckButton:
